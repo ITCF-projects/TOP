@@ -17,15 +17,15 @@ Inom ATI-gruppen under samarbetsorganet ITCF finns en arbetsgrupp vars mål är 
 
 ## 1.1 Målbild
 
-Arbetet inleddes med att se hur vi kunde använda HROpen. Den standarden visade sig dock sakna viktiga möjligheter för bland annat internationalisering, och genom att inte direkt stödja våra usecase blev många konstruktioner repetitiva eller ointuitiva. TOP använder alla delar av HROpen som går, men utökar och stuvar om. Se TOP som en dansgolvsremix av HROpen snarare än en nyinspelning eller cover.
+Arbetet inleddes med att se hur vi kunde använda HROpen. Den standarden visade sig dock sakna viktiga möjligheter för bland annat internationalisering och att samma person har flera roller i olika delar av organisationen, och genom att inte direkt stödja våra usecase blev många konstruktioner repetitiva eller ointuitiva. TOP använder alla delar av HROpen som går, men utökar och stuvar om. Se TOP som en dansgolvsremix av HROpen snarare än en cover.
 
-Vi har utgått från två huvudsakliga tänkta use-case: att ett lärosäte får ut sin HR-data från en HR-applikations-leverantör i ett applikationsoberoende format, och att lärosätet skickar data i samma format till en tjänsteleverantör, där vi som exempel valt Retendo. Vi har inte som uttryckligt use-case att lärosäten använder TOP internt, men gör samtidigt standarden avsiktligt dynamisk så att det är möjligt att göra i många olika arkitekturer om man vill det.
+Vi har utgått från två huvudsakliga tänkta use-case: att ett lärosäte får ut sin HR-data från en HR-applikationsleverantör i ett applikationsoberoende format, och att lärosätet skickar data i samma format till en tjänsteleverantör, där vi som exempel valt Retendo. Vi har inte som uttryckligt use-case att lärosäten använder TOP internt, men gör samtidigt standarden avsiktligt dynamisk så att det är möjligt att göra i många olika arkitekturer om man vill det.
 
 ## 1.2 Exempel: Lilla Lärosätet
 
 I hela standarden används ett och samma exempel. Här beskrivs detta, och eftersom informationsmodellens begrepp definieras först i nästa kapitel kommer beskrivningen här att vara lite vag för den som återvänder efter att ha tagit till sig hela standarden. Varje del av nedanstående exempel är relevant för någon del av standarden.
 
-> _Lilla Lärosätet_ (LL) är ett ofattbart litet lärosäte faktiskt. Personalen består av fyra personer, och de har två studenter. Organisationen består av en institution (Institutionen för Småskalighet) som är uppdelad en enda avdelning (Avdelningen för Smått Tänkande). Avdelningen har en professor, Patrik Socrates (men, som Patrik själv säger "det är bara min mamma som kallar mig Patrik, alla andra har i hela mitt liv kallat mig Putte.") Under Putte på avdelningen finns en lektor, Lena Lund. Man har också en administratör anställd på institutionen, han heter Adam Nistram. Han är egentligen heltidsanställd, men är föräldraledig på 40%.
+> _Lilla Lärosätet_ (LL) är ett ofattbart litet lärosäte. Personalen består av fyra personer, och de har två studenter. Organisationen består av en institution (Institutionen för Småskalighet) som är uppdelad en enda avdelning (Avdelningen för Smått Tänkande). Avdelningen har en professor, Patrik Socrates (men, som Patrik själv säger "det är bara min mamma som kallar mig Patrik, alla andra har i hela mitt liv kallat mig Putte.") Under Putte på avdelningen finns en lektor, Lena Lund. Man har också en administratör anställd på institutionen, han heter Adam Nistram. Han är egentligen heltidsanställd, men är föräldraledig på 40%.
 >
 > Givetvis har man en rektor, hon heter Hedda Master. Institutionen har en prefekt, förtroendevald på 5 år, och i ett hårt val blev det professor Putte som fick den posten. Han är därmed, enligt linjeorganisationen, chef över sig själv.
 >
@@ -43,7 +43,7 @@ För att överföra information måste avsändare och mottagare vara överens om
 
 Den grundläggande datamodellen går att använda både för data i vila och för data under färd. 
 
-Vissa entiteter i standarden är dock bara relevanta för data under färd. Ett exempel är modellen som beskriver vem som är någons chef. Rådatat till den är både chefskap och ett komplett organisatoriskt träd, tillsammans med en lokal regeluppsättning för att lösa upp sådant som att prefekter ibland skulle bli chefer över sig själva eller hur man prioriterar när någon har flera parallella anställningar.
+Vissa entiteter i standarden är dock mest relevanta för data under färd. Ett exempel är modellen som beskriver vem som är någons chef. Rådatat till den är både chefskap och ett komplett organisatoriskt träd, tillsammans med en lokal regeluppsättning för att lösa upp sådant som att prefekter ibland skulle bli chefer över sig själva eller hur man prioriterar när någon har flera parallella anställningar.
 
 För att en mottagare varken skall behöva känna till reglerna eller ha ett komplett organisationsträd så kan man överföra färdigberäknade relationer mellan personer, t.ex. att Hedda är chef över Putte.
 
@@ -76,7 +76,7 @@ Orgenheterna kan inte av sig själva utföra nytta, för detta behövs **persone
 
 > Lilla Lärosätet har såklart personposter för alla sina anställda: Hedda Master, Patrik Socrates, Lena Lund och Adam Nistram. Men eftersom både Linda Projektil, Peroja Deltacko och Emilia Fodat utför nytta åt lärosätet finns personposter även för dem.
 
-Personer knyts till lärosätet genom **anknytningsavtal**, där den vanligaste varianten är ett anställningsavtal. Men även gästprofessurer, deltagande i forskningsprojekt, till och med att en professor muntligen bjuder in någon från Harvard att sprida stjärnglans är former av sådana avtal.
+Personer knyts till lärosätet genom **anknytningsavtal**, där den vanligaste varianten är ett anställningsavtal. Men även gästprofessurer, deltagande i forskningsprojekt, till och med när en professor muntligen bjuder in någon från Harvard att sprida stjärnglans över sin institution är former av sådana avtal.
 
 > Lilla Lärosätet har anknytningsavtal för alla personer, men av olika typ. Hedda Master, Patrik Socrates, Lena Lund och Adam Nistram har alla typen "Anställd" på sina anknyntningsavtal. Eftersom Linda Projektil verkar vid lärosätet på heltid, så får hennes avtal typen "Bemanningspersonal". Peroja Deltacko som bara gör enstaka timmar får typen "Timkonsult", och Emilia Fodat får typen "Intermittent anställd" på sina respektive avtal.
 
@@ -84,7 +84,7 @@ Ett anknytningsavtal kan under sin löptid innefatta många olika egenskaper. Un
 
 Anknytningsavtalet kan ha ingen, en eller flera **ersättningsperioder** (en anställd kan t.ex. under en viss period få en viss lön), **frånvaroperioder** (t.ex. semester, sjukskrivning eller VAB), **omfattningsperioder** (t.ex. 80% tjänstgöringsgrad), **hemvistperioder** (som pekar ut den orgenhet där personens chef normalt sett återfinns).
 
-> På Lilla Lärosätet finns en ersättningsperiod vardera för de fyra anställda, med typen "Månadslön" - en summa och perioden "per månad". Emilia Fodat har en ersättningsperiod av typen "Timlön" med en summa och "per arbetad timme". Vilken ersättning man ger till konsulterna bedömer man inte att någon behöver ta emot, så dem utelämnar man ersättningsperioder för.
+> På Lilla Lärosätet finns en ersättningsperiod vardera för de fyra anställda, med typen "Månadslön" - en summa och enheten "per månad". Emilia Fodat har en ersättningsperiod av typen "Timlön" med en summa och "per arbetad timme". Vilken ersättning man ger till konsulterna bedömer man inte att någon behöver veta, så dem utelämnar man ersättningsperioder för.
 > 
 > De fast anställda har varsinn omfattningsperiod på 100%. Adam som är föräldraledig har utöver sin omfattning på 100%, också en frånvaroperiod på 40% av typen "Föräldraledig". Linda Projektil har en omfattningsperiod på 100%, där man också noterat att den slutar siste juni när projektet skall vara klart. Varken Peroja eller Emilia har några omfattningsperioder eftersom man inte i förväg vet exakt hur mycket de skall arbeta.
 > 
@@ -98,7 +98,7 @@ En uppsättning arbetsuppgifter, befogenheter, förväntade beteenden, ansvar os
 
 Att en person tilldelats en viss roll på en viss orgenhet under viss period uttrycks som en **rolltilldelning**. En sådan _kan_ förnkippas med ersättningsperioder (t.ex. lönetillägg för prefekter) och omfattningsperioder (som kan vara den faktiska tid en person förväntas lägga, borträknat ledigheter med mera).
 
-> På Lilla Lärosätet har bland annat Hedda Master en rolltilldelning med rollen "Rektor" för orgenheten "Lärosätet", och Putte Socrates har två rolltilldelningar - dels en som "Professor" för Avdelningen och dels en som "Prefekt" för Institutionen. Han tycker att det är mycket viktigare att vara prefekt än professor, och vill att prefektrollen alltid visas först.
+> På Lilla Lärosätet har bland annat Hedda Master en rolltilldelning med rollen "Rektor" för orgenheten "Lärosätet", och Putte Socrates har två rolltilldelningar - dels en som "Professor" för Avdelningen och dels en som "Prefekt" för Institutionen. Han tycker att det är mycket viktigare att vara prefekt än professor, och vill att prefektrollen alltid visas först, så den är flaggad som primär.
 > 
 > Puttes rolltilldelning som prefekt har ett slutdatum (eftersom prefektskapet är tidsbegränsat), och det är förknippat med en ersättningsperiod av typen "Lönetillägg per månad" eftersom han får extra betalt för ansvaret.
 > 
@@ -110,7 +110,7 @@ Lärosätena tilldelar personer vissa ansvar för vissa orgenheter. Till exempel
 > 
 > Eftersom man inte _måste_ peka ut ansvar överallt i sina överföringar, så väljer Lilla Lärosätet att inte tala om vem som har vilket ansvar för Programmet.
 
-Utöver att nytta struktureras baserat på roller, så kan orgenheter också ha **servicefunktioner**, där den vanligaste kanske är en expedition eller en helpdesk. De bemannas via rolltilldelningar, men har t.ex. öppettider och besöksadresser som egna egenskaper. 
+Utöver att utförd nytta struktureras baserat på roller, så kan orgenheter också ha **servicefunktioner**, där den vanligaste kanske är en expedition eller en helpdesk. De bemannas via rolltilldelningar, men har t.ex. öppettider och besöksadresser som egna egenskaper. 
 
 > Institutionen på Lilla Lärosätet har en expedition, vilket de representerar som en servicefunktion som "hör till" alla tre linjeorganisationerna.
 
@@ -122,7 +122,7 @@ Nästan alla dessa begrepp går att typa eller märka med **taggningar**. En tag
 
 > Lilla Lärosätet har valt att tagga anställningsperioderna för Hedda, Putte och Lena med "Anställningsliknande avtal". De har valt samma taggning för Linda Projektil, trots att hon formellt är anställd av konsultbolaget. Övriga har inte fått den taggningen. Denna taggning överförs till Miniatyrmänniskan, som skall ge behörighet baserat på den.
 > 
-> Eftersom Hedda, Putte, Lena och Linda alla har minst ett nutida anställningsavtal som är tagget med "Anställningsliknande avtal", så väljer Lilla Lärosätet också att tagga deras fyra personposter med "Anställningsliknande person". Även om de använt anställningsavtalen för att räkna ut detta, så väljer de att överföra det som en explicit taggning på personerna, så att mottagarna inte behöver veta vilka egenskaper som gör att en person räknas som "anställningsliknande". 
+> Eftersom Hedda, Putte, Lena och Linda alla har minst ett nutida anställningsavtal som är taggat med "Anställningsliknande avtal", så väljer Lilla Lärosätet också att tagga deras fyra personposter med "Anställningsliknande person". Även om de använt anställningsavtalen för att räkna ut detta, så väljer de att överföra det som en explicit taggning på personerna, så att mottagarna inte behöver veta vilka egenskaper som gör att en person räknas som "anställningsliknande". 
 
 Som man märker är det en väldig massa perioder överallt. Det finns tre olika fält som används. Det första är giltighetsstatus, med värdena dåtida/nutida/framtida (past/present/future). Sen kan man detaljera med start- och slutdatum om man känner till dem och mottagaren har nytta av dem.
 
@@ -137,7 +137,7 @@ Eftersom man kan överföra dåtida perioder, så skulle "en persons löneperiod
 
 #### 2.1.2.1 Olika ID:n
 
-Ett ID i denna standard består alltid av tre delar: namnrymd, datatyp och värde. Om värdet inte är globalt unikt kan man också ge ett scope, eller värderymd, för värdet.
+Ett ID i denna standard består alltid av tre eller fyra delar: alltid namnrymd, datatyp och värde. Om värdet inte är globalt unikt kan man också ge ett scope, eller värderymd, för värdet.
 
 Datatyper med namn som "personnummer" finns på många ställen, men har ibland olika definition - Primula har t.ex. ett ID som de kallar "personnummer" och som i de flesta fall är ett unikt värde utgivet av svenska staten. Men Primula tillåter att man lägger in rena hittepåvärden (t.ex. "19121212KK88") i personnummerfältet, och då är just det värdet inte längre unikt mellan olika Primula-instanser (och inte längre ett personnummer enligt svenska statens definition). 
 
@@ -145,7 +145,7 @@ Vi måste skilja på dessa två olika saker som bägge kallas "personnummer". De
 
 #### 2.1.2.2 Identifikation av namnrymd
 
-Namnrymden anges normalt sett genom ett domännamn som identifierar den definierande entiteten, t.ex. "chalmers.se" eller "orcid.org". I resten av denna standard skrivs exempel-ID:n som t.ex. `chalmers.se:person-id:123123123`, men i överföringen är dessa strukturerade som tre attribut i ett objekt (se 3.1.1 för detaljer).
+Namnrymden anges normalt sett genom ett domännamn som identifierar den definierande entiteten, t.ex. "chalmers.se" eller "orcid.org". I resten av denna standard skrivs exempel-ID:n som t.ex. `chalmers.se:person-id:123123123`, men i överföringen är dessa strukturerade som tre attribut i ett objekt `{schemeAgencyId: "chalmers.se", schemeId: "person-id", value: "123123123"}` (se 3.1.1 för detaljer).
 
 Syftet med att använda domännamn är att det redan finns ett register för dem, så denna standard behöver inte definiera en registerhantering. Dock finns några väldigt allmäna begrepp, t.ex. svenskt personnummer, där det kan upplevas som lite krystat att sätta domännamnet - det är formellt svenska staten som delar ut personnummer, även om det är Skatteverket som managerar det. För några sådana begrepp finns en defintion med utgivare i sektion 5.1.1. 
 
@@ -153,13 +153,13 @@ Om ett värde inte är globalt unikt och det finns anledning att tro att en mott
 
 #### 2.1.2.3 De olika ID-fälten och hur de hanteras
 
-En avsändare fyller i ett attribut `id` med den mest stabila identifierare man känner till för det objekt som överförs. För många kommer det t.ex. att vara ett post-id i en lokal masterdatabas. Syftet är att mottagare enkelt skall upptäcka att de får ny data för ett objekt de tidigare fått från samma avsändare. Därför är personnummer inte ett bra sånt här id om det går att undvika - alla har inte ett, vissa personer har flera, och många byter personnummer under en livstid.
+En avsändare fyller i ett attribut `id` med den mest stabila identifierare man känner till för det objekt som överförs. Det skall vara en identifierare som ändras så sällan som möjligt. Syftet är att mottagare enkelt skall upptäcka att de får ny data för ett objekt de tidigare fått från samma avsändare. Därför är personnummer inte ett bra sånt här id om det går att undvika - alla har inte ett, vissa personer har flera, och många byter personnummer under en livstid. För många kommer det t.ex. att vara ett post-id i en lokal masterdatabas. 
 
 För att erbjuda möjlighet för mottagaren att upptäcka att man får samma objekt från flera olika avsändare så kan avsändaren skicka över `correlationIds`, som är en lista av andra ID:n som man råkar känna till. På en person kan detta t.ex. vara personnummer, temporärpersonnummer från Ladok, Ladok-UID eller ORCID
 
 Man kan inte räkna med att en viss typ av ID alltid kommer som antingen huvud-id eller korrelationsid. En avsändare som inte har något annat än personnummer använder det som huvud-id, men en avsändare som har ett annat mer stabilt id använder istället personnummer som korrelationsid.
 
-Man kan tvingas byta ID på ett objekt. För huvud-ID:n sker det oftast när man av misstag fått dublettposter som måste slås samman, för korrelations-ID:n sker det t.ex. när någon leverantör uppströms behövt göra samma sak, eller när en person byter personnummer. Vid ID-byten överförs det gamla ID:t i `mergedFromId` eller `previousCorrelationIds`. 
+Avsändaren kan tvingas byta ID på ett objekt. För huvud-ID:n sker det oftast när man av misstag fått dublettposter som måste slås samman, för korrelations-ID:n sker det t.ex. när någon leverantör uppströms behövt göra samma sak, eller när en person byter personnummer. Vid ID-byten överförs det gamla ID:t i `mergedFromId` eller `previousCorrelationIds`. 
 
 Ett personnummerbyte representeras t.ex. från en avsändare som skickar det som korrelationsid genom att det nya personnumret läggs i `correlationIds` medan det gamla personnumret under en tid överförs i `previousCorrelationIds`.
 
@@ -167,7 +167,7 @@ Ett personnummerbyte representeras t.ex. från en avsändare som skickar det som
 
 En tag är likt ett ID, men kan dessutom ha ett språkhanterat namn för mänsklig konsumtion. I standarden används konstruktionen på många ställen, både för att ange typer och för att göra allmäna taggningar. Där många standarder kanske hade valt en enum (utan möjlighet till beskrivande text), så väljer denna standard i allmänhet en tag och definierar en standarduppsättning.
 
-Precis som ID:n används en utgivare, en datatyp och ett värde (med frivillig språkhanterad benämning). De taggar som definieras i denna standard har "*" som utgivare. Övriga har ett domännamn som identifierar utgivaren. Taggar skrivs i löptext som `<namnrymd>:<typ>:<värde>(<svensk text>/<engelsk text>)` men kodas egentligen som objekt i överföringen (se 3.1.1) där man också kan överföra fler språk än svenska och engelska om det behövs.
+Precis som ID:n används en utgivare, en datatyp och ett värde (med frivillig språkhanterad benämning). De taggar som definieras i denna standard har "*" som utgivare. Övriga har ett domännamn som identifierar utgivaren. Taggar skrivs i löptext som `<namnrymd>:<typ>:<värde>(<svensk text>/<engelsk text>)` men kodas egentligen som objekt i överföringen (se 3.1.2) där man också kan överföra fler språk än svenska och engelska om det behövs.
 
 Tillexempel definierar standarden en tag som i löptext skrivs `*:remuneration_type:monthly_salary` (Månadslön). Den överförs som ett objekt precis som id:n.
 
@@ -197,17 +197,17 @@ Det är tillåtet att skicka vidare utökningar som någon annan definierat, om 
 
 ## 2.2 ER-diagram
 
-![TOP.png](TOP.png)
+![TOP-ER.drawio.png](TOP-ER.drawio.png)
 
 ## 2.3 Entiteter, attribut, relationer
 
-Definierar de begrepp som återfinns i schemat och deras attribut. För varje entitet definieras både dess egna attribut, och namngivna pseudoattribut som representerar bakreferenser från andra entiteter. Till exempel så pekar en rolltilldelning ut en orgenhet, och ur orgenhetens perspektiv finns ett listvärt attribut där man kan lägga alla rolltilldelningar som pekar på just den orgenheten.
+Här definieras de begrepp som återfinns i schemat och deras attribut. För varje entitet definieras både dess egna attribut och namngivna pseudoattribut som representerar bakreferenser från andra entiteter. Till exempel så pekar en rolltilldelning ut en orgenhet, och ur orgenhetens perspektiv finns ett listvärt attribut där man kan lägga alla rolltilldelningar som pekar på just den orgenheten.
 
 Samtliga entiteter har fyra attribut `id`, `mergedFromIds`, `correlationIds` och `previousCorrelationIds` som används för att identifiera dem maskinläsbart. Se avsnitt 3.1 för en förklaring av hur dessa skall användas.
 
 Många entiteter har giltighetsattributen `effectiveStatus` och `effectiveTimePeriod`. Se 3.1.2 för en förklaring hur dessa skall användas.
 
-### 2.3.1 Orgenhet
+### 2.3.1 <a name="orgenhet">Orgenhet</a>
 
 Begrepp "Organisatorisk enhet" (förkortat "orgenhet") representerar någon form av gruppering som är viktig för hur lärosätet organiserar någon aspekt av sitt arbete. Inga gränser sätts för vad som är eller inte är en orgenhet, varje lärosäte avgör utifrån behov och förmåga. Exempel på möjliga orgenheter är:
 
@@ -233,13 +233,13 @@ Gemensamt är att de är väl definierade grupper med gemensamma mål och tydlig
 
 #### 2.3.1.2 Bakreferenser
 
-* `deployments` - bakreferens till Rolltilldelning (TODO: 2.3.???)
+* `deployments` - bakreferens till  [Rolltilldelning](#rolltilldelning)
 * `homed`- bakreferens till Hemvistperioder (TODO: 2.3.???)
 * `responsible` - bakreferens till Ansvarsperioder (TODO: 2.3.???)
-* `childRelations` - bakreferens till alla Orgenhetsrelationer som pekar ut denna orgenhets barn.
-* `parentRelations` - bakreferens till alla Orgenhetsrelationer som pekar ut denna orgenhets föräldrar.
+* `childRelations` - bakreferens till alla [Orgenhetsrelationer](#orgenhetsrelation) som pekar ut denna orgenhets barn.
+* `parentRelations` - bakreferens till alla [Orgenhetsrelationer](#orgenhetsrelation) som pekar ut denna orgenhets föräldrar.
 
-### 2.3.2 Orgenhetsrelationer
+### 2.3.2 <a name="orgenhetsrelation">Orgenhetsrelation</a>
 
 Vi har alla någon form av struktur bland våra orgenheter. Det är vanligt att ha flera olika strukturer, t.ex.: 
 
@@ -261,7 +261,7 @@ Varje orgenhetsrelation representerar ett riktat förhållande i något av träd
 * `child` pekar ut den orgenhet som är barn i denna relation.
 * `effectiveTimePeriod` är den tidsperiod denna relation är giltig.
 
-### 2.3.3 Kommunikationsvägar
+### 2.3.3 <a name="kommunikationsvag">Kommunikationsväg</a>
 
 Ett kommunikationsvägar-objekt innehåller upp till fyra listor av adresser/kontaktinformation för fyra olika typer av kontakt - epost, telefon, fysiskt besök, övriga elektroniska adresser.
 
@@ -301,7 +301,7 @@ Till exempel kommer Hedda kanske att flagga `hedda.master@lillalarosatet.se` med
     * `stopTime` - (obligatoriskt om startTime getts) Första klockslag lokal tid då besök inte längre kan ske.
   * `tags` - se 3.1.2
 
-### 2.3.4 Person
+### 2.3.4 <a name="person">Person</a>
 
 En person av kött och blod. Datat är så normaliserat som avsändaren klarar av - i normalfallet motsvaras varje fysisk person av som mest _en_ datapost. Ingen avsändare skall t.ex. skicka flera personposter med olika ID:n när en person har flera parallella anställningar.
 
@@ -311,9 +311,9 @@ Personobjekt innehåller vissa rena individegenskaper, t.ex. namn och diverse id
 
 * `id`/`mergedFromIds`/`correlationIds`/`previousCorrelationIds` - se 3.1.1
 * `tags` - övriga egenskaper (ofta beräknade) som är relevanta för mottagaren (t.ex. "anställningsliknande", "student" och/eller "TA-personal") - se också 3.2.2
-* `name` - personens namn.
+* `name` - personens namn. För personer som bara har ett enda namn, från kulturer där man inte har för-/efternamn skickas detta namn i `family`- och `formattedName`-fälten.
   * `given` - förnamn. Helst en korrekt blandning av versaler och gemener ("Viktor" snarare än "VIKTOR").
-  * `family` - efternamn. Helst en korrekt blandning av versaler och gemener ("McFlurry bin Nadal af Krusenstierna" snarare än "MC FLURRY BIN NADAL AF KRUSENSTIERNA").
+  * `family` - efternamn. Helst en korrekt blandning av versaler och gemener ("McFlurry bin Nadal af Krusenstierna Och Ovar" snarare än "MC FLURRY BIN NADAL AF KRUSENSTIERNA OCH OVAR").
   * `preferred` - föredraget tilltalsnamn, även om detta är en smeknamnsform.
   * `formattedName` - färdigformatterat namn, med korrekt blandning av versaler och gemener, i den form det skulle skrivas på t.ex. ett postkuvert. 
 * `deceased` - flagga att personen avlidit.
@@ -326,10 +326,10 @@ Personobjekt innehåller vissa rena individegenskaper, t.ex. namn och diverse id
 #### 2.3.4.2 Bakreferenser
 
 * `workLifeCycles` - alla Anknytningsavtal (TODO: 2.3.???) som gäller denna person
-* `deployments` - alla Rolltilldelningar (TODO: 2.3.???) som gäller denna person
-* `personalOrganizationalResponsibiltites` - alla Organisationsansvar (TODO: 2.3.???) som pekar ut denna person som personligt ansvarig (snarare än via en rolltilldelning).
+* `deployments` - alla [Rolltilldelningar](#rolltilldelning) som gäller denna person
+* `personalOrganizationalResponsibiltites` - alla [Organisationsansvar](#organisationsansvar) som pekar ut denna person som personligt ansvarig (snarare än via en rolltilldelning).
 
-### 2.3.5 Anknytningsavtal
+### 2.3.5 <a name="anknytningsavtal">Anknytningsavtal</a>
 
 Ett anknytningsavtal säger att en person knutits till lärosätet och hur, men säger inte vad personen gör (det finns i Rolltilldelningar (TODO: 2.3.???))
 
@@ -361,7 +361,7 @@ Det är mycket vanligt att behöva förmedla vilka avtalsperioder som motsvarar 
 * `workSchedules` - omfattningsperioder (se 2.3.8) som detaljerar detta avtal.
 * `leaves` - frånvaroperioder (se 2.3.9) som detaljerar detta avtal och dess omfattningsperioder.
 
-### 2.3.6 Hemvistperiod (detaljerar ett 2.3.5 Anknytningsavtal)
+### 2.3.6 <a name="hemvistperiod">Hemvistperiod</a> (detaljerar ett [Anknytningsavtal](#anknytningsavtal))
 
 En hemvistperiod är en detaljering till ett anknytningsavtal, som talar om vid vilka orgenheter personen har sin hemvist under olika delar av avtalets löptid. 
 
@@ -377,7 +377,7 @@ Som mottagare är man förmodligen oftast intresserad av antingen hemvisten elle
 * `workLifeCycle` - det anknytningsavtal som denna hemvistperiod detaljerar - se 2.6.5
 * `organization` - den orgenhet som denna hemvistperiod pekar ut som hemvist.
 
-### 2.3.7 Ersättningsperiod (detaljerar ett 2.3.5 Anknytningsavtal eller en 2.3.11 Rolltilldening)
+### 2.3.7 <a name="ersattningsperiod">Ersättningsperiod</a> (detaljerar ett [Anknytningsavtal](#anknytningsavtal) eller en [Rolltilldening](#rolltilldelning))
 
 Ett anknytningsavtal är ofta förknippat med en ersättning till personen - det vanligaste är lön. Eftersom personers lön kan variera under pågående anställning, så delas ersättningar upp i perioder (man kan såklart välja att bara överföra den just nu aktuella till en viss mottagare). 
 
@@ -403,7 +403,7 @@ I en ersättningsperiod kan man ange konteringar. Eftersom lärosätena inte har
 * `deployment` - en rolltilldelning som denna ersättningsperiod detaljerar (se 2.3.11)
 * `workLifeCycle` - ett anknytningsavtal som denna ersättningsperiod detaljerar (se 2.3.5)
 
-### 2.3.8 Omfattningsperiod (detaljerar ett 2.3.5 Anknytningsavtal eller en 2.3.11 Rolltilldelning)
+### 2.3.8 <a name="omfattningsperiod">Omfattningsperiod</a> (detaljerar ett [Anknytningsavtal](#anknytningsavtal) eller en [Rolltilldening](#rolltilldelning))
 
 En omfattningsperiod detaljerar ett anknytningsavtal eller en rolltilldelning. I bägge fallen avser den att representera grundförutsättningar, inte utfall. För anknytningsavtalen används den för att t.ex. beskriva tjänstgöringsgrad, medan den på rolltilldelningarna beskriver hur stor del av tjänstgöringen som görs i olika roller. 
 
@@ -429,7 +429,7 @@ Denna standard går inte djupare i dessa begrepp än så. Det går till exempel 
 * `deployment` - en rolltilldelning som denna omfattningsperiod detaljerar (se 2.3.11)
 * `workLifeCycle` - ett anknytningsavtal som denna omfattningsperiod detaljerar (se 2.3.5)
 
-### 2.3.9 Frånvaroperiod (detaljerar ett 2.3.5 Anknytningsavtal)
+### 2.3.9 <a name="franvaroperiod">Frånvaroperiod</a> (detaljerar ett [Anknytningsavtal](#anknytningsavtal))
 
 En frånvaroperiod är en mängd arbetstid som uteblev/kommer utebli från den som tillförs via
 omfattningsperioder (2.2.8). Omfattningen uttrycks på samma sätt som i omfattningsperioder, men det
@@ -448,7 +448,7 @@ Precis som omfattningsperioder så kan en frånvaroperiod uttrycka ett förvänt
 * `deployment` - en rolltilldelning som denna frånvaroperiod detaljerar (se 2.3.11)
 * `workLifeCycle` - ett anknytningsavtal som denna frånvaroperiod detaljerar (se 2.3.5)
 
-### 2.3.10 Roll
+### 2.3.10 <a name="roll">Roll</a>
 
 En roll är en abstrakt beskrivning av vissa arbetsguppgifter, ofta förknippad med de ansvar och befogenheter som behövs för att utföra de arbetsuppgifterna. De flesta befattningar (t.ex. "IT-utvecklare") på ett lärosäte är roller, men även visa ickebefattningar som "Rektor", "Dekan" och "Prefekt" (som normalt sett är förtroendeuppdrag) är roller.
 
@@ -471,7 +471,7 @@ Roller på lärosätena måste dock inte vara lika formellt definierade som roll
 
 * `deployments` - lista av rolltilldelningar (2.2.11) för denna roll.
 
-### 2.3.11 Rolltilldelning
+### 2.3.11 <a name="rolltilldelning">Rolltilldelning</a>
 
 Rolltilldelningen säger att en viss person tilldelats ansvar och möjlighet att agera i en viss roll, för en viss orgenhet, under någon viss tidsperiod. Rolltilldelningen kan förknippas med både omfattningsperioder och ersättningsperioder.
 
@@ -498,7 +498,7 @@ Att någon är chef eller arbetsledare är normalt sett en Ansvarsperiod för or
 * `organizationalResponsibilities` - eventuella Ansvarsperioder för organisation (2.2.12) som pekar ut denna rolltilldelning som källan för ansvarig person.
 * `staffsServiceFunctions` - eventuella Servicefunktioner (2.2.14) som bemannas via denna rolltilldelning.
 
-### 2.3.12 Ansvarsperiod för orgenhet
+### 2.3.12 <a name="ansvarsperiodorgenhet">Ansvarsperiod för orgenhet</a>
 
 Uttrycker en viss typ av ansvar (identifierat av en tag) för en viss orgenhet, och att detta tilldelas en individ personligen eller att det följer av en viss rolltilldelning.
 
@@ -516,7 +516,7 @@ Ekonomiskt ansvar är ofta delegerat på individnivå, medan chefskap följer av
 * `persons` - den/de person som individuellt tilldelats ansvaret.
 * `deployments` - den/de rolltilldelningar via vilket ansvaret tilldelas.
 
-### 2.3.13 Ansvarsperiod för rolltilldelning
+### 2.3.13 <a name="ansvarsperiodrolltilldelning">Ansvarsperiod för rolltilldelning</a>
 
 Uttrycker att en viss person tilldelats ett ansvar för en viss rolltilldelning individuellt, t.ex. att en person blivit handledare för en viss praktikant.
 
@@ -529,7 +529,7 @@ Uttrycker att en viss person tilldelats ett ansvar för en viss rolltilldelning 
 * `id`/`mergedFromIds`/`correlationIds`/`previousCorrelationIds` - se 3.1.1. Inget ID måste skickas.
 * `tags` - övriga egenskaper (ofta beräknade) som är relevanta för mottagaren. Se 3.1.2
 
-### 2.3.14 Servicefunktion
+### 2.3.14 <a name="servicefunktion">Servicefunktion</a>
 
 En servicefunktion är t.ex. en expedition, handläggargrupp, eller annat sätt att utföra arbete som inte direkt relaterar till en specifik rolltilldelning. Servicefunktionerna kan tillhöra en eller flera orgenheter. Både fysiska expeditioner med besökstider och handläggargrupper i ett ärendehanteringssystem kan representeras som servicefunktioner.
 
@@ -541,13 +541,20 @@ En servicefunktion är t.ex. en expedition, handläggargrupp, eller annat sätt 
 * `communications` - kontaktvägar (inklusive besöksinformation) till servicefunktionen.
 * `staffedViaDeployments` - de rolltilldelningar (2.2.11) som innebär en bemanning av servicefunktionen.
 
-# 3. Dataöverföringsobjekt (DTO:er)
+# 3. Dataobjekt (DTO:er)
 
-Denna standard definierar i grunden inte fasta DTO:er. Istället definieras ett schema som entydigt beskriver hur DTO:erna formas och tolkas - i detta schema är nästan alla attribut frivilliga. Avsändare och mottagare blir överens om hur avsändaren, utifrån schemat och den information som skall överföras, formar DTO:er genom att inkludera/exkludera attribut och nästlade objekt till godtyckligt djup. En mottagare med en full implementation av denna standard kan ta emot och förstå samtliga DTO:er som formats enligt schemat.
+Denna standard definierar i grunden inte fasta dataobjekt (tabeller, DTO:er, klasser med mera). Istället definieras ett schema, helt utgående från informationsmodellen ovan, som entydigt beskriver hur dataobjekt formas och tolkas. I det schemat är nästan alla attribut frivilliga. Avsändare och mottagare blir överens om hur avsändaren, utifrån schemat och den information som skall överföras, formar DTO:er genom att inkludera/exkludera attribut och nästlade objekt till godtyckligt djup. En mottagare med en full implementation av denna standard kan ta emot och förstå samtliga DTO:er som formats enligt schemat.
 
-Avsikten är att inte låsa nyttjande till specifika arkitekturer. Vill man skicka jättestora, djupt berikade objekt så skapar man sådana DTO:er. Vill man istället skicka supertunna småobjekt så skapar man sådana DTO:er istället. Och vill man erbjuda ett GraphQL-gränssnitt där mottagaren formar sina egna DTO:er utifrån schemat så gör man på det sättet. Så länge DTO:erna formeras utifrån schemat så kan en mottagare alltid veta exakt vad som kommer i varje del av en DTO, och härleda det till informationsmodellen.
+Avsikten är att inte låsa nyttjande till specifika detaljarkitekturer. Man kan utgående från TOP och dess grundschema skapa:
 
-För att göra det enklare att komma igång, så finns också en uppsättning föreslagna objekt. Man kan följa standarden utan att använda de föreslagna objekten. Deras huvudsakliga syfte är som exempel och för att det är enklare att kravställa på en leverantör att de "levererar objekten X, Y och Z enligt kapitel 3.2 i denna standard" snarare än "ge oss lämpliga DTO:er formade enligt schemat". 
+* Djupt berikade Data Transfer Object (DTO) med all nuvarande och historisk info om en viss person.
+* Supertunna DTO:er med bara attribut som har ändrats sedan någon tidigare överföring.
+* Ett GraphQL-gränssnitt.
+* Ett silverformat för en medallion architecture data lake.
+
+Så länge alla dessa formeras utifrån schemat så kan en uttolkare alltid veta exakt vad som kommer i varje del av objektet, och genom härledning till informationsmodellen förstå dess semantik. Det blir också trivialt att t.ex. hämta ut data via GraphQL som sedan lagras in i en silvermodell när bägge har samma grundschema.
+
+För att göra det enklare att komma igång, så finns docken uppsättning föreslagna objekt. Man kan följa standarden utan att använda de föreslagna objekten. Deras huvudsakliga syfte är som exempel och för att det är enklare att kravställa på en leverantör att de "levererar objekten X, Y och Z enligt kapitel 3.2 i denna standard" snarare än "ge oss lämpliga DTO:er formade enligt schemat". 
 
 ## 3.1 Gemensamma egenskaper
 
@@ -609,7 +616,7 @@ En helt utelämnad giltighetstid säger egentligen ingenting om giltighet, men k
 
 ### 3.1.4 Lokala utökningar
 
-Lokala utökningar får göras av alla entiteter. De görs genom att definiera nyckeln `extensions` som ett objekt, där man under sitt domännamn läger ett objekt som håller utökningarna. Man får lov att hantera och skicka vidare utökningar som definierats av andra, om man vet vad de betyder och vet att man får lov att hantera/skicka vidare dem.
+Lokala utökningar får göras av alla entiteter. De görs genom att definiera nyckeln `extensions` som ett objekt, där man under sitt domännamn läger ett objekt som håller utökningarna. Man får lov att hantera och skicka vidare utökningar som definierats av andra, om man vet vad de betyder, känner till deras livscykel, och vet att man får lov att hantera/skicka vidare dem.
 
 ```json5
 {
@@ -626,7 +633,7 @@ Lokala utökningar får göras av alla entiteter. De görs genom att definiera n
 
 ### 3.1.5 Referenser
 
-Om man väljer att i en DTO som representerar en person överföra en referens till de deployments som gäller för personen, så ser det ut t.ex. såhär:
+Om man väljer att i en DTO som representerar en person överföra en referens till de deployments som gäller för personen, så ser det som ett minimum ut såhär:
 
 ```json5
 {
@@ -929,6 +936,8 @@ TODO...
 Det finns en lite lös plan på att tillhandahålla en XML-variant. Den kommer i så fall att bygga på en generell översättning av JSON-till-XML, snarare än att vara specialdesignad.
 
 ## 6.5 JSON-schema
+
+Se [TOP.json](./TOP.json)
 
 ```json
 {

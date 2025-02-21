@@ -42,10 +42,17 @@ class Regexp(Constraint):
         self.regexp = regexp
 
 
+class I18nText:
+    """Språkhanterad text. Nycklar är språkkod enligt RFC4646/RFC4647 (t.ex. 'en' eller 'sv'), värdet är
+    texten på det språket."""
+    __json_schema__ = {
+        "type": "object",
+        "patternProperties": {
+            "^[a-z]{2,3}$": {"type": "string"}
+        }
+    }
 
-# Språkhanterad text. Nycklar är språkkod enligt RFC4646/RFC4647 (t.ex. 'en' eller 'sv'), värdet är
-# texten på det språket.
-I18nText = dict[str, str]
+# I18nText = dict[str, str]
 
 
 @dataclass(kw_only=True)

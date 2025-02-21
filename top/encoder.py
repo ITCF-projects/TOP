@@ -8,6 +8,11 @@ import typing
 from typing import *
 from top import *
 
+
+# Choices...
+#
+#
+
 def to_json(obj) -> str:
     def _convert(obj) -> Any:
         if dataclasses.is_dataclass(obj):
@@ -96,6 +101,8 @@ class _Model:
         for field in self.fields.values():
             if dataclasses.is_dataclass(field.type):
                 refs.add(_Model.from_class(field.type))
+            elif hasattr(field.type, "__json_schema__"):
+                refs.add(field.type)
         return refs
 
     def recursive_references(self) -> "Set[_Model]":
@@ -103,12 +110,89 @@ class _Model:
         while True:
             to_add = set()
             for submdl in all_models:
-                to_add |= (submdl.referenced_models() - all_models)
+                if isinstance(submdl, _Model):
+                    to_add |= (submdl.referenced_models() - all_models)
+                elif hasattr(submdl, "__json_schema__"):
+                    pass
+                else:
+                    raise ValueError("IJ", submdl)
             if to_add:
                 all_models |= to_add
             else:
                 break
         return all_models
+
+    def top_json_schema_dict(self) -> dict:
+        js = {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "version": "1.0.0",
+            "title": self.name,
+            "$defs": {}
+        }
+        for mdl in self.recursive_references():
+            if isinstance(mdl, _Model):
+                js["$defs"][mdl.name] = mdl.json_schema_dict()
+            elif hasattr(mdl, "__json_schema__"):
+                js["$defs"][mdl.__name__] = mdl.__json_schema__
+        js |= self.json_schema_dict()
+        return js
+
+    def json_schema_dict(self) -> dict:
+        js = {"type": "object"}
+        if self.docstring:
+            js["description"] = " ".join(x.strip() for x in self.docstring.split())
+        if self.includes:
+            js["allOf"] = [{"$ref": f"#/$defs/{i.name}"} for i in self.includes]
+        js["properties"] = {}
+        for (name, field) in self.fields.items():
+            # print("P", name, field)
+            js["properties"]["name"] = prop = {}
+            if field.docstring:
+                prop["description"] = field.docstring
+
+            if field.type is str:
+                prop["type"] = "string"
+                for con in field.constraints:
+                    if isinstance(con, Regexp):
+                        prop["pattern"] = con.regexp
+                    else:
+                        raise ValueError(con)
+            elif field.type is float:
+                prop["type"] = "number"
+            elif field.type is int:
+                prop["type"] = "integer"
+            elif dataclasses.is_dataclass(field.type):
+                prop["$ref"] = f"#/$defs/{_Model.from_class(field.type).name}"
+            elif hasattr(field.type, "__json_schema__"):
+                prop["$ref"] = f"#/$defs/{field.type.__name__}"
+            else:
+                raise ValueError((self.name, name, field.type, field))
+
+        o = []
+        o += [f"  DOCSTRING {self.docstring.strip()}"]
+
+        for i in self.includes:
+            o += [f"  INCLUDE <{i.name}>"]
+
+        for (name, field) in self.fields.items():
+            if field.docstring:
+                o += [f"    # {field.docstring}"]
+
+            if field.type is str:
+                typedef = _string_defs(field.constraints)
+            elif dataclasses.is_dataclass(field.type):
+                typedef = f"$ref {_Model.from_class(field.type).name}"
+            else:
+                typedef = "???"
+
+            if field.is_list:
+                typedef = f"LIST[{typedef}]"
+
+            if field.optional:
+                typedef = f"OPTIONAL {typedef}"
+            o += [f"    {name} {typedef}"]
+
+        return js
 
     def __str__(self):
         return f'<_Model {self.name} ({self.type}) keys={tuple(self.fields.keys())}, includes={[i.name for i in self.includes]}>'
@@ -124,6 +208,12 @@ def _string_defs(constraints: List[Constraint]):
 
 def _object_defs(mdl: "_Model") -> List[str]:
     o = [f"OBJECT <{mdl.name}>"]
+  #   o = [f'''"{mdl.name}": {{
+  # "type": "object",',
+  # "description": "{mdl.docstring.strip()}",
+  # '''
+  #
+  #        ]
     o += [f"  DOCSTRING {mdl.docstring.strip()}"]
     for i in mdl.includes:
         o += [f"  INCLUDE <{i.name}>"]
@@ -164,5 +254,8 @@ def to_json_schema(kls: type) -> str:
 
 
 if __name__ == "__main__":
-    print(to_json_schema(Message))
+    import json
+    # print(to_json_schema(Message))
+    schema = _Model(Message).top_json_schema_dict()
+    print(json.dumps(schema, indent=2))
 

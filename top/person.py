@@ -44,6 +44,7 @@ class Name:
 
 @dataclass(kw_only=True)
 class Person(MandatoryIdMixin, TagsMixin):
+    """A Person."""
     _json_type_name = "Person"
 
     name: Name = None

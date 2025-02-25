@@ -12,4 +12,4 @@ sch.load_module(top2)
 # print("\n".join(sorted(sch.types_by_name.keys())))
 sch.close_schema()
 
-print(json.dumps(sch.make_single_schema("Message"), indent=2))
+print(json.dumps(sch.make_single_schema("Message"), indent=2, ensure_ascii=False))

@@ -22,6 +22,7 @@ class Struct(Typedef):
         self.typ = typ
         self.properties = {}
         self.bases: "list[Typedef]" = []
+        self.description = self.typ.__json_args__.get("description", self.typ.__doc__)
 
     def schema_closed(self):
         # Ugly ass hack! I'm proud! Could be reduced to an ugly hack (as opposed to ugly _ass_ hack)
@@ -127,29 +128,25 @@ class Struct(Typedef):
             else:
                 raise ValueError(hint)
 
-    def recursively_referenced_typedefs(self) -> set[Typedef]:
-        referenced = set()
-        to_check = [self]
-        while to_check:
-            td = to_check.pop()
-            if td in referenced:
-                continue
+    def directly_referenced_typedefs(self) -> "set[Typedef]":
+        refs = {v.referenced_typedef for v in self.properties.values() if isinstance(v, ReferenceHint)}
+        refs |= set(self.bases)
+        return refs
 
-            referenced.add(td)
-
-            for v in self.properties.values():
-                if isinstance(v, ReferenceHint) and v.referenced_typedef not in referenced:
-                    to_check.append(v.referenced_typedef)
-
-            for b in self.bases:
-                if b not in referenced:
-                    to_check.append(b)
-
-        referenced.remove(self)
-        return referenced
+    def reflow(self, t):
+        reflowed = [""]
+        for word in t.split():
+            if len(reflowed[-1]) + len(word) > 120:
+                reflowed.append("")
+            if reflowed[-1]:
+                reflowed[-1] += " "
+            reflowed[-1] += word
+        return "\n".join(reflowed)
 
     def json_schema_definition(self, *, as_toplevel: bool) -> dict:
         base_schema = {"type": "object"}
+        if self.description:
+            base_schema["description"] = self.reflow(self.description)
         if self.bases:
             base_schema["allOf"] = [b.json_schema_use() for b in self.bases]
         base_schema["properties"] = {

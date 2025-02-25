@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import *
 
 from schemagen import jsontype
-from top2.common import Identifier, MandatoryIdMixin, EffectiveTimePeriodMixin, TagsMixin
+from top2.common import Identifier, MandatoryIdMixin, OptionalIdMixin, EffectiveTimePeriodMixin, TagsMixin
 
 if TYPE_CHECKING:
     from top2.deployment import Deployment
@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 
 @jsontype()
 @dataclass(kw_only=True)
-class AccessPrivilege(EffectiveTimePeriodMixin):
+class AccessPrivilege(EffectiveTimePeriodMixin, OptionalIdMixin):
     """En passerbehörighet, identifierad av ett för mottagaren meningsfullt ID."""
 
     # Behörighetens ID (inte resursen behörigheten gäller för).

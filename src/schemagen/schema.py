@@ -1,5 +1,7 @@
 
 import enum
+import json
+import re
 import types
 import datetime
 
@@ -17,6 +19,14 @@ class Schema:
         self.typedefs_by_type[datetime.datetime] = self.typedefs_by_name["DateTime"]
 
     def try_add(self, name, obj):
+        if not isinstance(obj, type):
+            # We might want to add non-classes to the schema in the future, but for now it's
+            # only classes.
+            return
+
+        if obj in self.typedefs_by_type:
+            return
+
         if isinstance(obj, type) and hasattr(obj, "__json_args__"):
             if issubclass(obj, enum.Enum):
                 typedef = EnumTypedef(self, name, [x.name.strip("_") for x in obj])
@@ -27,6 +37,9 @@ class Schema:
             self.typedefs_by_name[name] = typedef
             self.typedefs_by_type[obj] = typedef
             self.types_by_name[name] = obj
+
+            for b in obj.__bases__:
+                self.try_add(b.__name__.split(".")[-1], b)
 
     def load_modules(self, *modules: types.ModuleType):
         for m in modules:
@@ -43,3 +56,16 @@ class Schema:
 
     def make_single_schema(self, toplevel_name: str) -> dict:
         return self.typedefs_by_name[toplevel_name].json_schema_definition(as_toplevel=True)
+
+    def make_single_schema_string(self, toplevel_name: str) -> str:
+        schema = json.dumps(self.make_single_schema(toplevel_name), ensure_ascii=False, indent=2)
+        lines = schema.splitlines()
+        out = []
+        while lines:
+            if lines[0].strip() == "{" and "$ref" in lines[1]:
+                out.append("        {" + lines[1].strip() + lines[2].strip())
+                lines = lines[3:]
+            else:
+                out.append(lines.pop(0))
+        return "\n".join(out)
+

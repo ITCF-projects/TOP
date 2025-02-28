@@ -27,7 +27,7 @@ class Struct(Typedef):
     def schema_closed(self):
         # Ugly ass hack! I'm proud! Could be reduced to an ugly hack (as opposed to ugly _ass_ hack)
         # by using the AST module.
-        vardef = re.compile("^\s+([_a-zA-Z0-9]+)\s*:\s*[A-za-z]+.*")
+        vardef = re.compile(r"^\s+([_a-zA-Z0-9]+)\s*:\s*[A-za-z]+.*")
         comments = {}
         comment_lines = []
         for srcline in inspect.getsource(self.typ).splitlines():
@@ -152,6 +152,9 @@ class Struct(Typedef):
         base_schema["properties"] = {
             p: h.to_json_schema() for (p, h) in self.properties.items()
         }
+        req = [n for (n, p) in self.properties.items() if not p.optional]
+        if req:
+            base_schema["required"] = req
         if as_toplevel:
             defs = {}
             for td in sorted(self.recursively_referenced_typedefs(), key=lambda t: t.name):
@@ -164,7 +167,6 @@ class Struct(Typedef):
                 "$defs": defs
             }
             jsonschema |= base_schema
-            jsonschema["required"] = [n for (n, p) in self.properties.items() if not p.optional]
             jsonschema["unevaluatedProperties"] = False
         else:
             jsonschema = {
@@ -172,4 +174,5 @@ class Struct(Typedef):
             }
         return jsonschema
 
-
+    def __str__(self):
+        return f'<Struct typ={self.typ} name={self.name}>'

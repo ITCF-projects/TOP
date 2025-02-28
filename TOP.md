@@ -937,7 +937,7 @@ Det finns en lite lös plan på att tillhandahålla en XML-variant. Den kommer i
 
 ## 6.5 JSON-schema
 
-Se [TOP.json](./TOP.json)
+Se [TOP.json](./TOP.json.manual)
 
 ```json
 {

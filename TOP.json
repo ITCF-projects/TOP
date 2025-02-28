@@ -1,64 +1,49 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "version": "1.0.0",
-  "title": "TopType",
+  "title": "Message",
   "$defs": {
-    "AccessCardType": {
+    "AccessCard": {
       "type": "object",
-      "description": "Ett passerkort och de behörigheter detta kort skall vara försedda med. Om behörigheter knyts till personen snarare än till dennes kort så används istället PersonType.accessPrivileges. Notera att giltighetstider i detta objekt rör passerkortet i sig, behörigheterna har egna giltighetstider.",
+      "description": "Ett passerkort och de behörigheter detta kort skall vara försedda med. Om behörigheter knyts till personen snarare än\ntill dennes kort så används istället PersonType.accessPrivileges. Notera att giltighetstider i detta objekt rör\npasserkortet i sig, behörigheterna har egna giltighetstider.",
+      "allOf": [
+        {"$ref": "#/$defs/OptionalIdMixin"},
+        {"$ref": "#/$defs/EffectiveTimePeriodMixin"},
+        {"$ref": "#/$defs/ExtendableMixin"}
+      ],
       "properties": {
         "cardId": {
-          "$ref": "#/$defs/SingleIdentifierType",
-          "description": "Kortets id."
+          "description": "Kortets id.",
+          "$ref": "#/$defs/Identifier"
         },
         "accessPrivileges": {
+          "description": "Behörigheter som kortet skall förknippas med (behörigheter för individ skickas i Person.accessPrivileges)",
           "type": "array",
           "items": {
-            "$ref": "#/$defs/AccessPrivilegeType"
-          },
-          "description": "Behörigheter som kortet skall förknippas med."
-        },
-        "effectiveTimePeriod": {
-          "$ref": "#/$defs/EffectiveTimePeriodType",
-          "description": "Giltighetsperiod. Om denna utelämnas så känner avsändaren varken till start- eller slutdatum, bara att objektet är giltigt just nu."
-        },
-        "effectiveStatus": {
-          "type": "string",
-          "enum": [
-            "future",
-            "past",
-            "present"
-          ]
+            "$ref": "#/$defs/AccessPrivilege"
+          }
         }
       },
       "required": [
-        "accessPrivileges",
         "cardId"
       ]
     },
-    "AccessPrivilegeType": {
+    "AccessPrivilege": {
       "type": "object",
       "description": "En passerbehörighet, identifierad av ett för mottagaren meningsfullt ID.",
+      "allOf": [
+        {"$ref": "#/$defs/EffectiveTimePeriodMixin"},
+        {"$ref": "#/$defs/OptionalIdMixin"},
+        {"$ref": "#/$defs/ExtendableMixin"}
+      ],
       "properties": {
         "privilegeId": {
-          "$ref": "#/$defs/SingleIdentifierType",
-          "description": "Behörighetens ID (inte resursen behörigheten gäller för)."
+          "description": "Behörighetens ID (inte resursen behörigheten gäller för).",
+          "$ref": "#/$defs/Identifier"
         },
         "resourceId": {
-          "$ref": "#/$defs/SingleIdentifierType",
-          "description": "ID på den resurs som behörigheten gäller för (inte behörighetens egna ID om ett sådant finns."
-        },
-        "effectiveTimePeriod": {
-          "$ref": "#/$defs/EffectiveTimePeriodType",
-          "description": "Giltighetsperiod. Om denna utelämnas så känner avsändaren varken till start- eller slutdatum, bara att objektet är giltigt just nu."
-        },
-        "effectiveStatus": {
-          "type": "string",
-          "enum": [
-            "future",
-            "past",
-            "present"
-          ]
+          "description": "ID på den resurs som behörigheten gäller för (inte behörighetens egna ID om ett sådant finns).",
+          "$ref": "#/$defs/Identifier"
         }
       },
       "required": [
@@ -66,1470 +51,1065 @@
         "resourceId"
       ]
     },
-    "AddressType": {
+    "Address": {
       "type": "object",
       "description": "Postadress",
+      "allOf": [
+        {"$ref": "#/$defs/VisibilityConfigurationMixin"},
+        {"$ref": "#/$defs/TagsMixin"}
+      ],
       "properties": {
         "formattedAddress": {
+          "description": "Formatterad adress, sådan den skrivs på ett kuvert som postas på svensk brevlåda.",
           "type": "array",
           "items": {
-            "type": "string",
-            "pattern": "Adressrad"
-          },
-          "description": "Formatterad adress, sådan den skrivs på ett kuvert som postas på svensk brevlåda"
-        },
-        "visibility": {
-          "$ref": "#/$defs/SingleTagType",
-          "description": "En ensam tag som beskriver det sätt ett objekt får spridas (t.ex. internt, intranät, extranät, publikationer)"
-        },
-        "rank": {
-          "type": "integer",
-          "description": "Rangordning mellan objekt av samma typ med samma spridning. I dessa lägen 'vinner' objekt med lägre värde över de med högre värden. Inget värde räknas som oändligheten. Om flera objekt har samma prioritet väljer mottagaren godtyckligt."
-        },
-        "tags": {
-          "$ref": "#/$defs/MultipleTagType",
-          "description": "Ingen, en eller flera taggar som objektet förknippas med just nu"
-        },
-        "tagsWithEffectiveTimePeriod": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/TagsPeriod"
-          },
-          "description": "Ingen, en eller flera taggar som objektet förknippas med under viss tidsperiod - de som är giltiga vid överföringstillfället måste också återfinnas i tags-attributet"
+            "type": "string"
+          }
         },
         "countryCode": {
-          "type": "string",
-          "pattern": "[A-Z]{2}",
-          "description": "Kopia av landskoden från formattedAddress"
+          "description": "Kopia av landskoden från formattedAddress.",
+          "type": "string"
         },
         "countryName": {
-          "type": "string",
-          "pattern": "[A-Z ]+",
-          "description": "Kopia av landsnamn från formattedAddress"
+          "description": "Kopia av landsnamn från formattedAddress.",
+          "type": "string"
         },
         "postalCode": {
-          "type": "string",
-          "pattern": "[-A-Z0-9 ]+",
-          "description": "Kopia av postnumret från formattedAddress"
+          "description": "Kopia av postnumret från formattedAddress",
+          "type": "string"
         },
         "city": {
-          "type": "string",
-          "description": "Kopia av postort från formattedAddress"
+          "description": "Kopia av postort från formattedAddress.",
+          "type": "string"
         }
       },
       "required": [
         "formattedAddress"
       ]
     },
-    "Boolean": {
-      "type": "boolean"
-    },
-    "CalculatedResponsibilityType": {
+    "CalculatedResponsibility": {
       "type": "object",
-      "description": "Färdigberäknat ansvar mellan två personer, där den ena ('responsiblePerson' har ansvar av viss typ för en annan person ('affectedPerson').",
+      "description": "CalculatedResponsibility(*, tags: list[top2.common.Tag] = None, tagsWithEffectiveTimePeriod:\nlist[top2.common.TagWithEffectiveTimePeriod] = None, effectiveTimePeriod: top2.common.EffectiveTimePeriod = None,\neffectiveStatus: top2.common.EffectiveStatusEnum = None, type: top2.common.Tag, responsiblePerson: 'Person' = None,\naffectedPerson: 'Person' = None)",
+      "allOf": [
+        {"$ref": "#/$defs/EffectiveTimePeriodMixin"},
+        {"$ref": "#/$defs/TagsMixin"}
+      ],
       "properties": {
-        "responsibilityType": {
-          "$ref": "#/$defs/MultipleTagType",
-          "description": "Ansvarstyp (chef, ekonomiskt ansvarig, arbetsledare...)"
+        "type": {
+          "description": "Ansvarstyp (chef, ekonomiskt ansvarig, arbetsledare...)",
+          "$ref": "#/$defs/Tag"
         },
         "responsiblePerson": {
-          "$ref": "#/$defs/PersonType",
-          "description": "Den person som har ansvaret (t.ex. arbetsledaren)."
+          "$ref": "#/$defs/Person"
         },
         "affectedPerson": {
-          "$ref": "#/$defs/PersonType",
-          "description": "Den person som ansvaret gäller för (t.ex. den arbetsledde)."
+          "$ref": "#/$defs/Person"
         }
       },
       "required": [
-        "responsibilityType"
+        "type"
       ]
     },
-    "CommunicationType": {
+    "Communication": {
       "type": "object",
-      "description": "Kontaktvägar till någon entitet.",
+      "description": "Kommunikationsvägar till någon entitet. Minst ett av attributen måste ha ett värde som inte är en tom lista.",
       "properties": {
         "phone": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/PhoneType"
+            "$ref": "#/$defs/Phone"
           }
         },
         "address": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/AddressType"
+            "$ref": "#/$defs/Address"
           }
         },
         "electronic": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/ElectronicAddressType"
+            "$ref": "#/$defs/ElectronicAddress"
           }
         },
         "visit": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/VisitType"
+            "$ref": "#/$defs/VisitAddress"
           }
         }
       }
     },
     "DateTime": {
+      "description": "RFC 3339 (ISO-8601) date and time.",
       "type": "string",
-      "description": "A date and time in YYYY-MM-DDTHH:MM:SS format, e.g. 2007-04-14T13:54:22, a date in YYYY-MM-DD format (interpreted as being at 00:00:00 that date), or the special values \"now\", \"epoch\" or \"infinity\"",
-      "format": "date-time"
+      "pattern": "^((?:(\\d{4}-\\d{2}-\\d{2})T(\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?))(Z|[\\+-]\\d{2}:\\d{2})?)$"
     },
-    "DeploymentResponsibilityType": {
+    "Deployment": {
       "type": "object",
-      "description": "Ansvar för person som har viss rolltilldelning, t.ex. att vara handledare för en viss praktikant.",
+      "description": "En rolltilldelning - säger att en person förväntas agera i en viss roll för en viss del av organisationen under viss tid.\nOm man varken känner till start- eller slutdatum utelämnas effectiveTimePeriod.",
+      "allOf": [
+        {"$ref": "#/$defs/MandatoryIdMixin"},
+        {"$ref": "#/$defs/EffectiveTimePeriodMixin"},
+        {"$ref": "#/$defs/TagsMixin"}
+      ],
       "properties": {
-        "type": {
-          "$ref": "#/$defs/SingleTagType",
-          "description": "Ansvarstyp(er) (arbetsledare, handledare...)"
-        },
-        "effectiveTimePeriod": {
-          "$ref": "#/$defs/EffectiveTimePeriodType",
-          "description": "Giltighetsperiod. Om denna utelämnas så känner avsändaren varken till start- eller slutdatum, bara att objektet är giltigt just nu."
-        },
-        "effectiveStatus": {
-          "type": "string",
-          "enum": [
-            "future",
-            "past",
-            "present"
-          ]
-        },
-        "tags": {
-          "$ref": "#/$defs/MultipleTagType",
-          "description": "Ingen, en eller flera taggar som objektet förknippas med just nu"
-        },
-        "tagsWithEffectiveTimePeriod": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/TagsPeriod"
-          },
-          "description": "Ingen, en eller flera taggar som objektet förknippas med under viss tidsperiod - de som är giltiga vid överföringstillfället måste också återfinnas i tags-attributet"
-        },
-        "id": {
-          "$ref": "#/$defs/SingleIdentifierType"
-        },
-        "correlationIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "mergedFromIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "previousCorrelationIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "responsiblePerson": {
-          "$ref": "#/$defs/PersonType",
-          "description": "Den person som har ansvaret (t.ex. handledaren)."
-        },
-        "deployment": {
-          "$ref": "#/$defs/DeploymentType",
-          "description": "Rolltilldelningen som responsiblePerson ansvarar för (t.ex. rolltilldelningen som säger att någon är praktikant)."
-        }
-      },
-      "required": [
-        "type"
-      ]
-    },
-    "DeploymentType": {
-      "type": "object",
-      "description": "En rolltilldelning - säger att en person förväntas agera i en viss roll för en viss del av organisationen under viss tid. Om man varken känner till start- eller slutdatum utelämnas effectiveTimePeriod.",
-      "properties": {
-        "id": {
-          "$ref": "#/$defs/SingleIdentifierType"
-        },
-        "correlationIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "mergedFromIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "previousCorrelationIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "effectiveTimePeriod": {
-          "$ref": "#/$defs/EffectiveTimePeriodType",
-          "description": "Giltighetsperiod. Om denna utelämnas så känner avsändaren varken till start- eller slutdatum, bara att objektet är giltigt just nu."
-        },
-        "effectiveStatus": {
-          "type": "string",
-          "enum": [
-            "future",
-            "past",
-            "present"
-          ]
-        },
-        "tags": {
-          "$ref": "#/$defs/MultipleTagType",
-          "description": "Ingen, en eller flera taggar som objektet förknippas med just nu"
-        },
-        "tagsWithEffectiveTimePeriod": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/TagsPeriod"
-          },
-          "description": "Ingen, en eller flera taggar som objektet förknippas med under viss tidsperiod - de som är giltiga vid överföringstillfället måste också återfinnas i tags-attributet"
-        },
         "person": {
-          "$ref": "#/$defs/PersonType"
+          "$ref": "#/$defs/Person"
         },
         "organization": {
-          "$ref": "#/$defs/OrganizationType",
-          "description": "Den orgenhet där personen tilldelats rollen. Andra änden av OrganisationType.deployments."
+          "$ref": "#/$defs/Organization"
         },
         "communications": {
-          "$ref": "#/$defs/CommunicationType",
-          "description": "Kommunikationsvägar till personen i kontexten av denna rolltilldelning."
+          "$ref": "#/$defs/Communication"
         },
         "job": {
-          "$ref": "#/$defs/JobType",
-          "description": "Den roll som personen tilldelats."
+          "$ref": "#/$defs/Job"
         },
         "workSchedules": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/WorkScheduleType"
-          },
-          "description": "Omfattning(ar) för denna rolltilldelning."
+            "$ref": "#/$defs/WorkSchedule"
+          }
         },
         "remunerations": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/RemunerationOrDeductionType"
-          },
-          "description": "Lönetillägg eller andra extra ersättningar som personen får för denna rolltilldelning. Kan vara flera, och kan variera under giltighetstiden. Lön läggs i avtalsperioden (WorkLifeCycleType.remunerations)."
+            "$ref": "#/$defs/RemunerationOrDeduction"
+          }
         },
         "organizationResponsibilities": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/OrganizationResponsibilityType"
-          },
-          "description": "De ansvar som denna rolltilldelning medför (t.ex. linjechefsansvar för en orgenhet orsakad av en rolltilldelning som enhetschef. Andra änden av OrganizationResponsibilityType.deployment."
+            "$ref": "#/$defs/OrganizationResponsibility"
+          }
         },
         "explicitlyResponsible": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/DeploymentResponsibilityType"
-          },
-          "description": "Personliga ansvar tilldelade någon annan för denna rolltilldelning (t.ex. handledarskap för en rolltilldelning som praktikant). Andra änden av DeploymentResponsibilityType.deployment."
+            "$ref": "#/$defs/DeploymentResponsibility"
+          }
         },
         "staffsServiceFunctions": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/ServiceFunctionType"
-          },
-          "description": "De servicefunktioner (om några) som bemannas via denna rolltilldelning. En specifik rolltilldelning som studievägledare kan t.ex. innebära att man bemannar en studentmottagning."
+            "$ref": "#/$defs/ServiceFunction"
+          }
+        }
+      }
+    },
+    "DeploymentResponsibility": {
+      "type": "object",
+      "description": "Ansvar för person som har viss rolltilldelning, t.ex. att vara handledare för en viss praktikant.",
+      "allOf": [
+        {"$ref": "#/$defs/EffectiveTimePeriodMixin"},
+        {"$ref": "#/$defs/TagsMixin"},
+        {"$ref": "#/$defs/OptionalIdMixin"}
+      ],
+      "properties": {
+        "type": {
+          "description": "Ansvarstyp(er) (arbetsledare, handledare...)",
+          "$ref": "#/$defs/Tag"
+        },
+        "responsiblePerson": {
+          "$ref": "#/$defs/Person"
+        },
+        "deployment": {
+          "$ref": "#/$defs/Deployment"
         }
       },
       "required": [
-        "id"
+        "type"
       ]
     },
-    "EffectiveTimePeriodType": {
+    "EffectiveTimePeriod": {
       "type": "object",
-      "description": "En tidsperiod inom vilken ett associerat värde är giltigt.",
+      "description": "En tidsperiod inom vilken ett associerat värde är giltigt. Om invalidFrom",
       "properties": {
         "validFrom": {
-          "$ref": "#/$defs/DateTime",
-          "description": "Första tidpunkt entieten är giltig."
+          "$ref": "#/$defs/DateTime"
         },
         "invalidFrom": {
-          "$ref": "#/$defs/DateTime",
-          "description": "Första tidpunkt efter validFrom då entiteten inte längre är giltig."
+          "$ref": "#/$defs/DateTime"
         }
       },
       "required": [
-        "invalidFrom",
         "validFrom"
       ]
     },
-    "ElectronicAddressType": {
+    "EffectiveTimePeriodMixin": {
+      "type": "object",
+      "description": "EffectiveTimePeriodMixin(*, effectiveTimePeriod: top2.common.EffectiveTimePeriod = None, effectiveStatus:\ntop2.common.EffectiveStatusEnum = None)",
+      "properties": {
+        "effectiveTimePeriod": {
+          "description": "Giltighetsperiod. Om denna utelämnas så känner avsändaren varken till start- eller slutdatum, bara att objektet är giltigt just nu.",
+          "$ref": "#/$defs/EffectiveTimePeriod"
+        },
+        "effectiveStatus": {
+          "type": "string",
+          "enum": [
+            "PAST",
+            "PRESENT",
+            "FUTURE"
+          ]
+        }
+      }
+    },
+    "ElectronicAddress": {
       "type": "object",
       "description": "Elektronisk adress",
+      "allOf": [
+        {"$ref": "#/$defs/VisibilityConfigurationMixin"},
+        {"$ref": "#/$defs/TagsMixin"}
+      ],
       "properties": {
         "media": {
-          "$ref": "#/$defs/SingleTagType",
-          "description": "Media. Standarden definierar taggar för t.ex. web och epost, men det är fritt att definiera egna för specifika media."
+          "description": "Media. Standarden definierar taggar för t.ex. web och epost, men det är fritt att definiera egna för specifika media.",
+          "$ref": "#/$defs/Tag"
         },
         "address": {
-          "type": "string",
-          "description": "Adressen. Utseendet beror på media. För epost är det t.ex. en epostadress, för web en URL."
-        },
-        "visibility": {
-          "$ref": "#/$defs/SingleTagType",
-          "description": "En ensam tag som beskriver det sätt ett objekt får spridas (t.ex. internt, intranät, extranät, publikationer)"
-        },
-        "rank": {
-          "type": "integer",
-          "description": "Rangordning mellan objekt av samma typ med samma spridning. I dessa lägen 'vinner' objekt med lägre värde över de med högre värden. Inget värde räknas som oändligheten. Om flera objekt har samma prioritet väljer mottagaren godtyckligt."
-        },
-        "tags": {
-          "$ref": "#/$defs/MultipleTagType",
-          "description": "Ingen, en eller flera taggar som objektet förknippas med just nu"
-        },
-        "tagsWithEffectiveTimePeriod": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/TagsPeriod"
-          },
-          "description": "Ingen, en eller flera taggar som objektet förknippas med under viss tidsperiod - de som är giltiga vid överföringstillfället måste också återfinnas i tags-attributet"
+          "description": "Adressen. Utseendet beror på media. För epost är det t.ex. en epostadress, för web en URL.",
+          "type": "string"
         }
       },
       "required": [
-        "address",
-        "media"
+        "media",
+        "address"
       ]
     },
-    "FormattedPhoneNumberType": {
-      "type": "string",
-      "description": [
-        "Telefonnummer i visuellt format, t.ex. +46 (0)31-772 10 00"
-      ],
-      "pattern": "\\+?[-0-9() ]{6,}"
-    },
-    "I18nTextType": {
+    "ExtendableMixin": {
       "type": "object",
-      "description": "Språkhanterad text. Nycklar är språkkod enligt RFC4646/RFC4647 (t.ex. 'en' eller 'sv'), värdet är\n    texten på det språket.",
-      "properties": {},
+      "description": "Plats att lägga alla sina coola extensions på. Se Extension-typen för en beskrivning av innehållet.",
+      "properties": {
+        "extensions": {
+          "$ref": "#/$defs/Extension"
+        }
+      },
+      "required": [
+        "extensions"
+      ]
+    },
+    "Extension": {
+      "type": "object",
       "patternProperties": {
-        "[a-z]+": {
+        "^[-_a-zA-Z0-9:/?.@]+$": {
+          "type": "object"
+        }
+      }
+    },
+    "I18nText": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}$": {
           "type": "string"
         }
       }
     },
-    "IdentifierValueType": {
+    "Identifier": {
       "type": "object",
-      "description": "Ett ID-värde. Om värdet inte är globalt unikt kan man ange valueScope för att tala om i vilken kontext värdet blir unikt.",
+      "description": "Identifierare. Om Evry i sin Primula-applikation definierar ett begrepp 'aperson_id', och Chalmers vill förmedla att i\njust vår skarpa Primula-instans har en person värdet 42 på den identifieraren, så skulle man t.ex. använda:\n{schemeAgencyId='evry.se/primula' schemeId='aperson_id' value='42' valueScope='chalmers.se/skarp'}",
       "properties": {
+        "schemeId": {
+          "description": "Värdets typ. Den som förstår denna typ vet också vad man skall göra med värdet.",
+          "type": "string"
+        },
+        "schemeAgencyId": {
+          "description": "Den entitet som definierar schemeId, eller annorlunda uttryckt den namnrymd där schemeId är definierat. Ofta den leverantör och applikation ur vilket värdet har lästs, t.ex. 'evry.se/primula' eller, om leverantören bara har en produkt, t.ex. 'ladok.se'. Vissa schemeId definieras i TOP-standarden, dessa har schemeAgencyId='*'",
+          "type": "string"
+        },
         "value": {
+          "description": "Värde",
           "type": "string"
         },
         "valueScope": {
-          "type": "string",
-          "description": "Domännamn eller liknande identifierare som ger en kontext där värdet i .value blir globalt unikt - utelämnas om värdet redan har den egenskapen (t.ex. ett UUID)."
+          "description": "Domännamn eller liknande identifierare som ger en kontext för kombinationen (schemeAgencyId, schemeId, value) om samma typ+värde finns i olika kontexter (t.ex. olika instanser av samma applikation). Behöver bara användas när det finns en risk att sådana värden möts i samma mottagare. Oftast på formen \"lärosäte.se/applikationsinstans\"",
+          "type": "string"
         }
       },
       "required": [
+        "schemeId",
+        "schemeAgencyId",
         "value"
       ]
     },
-    "JobType": {
+    "Job": {
       "type": "object",
-      "description": "En viss roll - en uppsättning arbetsuppgifter och ansvar t.ex. 'Studievägledare' eller 'Rektor'. Personer kan agera i en roll (d.v.s. utföra de arbetsuppgifter som rollen beskriver), men rollen i sig kan inte utföra något. De personer som förväntas agera i en viss roll på en viss orgenhet har en rolltilldelning (DeploymentType) där.",
+      "description": "En viss roll - en uppsättning arbetsuppgifter och ansvar t.ex. 'Studievägledare' eller 'Rektor'. Personer kan agera i en\nroll (d.v.s. utföra de arbetsuppgifter som rollen beskriver), men rollen i sig kan inte utföra något. De personer som\nförväntas agera i en viss roll på en viss orgenhet har en rolltilldelning (DeploymentType) där.",
+      "allOf": [
+        {"$ref": "#/$defs/MandatoryIdMixin"},
+        {"$ref": "#/$defs/TagsMixin"}
+      ],
       "properties": {
-        "id": {
-          "$ref": "#/$defs/SingleIdentifierType"
-        },
-        "correlationIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "mergedFromIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "previousCorrelationIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "tags": {
-          "$ref": "#/$defs/MultipleTagType",
-          "description": "Ingen, en eller flera taggar som objektet förknippas med just nu"
-        },
-        "tagsWithEffectiveTimePeriod": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/TagsPeriod"
-          },
-          "description": "Ingen, en eller flera taggar som objektet förknippas med under viss tidsperiod - de som är giltiga vid överföringstillfället måste också återfinnas i tags-attributet"
-        },
         "title": {
-          "$ref": "#/$defs/I18nTextType",
-          "description": "Rollens namn, t.ex. {'sv': 'Studievägledare', 'en': 'Study counsellor'}"
+          "description": "Rollens namn, t.ex. {'sv': 'Studievägledare', 'en': 'Study counsellor'}",
+          "$ref": "#/$defs/I18nText"
         },
         "description": {
-          "$ref": "#/$defs/I18nTextType",
-          "description": "Beskrivning av rollen, t.ex. vilka arbetsuppgifter och ansvar som ingår i den."
+          "description": "Beskrivning av rollen, t.ex. vilka arbetsuppgifter och ansvar som ingår i den.",
+          "$ref": "#/$defs/I18nText"
         },
         "deployments": {
-          "$ref": "#/$defs/DeploymentType",
-          "description": "Rolltilldelningar för denna roll."
+          "$ref": "#/$defs/Deployment"
+        }
+      }
+    },
+    "Leave": {
+      "type": "object",
+      "description": "En frånvaroperiod uttrycker semester, föräldraledighet, sjukskrivningar med mera. Det finns möjlighet att ange en\nomfattning om man önskar.",
+      "allOf": [
+        {"$ref": "#/$defs/EffectiveTimePeriodMixin"},
+        {"$ref": "#/$defs/TagsMixin"},
+        {"$ref": "#/$defs/OptionalIdMixin"},
+        {"$ref": "#/$defs/TypeMixin"}
+      ],
+      "properties": {
+        "fullTimeEquivalentRatio": {
+          "description": "Andel av heltid, som ett flyttal.",
+          "type": "number"
+        },
+        "hours": {
+          "description": "Ett visst antal timmar.",
+          "type": "integer"
+        },
+        "remunerationCode": {
+          "$ref": "#/$defs/RemunerationCode"
+        },
+        "returnDateIsScheduled": {
+          "description": "Om sann så är slutdatumet på perioden preliminärt, t.ex. slutdatum på en längre sjukskrivning som kan få en fortsättning. Om falsk så förväntas personens frånvaro sluta enligt giltigheten, t.ex. en beviljad semesterperiod.",
+          "type": "boolean"
+        },
+        "workLifeCycle": {
+          "$ref": "#/$defs/WorkLifeCycle"
+        }
+      }
+    },
+    "MandatoryIdMixin": {
+      "type": "object",
+      "description": "MandatoryIdMixin(*, id: top2.common.Identifier, correlationIds: list[top2.common.Identifier] = None, mergedFromIds:\nlist[top2.common.Identifier] = None, previousCorrelationIds: list[top2.common.Identifier] = None)",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "correlationIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Identifier"
+          }
+        },
+        "mergedFromIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Identifier"
+          }
+        },
+        "previousCorrelationIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Identifier"
+          }
         }
       },
       "required": [
         "id"
       ]
     },
-    "LeaveType": {
+    "Name": {
       "type": "object",
-      "description": "En frånvaroperiod uttrycker semester, föräldraledighet, sjukskrivningar med mera. Det finns möjlighet att ange en omfattning om man önskar.",
+      "description": "Name(*, given: str, family: str, formattedName: str, familyList: list[str] = None, preferred: str = None)",
+      "allOf": [
+        {"$ref": "#/$defs/ExtendableMixin"}
+      ],
       "properties": {
-        "type": {
-          "$ref": "#/$defs/SingleTagType",
-          "description": "En ensam tag som representerar objektets typ."
+        "given": {
+          "type": "string"
         },
-        "tags": {
-          "$ref": "#/$defs/MultipleTagType",
-          "description": "Ingen, en eller flera taggar som objektet förknippas med just nu"
+        "family": {
+          "type": "string"
         },
-        "tagsWithEffectiveTimePeriod": {
+        "formattedName": {
+          "type": "string"
+        },
+        "familyList": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/TagsPeriod"
-          },
-          "description": "Ingen, en eller flera taggar som objektet förknippas med under viss tidsperiod - de som är giltiga vid överföringstillfället måste också återfinnas i tags-attributet"
+            "type": "string"
+          }
         },
-        "id": {
-          "$ref": "#/$defs/SingleIdentifierType"
-        },
-        "correlationIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "mergedFromIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "previousCorrelationIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "effectiveTimePeriod": {
-          "$ref": "#/$defs/EffectiveTimePeriodType",
-          "description": "Giltighetsperiod. Om denna utelämnas så känner avsändaren varken till start- eller slutdatum, bara att objektet är giltigt just nu."
-        },
-        "effectiveStatus": {
-          "type": "string",
-          "enum": [
-            "future",
-            "past",
-            "present"
-          ]
-        },
-        "fullTimeEquivalentRatio": {
-          "type": "number",
-          "description": "Andel av heltid, som ett flyttal"
-        },
-        "hours": {
-          "type": "integer",
-          "description": "Ett visst antal timmar"
-        },
-        "remunerationCode": {
-          "type": "string",
-          "enum": [
-            "Paid",
-            "Unpaid"
-          ],
-          "description": "Betald eller obetald frånvaro"
-        },
-        "returnDateIsScheduled": {
-          "$ref": "#/$defs/Boolean",
-          "description": "Om sann så är slutdatumet på perioden preliminärt, t.ex. slutdatum på en längre sjukskrivning som kan få en fortsättning. Om falsk så förväntas personens frånvaro sluta enligt giltigheten, t.ex. en beviljad semesterperiod."
-        },
-        "workLifeCycle": {
-          "$ref": "#/$defs/WorkLifeCycleType",
-          "description": "Den anknytningsperiod som denna frånvaroperiod detaljerar"
+        "preferred": {
+          "type": "string"
         }
       },
       "required": [
-        "type"
+        "given",
+        "family",
+        "formattedName"
       ]
     },
-    "MultipleIdentifiersType": {
+    "OptionalIdMixin": {
       "type": "object",
-      "description": "En uppsättning identifierare. Om Evry definierar en ID-typ \"APersonId\" och Chalmers vill \n    tala om att en person har värdet 42 hos dem så överförs det som \n    {\"evry.se\": {\"APersonId\": {\"value\": \"42\", \"valueScope\": \"chalmers.se\"}}}. Om värdet är globalt unikt\n    (t.ex. ett UUID) kan man alltid utelämna valueScope.",
-      "properties": {},
-      "patternProperties": {
-        "[\\w.-]+": {
-          "type": "object",
-          "description": "En uppsättning identifierare, nycklade med identifierartyp.",
-          "properties": {},
-          "patternProperties": {
-            "[\\w.-]+": {
-              "type": "array",
-              "items": {
-                "$ref": "#/$defs/IdentifierValueType"
-              }
-            }
+      "description": "OptionalIdMixin(*, id: top2.common.Identifier = None, correlationIds: list[top2.common.Identifier] = None, mergedFromIds:\nlist[top2.common.Identifier] = None, previousCorrelationIds: list[top2.common.Identifier] = None)",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "correlationIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Identifier"
+          }
+        },
+        "mergedFromIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Identifier"
+          }
+        },
+        "previousCorrelationIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Identifier"
           }
         }
       }
     },
-    "MultipleTagType": {
+    "Organization": {
       "type": "object",
-      "description": "En uppsättning taggar i strukturen {\"namnrymd\": {\"tagtyp\": {\"värde\": {\"sv\": \"Displaynamn\"}}}}",
-      "properties": {},
-      "patternProperties": {
-        "[-.\\w]+": {
-          "type": "object",
-          "description": "Alla taggar på objektet som definierats av en viss utgivare, nycklade med typ",
-          "properties": {},
-          "patternProperties": {
-            "[-.\\w]+": {
-              "type": "object",
-              "description": "Alla taggar av viss typ, nycklat med tagvärde där värdet är ett språkhanterat displaynamn.",
-              "properties": {},
-              "patternProperties": {
-                "[-.\\w]+": {
-                  "$ref": "#/$defs/I18nTextType"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "OrganizationResponsibilityType": {
-      "type": "object",
-      "description": "Ansvar för viss orgenhet, antingen tilldelat personligen eller via en rolltilldelning. Som mest en avperson, organization, deployment får utelämnas.",
+      "description": "En organisatorisk enhet (orgenhet) - någon del av organisationen bestående av en grupp människor utpekade genom att de\ntilldelats roller på orgenheten. Kan vara delar i linjen, matrisorganisationer, projekt...",
+      "allOf": [
+        {"$ref": "#/$defs/MandatoryIdMixin"},
+        {"$ref": "#/$defs/EffectiveTimePeriodMixin"},
+        {"$ref": "#/$defs/TagsMixin"}
+      ],
       "properties": {
-        "type": {
-          "$ref": "#/$defs/SingleTagType",
-          "description": "Ansvarstyp(er) (chef, ekonomiskt ansvarig, arbetsledare...)"
-        },
-        "effectiveTimePeriod": {
-          "$ref": "#/$defs/EffectiveTimePeriodType",
-          "description": "Giltighetsperiod. Om denna utelämnas så känner avsändaren varken till start- eller slutdatum, bara att objektet är giltigt just nu."
-        },
-        "effectiveStatus": {
-          "type": "string",
-          "enum": [
-            "future",
-            "past",
-            "present"
-          ]
-        },
-        "tags": {
-          "$ref": "#/$defs/MultipleTagType",
-          "description": "Ingen, en eller flera taggar som objektet förknippas med just nu"
-        },
-        "tagsWithEffectiveTimePeriod": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/TagsPeriod"
-          },
-          "description": "Ingen, en eller flera taggar som objektet förknippas med under viss tidsperiod - de som är giltiga vid överföringstillfället måste också återfinnas i tags-attributet"
-        },
-        "id": {
-          "$ref": "#/$defs/SingleIdentifierType"
-        },
-        "correlationIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "mergedFromIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "previousCorrelationIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "organization": {
-          "$ref": "#/$defs/OrganizationType",
-          "description": "Den organisation för vilken ansvaret gäller."
-        },
-        "deployments": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/DeploymentType"
-          },
-          "description": "Rolltilldelning(ar) via vilken ansvaret tilldelats (t.ex. tilldelning av chefsroll)"
-        },
-        "individual": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/PersonType"
-          },
-          "description": "Individ(er) som fått ansvaret personligen tilldelat"
-        }
-      },
-      "required": [
-        "type"
-      ]
-    },
-    "OrganizationType": {
-      "type": "object",
-      "description": "En organisatorisk enhet (orgenhet) - någon del av organisationen bestående av en grupp människor utpekade genom att de tilldelats roller på orgenheten. Kan vara delar i linjen, matrisorganisationer, projekt...",
-      "properties": {
-        "id": {
-          "$ref": "#/$defs/SingleIdentifierType"
-        },
         "name": {
-          "$ref": "#/$defs/I18nTextType",
-          "description": "Orgenhetens namn."
+          "description": "Orgenhetens namn.",
+          "$ref": "#/$defs/I18nText"
         },
         "types": {
-          "$ref": "#/$defs/MultipleTagType",
-          "description": "Orgenhetens typ. Övriga taggningar som inte kan sägas vara dess typ läggs i stället i .tags."
-        },
-        "correlationIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "mergedFromIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "previousCorrelationIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "effectiveTimePeriod": {
-          "$ref": "#/$defs/EffectiveTimePeriodType",
-          "description": "Giltighetsperiod. Om denna utelämnas så känner avsändaren varken till start- eller slutdatum, bara att objektet är giltigt just nu."
-        },
-        "effectiveStatus": {
-          "type": "string",
-          "enum": [
-            "future",
-            "past",
-            "present"
-          ]
-        },
-        "tags": {
-          "$ref": "#/$defs/MultipleTagType",
-          "description": "Ingen, en eller flera taggar som objektet förknippas med just nu"
-        },
-        "tagsWithEffectiveTimePeriod": {
+          "description": "Orgenhetens typ(er). Övriga taggningar som inte kan sägas vara dess typ läggs i stället i .tags. \"Institution\" är tydligt en typ av organisation, men om \"resultatenhet\" är en typ eller en taggning är upp till varje lärosäte att avgöra.",
           "type": "array",
           "items": {
-            "$ref": "#/$defs/TagsPeriod"
-          },
-          "description": "Ingen, en eller flera taggar som objektet förknippas med under viss tidsperiod - de som är giltiga vid överföringstillfället måste också återfinnas i tags-attributet"
+            "$ref": "#/$defs/Tag"
+          }
         },
         "communications": {
-          "$ref": "#/$defs/CommunicationType",
-          "description": "Kommunikationsvägar till orgenheten som abstrakt entitet, t.ex. en info@institution-epostadress."
+          "$ref": "#/$defs/Communication"
         },
         "deployments": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/DeploymentType"
-          },
-          "description": "Rolltilldelningar, som knyter personer till orgenheten i betydelsen att de utför arbete åt den."
+            "$ref": "#/$defs/Deployment"
+          }
+        },
+        "serviceFunctions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ServiceFunction"
+          }
         },
         "homed": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/OrganizationalHomeType"
-          },
-          "description": "Anknytningsavtal"
+            "$ref": "#/$defs/OrganizationalHome"
+          }
         },
         "responsible": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/OrganizationResponsibilityType"
-          },
-          "description": "Personer med vissa ansvar för denna orgenhet, utpekade personligen eller via en rolltilldelning."
+            "$ref": "#/$defs/OrganizationResponsibility"
+          }
         },
         "parentRelations": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/OrganizationalRelationType"
-          },
-          "description": "Alla relationer som definierar denna orgenhets föräldrar."
+            "$ref": "#/$defs/OrganizationalRelation"
+          }
         },
         "childRelations": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/OrganizationalRelationType"
-          },
-          "description": "Alla relationer som definierar denna orgenhets barn."
+            "$ref": "#/$defs/OrganizationalRelation"
+          }
         },
         "filterRelations": {
           "type": "array",
           "items": {
             "$ref": "#/$defs/ScopedOrganizationalRelation"
-          },
-          "description": "Orgenheter som är relevanta för filtrering, uppdelade per relation. Vanligt är t.ex. relationen 'en del av', där man för orgenhet X har en lista av alla orgenheter som X anses vara 'en del av'."
+          }
+        }
+      }
+    },
+    "OrganizationResponsibility": {
+      "type": "object",
+      "description": "Ansvar för viss orgenhet, antingen tilldelat personligen eller via en rolltilldelning.",
+      "allOf": [
+        {"$ref": "#/$defs/EffectiveTimePeriodMixin"},
+        {"$ref": "#/$defs/TagsMixin"},
+        {"$ref": "#/$defs/OptionalIdMixin"}
+      ],
+      "properties": {
+        "type": {
+          "description": "Ansvarstyp(er) (chef, ekonomiskt ansvarig, arbetsledare...)",
+          "$ref": "#/$defs/Tag"
+        },
+        "organization": {
+          "$ref": "#/$defs/Organization"
+        },
+        "deployments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Deployment"
+          }
+        },
+        "individual": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Person"
+          }
         }
       },
       "required": [
-        "id",
-        "name",
-        "types"
+        "type"
       ]
     },
-    "OrganizationalHomeType": {
+    "OrganizationalHome": {
       "type": "object",
-      "description": "Säger att den organisatoriska hemvisten för ett visst anknytningsavtal under viss period ligger på en viss orgenhet. Den organisatoriska hemvisten används för att beräkna var ansvaret för en person ligger (t.ex. chefsansvar).",
+      "description": "Säger att den organisatoriska hemvisten för ett visst anknytningsavtal under viss period ligger på en viss orgenhet. Den\norganisatoriska hemvisten används för att beräkna var ansvaret för en person ligger (t.ex. chefsansvar).",
+      "allOf": [
+        {"$ref": "#/$defs/EffectiveTimePeriodMixin"},
+        {"$ref": "#/$defs/TagsMixin"}
+      ],
       "properties": {
         "organization": {
-          "$ref": "#/$defs/OrganizationType",
-          "description": "Den organisatoriska enhet som ansvarar för den person som anknyntningsavtalet gäller."
-        },
-        "effectiveTimePeriod": {
-          "$ref": "#/$defs/EffectiveTimePeriodType",
-          "description": "Giltighetsperiod. Om denna utelämnas så känner avsändaren varken till start- eller slutdatum, bara att objektet är giltigt just nu."
-        },
-        "effectiveStatus": {
-          "type": "string",
-          "enum": [
-            "future",
-            "past",
-            "present"
-          ]
-        },
-        "tags": {
-          "$ref": "#/$defs/MultipleTagType",
-          "description": "Ingen, en eller flera taggar som objektet förknippas med just nu"
-        },
-        "tagsWithEffectiveTimePeriod": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/TagsPeriod"
-          },
-          "description": "Ingen, en eller flera taggar som objektet förknippas med under viss tidsperiod - de som är giltiga vid överföringstillfället måste också återfinnas i tags-attributet"
+          "description": "Den organisatoriska enhet som ansvarar för den person som anknyntningsavtalet gäller.",
+          "$ref": "#/$defs/Organization"
         },
         "workLifeCycle": {
-          "$ref": "#/$defs/WorkLifeCycleType",
-          "description": "Det anknytningsavtal som denna orghemvist detaljerar."
+          "description": "Det anknytningsavtal som denna orghemvist detaljerar.",
+          "$ref": "#/$defs/WorkLifeCycle"
         }
       },
       "required": [
         "organization"
       ]
     },
-    "OrganizationalRelationType": {
+    "OrganizationalRelation": {
       "type": "object",
-      "description": "En relation mellan två organisatoriska enheter, som säger att i en viss struktur ligger den ena ovanför den andra.",
+      "description": "En relation mellan två organisatoriska enheter, som säger att i en viss struktur ligger den ena ovanför den andra. Vissa\nlärosäten har många olika strukturer/perspektiv som utgör separata träd, t.ex. linjeträd, grundutbildningsorganisation,\nprogramorganisation, och utvisningsträd för webben.",
+      "allOf": [
+        {"$ref": "#/$defs/MandatoryIdMixin"},
+        {"$ref": "#/$defs/EffectiveTimePeriodMixin"},
+        {"$ref": "#/$defs/TagsMixin"}
+      ],
       "properties": {
-        "id": {
-          "$ref": "#/$defs/SingleIdentifierType"
-        },
-        "parent": {
-          "$ref": "#/$defs/OrganizationType",
-          "description": "Den orgenhet som är förälder/ovanför i denna relation."
-        },
-        "child": {
-          "$ref": "#/$defs/OrganizationType",
-          "description": "Den orgenhet som är barn/under i denna relation."
-        },
         "types": {
-          "$ref": "#/$defs/MultipleTagType",
-          "description": "Den/de organisatoriska strukturer/träd/perspektiv som denna relation gäller."
-        },
-        "correlationIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "mergedFromIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "previousCorrelationIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "effectiveTimePeriod": {
-          "$ref": "#/$defs/EffectiveTimePeriodType",
-          "description": "Giltighetsperiod. Om denna utelämnas så känner avsändaren varken till start- eller slutdatum, bara att objektet är giltigt just nu."
-        },
-        "effectiveStatus": {
-          "type": "string",
-          "enum": [
-            "future",
-            "past",
-            "present"
-          ]
-        },
-        "tags": {
-          "$ref": "#/$defs/MultipleTagType",
-          "description": "Ingen, en eller flera taggar som objektet förknippas med just nu"
-        },
-        "tagsWithEffectiveTimePeriod": {
+          "description": "Den/de strukturer/träd/perspektiv som denna relation gäller för.",
           "type": "array",
           "items": {
-            "$ref": "#/$defs/TagsPeriod"
-          },
-          "description": "Ingen, en eller flera taggar som objektet förknippas med under viss tidsperiod - de som är giltiga vid överföringstillfället måste också återfinnas i tags-attributet"
+            "$ref": "#/$defs/Tag"
+          }
+        },
+        "parent": {
+          "$ref": "#/$defs/Organization"
+        },
+        "child": {
+          "$ref": "#/$defs/Organization"
         }
       },
       "required": [
-        "child",
-        "id",
-        "parent",
         "types"
       ]
     },
-    "PersonType": {
+    "Person": {
       "type": "object",
-      "description": "En person av kött och blod. Datat är så normaliserat som avsändaren klarar av - i normalfallet motsvaras varje fysisk person av som mest _en_ datapost.",
+      "description": "A Person.",
+      "allOf": [
+        {"$ref": "#/$defs/MandatoryIdMixin"},
+        {"$ref": "#/$defs/TagsMixin"},
+        {"$ref": "#/$defs/ExtendableMixin"},
+        {"$ref": "#/$defs/EffectiveTimePeriodMixin"}
+      ],
       "properties": {
-        "id": {
-          "$ref": "#/$defs/SingleIdentifierType"
-        },
-        "correlationIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "mergedFromIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "previousCorrelationIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "tags": {
-          "$ref": "#/$defs/MultipleTagType",
-          "description": "Ingen, en eller flera taggar som objektet förknippas med just nu"
-        },
-        "tagsWithEffectiveTimePeriod": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/TagsPeriod"
-          },
-          "description": "Ingen, en eller flera taggar som objektet förknippas med under viss tidsperiod - de som är giltiga vid överföringstillfället måste också återfinnas i tags-attributet"
-        },
         "name": {
-          "type": "object",
-          "description": "En persons namn.",
-          "properties": {
-            "given": {
-              "type": "string",
-              "description": "Förnamn (ett eller flera mellanslagsseparerade), helst med en korrekt blandning av gemener och versaler"
-            },
-            "family": {
-              "type": "string",
-              "description": "Efternamn (ett eller flera mellanslagsseparerade), helst med en korrekt blandning av gemener or versaler t.ex. bin Nadr, McBoatface eller O'Connor"
-            },
-            "formattedName": {
-              "type": "string",
-              "description": "Färdigformatterat namn sådant det skulle skrivas på t.ex. ett postkuvert, helst med en korrekt blandning av gemener och versaler"
-            },
-            "familyList": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "description": "Efternamn, ett per element i listan, för att underlätta för mottagaren att hantera dubbelnamn som 'bin Nadal von Otter'"
-            },
-            "preferred": {
-              "type": "string",
-              "description": "Föredraget tilltalsnamn, antingen ett av namnen i 'given' eller en smeknamnsform"
-            }
-          },
-          "required": [
-            "family",
-            "formattedName",
-            "given"
-          ]
+          "$ref": "#/$defs/Name"
         },
-        "communication": {
-          "$ref": "#/$defs/CommunicationType",
-          "description": "Kommunikationsvägar till personen som individ"
+        "communications": {
+          "$ref": "#/$defs/Communication"
         },
         "accessPrivileges": {
+          "description": "Accessbehörigheter som personen skall ha, oavsett passerkort.",
           "type": "array",
           "items": {
-            "$ref": "#/$defs/AccessPrivilegeType"
-          },
-          "description": "Accessbehörigheter som personen skall ha, oavsett passerkort."
+            "$ref": "#/$defs/AccessPrivilege"
+          }
         },
         "accessCards": {
+          "description": "Passerkort inklusive eventuella behörigheter för kortet i sig snarare än för personen.",
           "type": "array",
           "items": {
-            "$ref": "#/$defs/AccessCardType"
-          },
-          "description": "Passerkort och de behörigheter som just detta kort skall få (utöver de som personen tilldelas via .accessPrivileges"
+            "$ref": "#/$defs/AccessCard"
+          }
         },
         "workLifeCycles": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/WorkLifeCycleType"
-          },
-          "description": "Anknytningsavtal för denna person"
+            "$ref": "#/$defs/WorkLifeCycle"
+          }
         },
         "deployments": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/DeploymentType"
-          },
-          "description": "Rolltilldelningar för denna person"
+            "$ref": "#/$defs/Deployment"
+          }
         },
         "deceased": {
-          "$ref": "#/$defs/Boolean",
-          "description": "Är personen avliden"
+          "type": "boolean"
         },
         "personalOrganizationalResponsibiltites": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/OrganizationResponsibilityType"
-          },
-          "description": "Personligt tilldelade ansvar"
+            "$ref": "#/$defs/OrganizationResponsibility"
+          }
         },
         "calculatedResponsibilities": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/CalculatedResponsibilityType"
-          },
-          "description": "Alla ansvar denna person kan beräknas ha för andra personer"
+            "$ref": "#/$defs/CalculatedResponsibility"
+          }
         },
         "affectedByResponsibilities": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/CalculatedResponsibilityType"
-          },
-          "description": "Alla ansvar andra personer kan beräknas ha över denna person"
+            "$ref": "#/$defs/CalculatedResponsibility"
+          }
         }
-      },
-      "required": [
-        "id"
-      ]
+      }
     },
-    "PhoneNumberType": {
-      "type": "string",
-      "description": "Universellt telefonnummer inklusive landskod, utan separerare, t.ex. +46317721000",
-      "pattern": "\\+[0-9]{6,}"
-    },
-    "PhoneType": {
+    "Phone": {
       "type": "object",
+      "description": "Telefonnummer.",
       "properties": {
         "number": {
-          "$ref": "#/$defs/PhoneNumberType"
-        },
-        "visibility": {
-          "$ref": "#/$defs/SingleTagType",
-          "description": "En ensam tag som beskriver det sätt ett objekt får spridas (t.ex. internt, intranät, extranät, publikationer)"
-        },
-        "rank": {
-          "type": "integer",
-          "description": "Rangordning mellan objekt av samma typ med samma spridning. I dessa lägen 'vinner' objekt med lägre värde över de med högre värden. Inget värde räknas som oändligheten. Om flera objekt har samma prioritet väljer mottagaren godtyckligt."
-        },
-        "tags": {
-          "$ref": "#/$defs/MultipleTagType",
-          "description": "Ingen, en eller flera taggar som objektet förknippas med just nu"
-        },
-        "tagsWithEffectiveTimePeriod": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/TagsPeriod"
-          },
-          "description": "Ingen, en eller flera taggar som objektet förknippas med under viss tidsperiod - de som är giltiga vid överföringstillfället måste också återfinnas i tags-attributet"
+          "description": "Universellt telefonnummer inklusive landskod, utan separerare, t.ex. +46317721000",
+          "type": "string",
+          "pattern": "[+][0-9]{6,}"
         },
         "formattedNumber": {
-          "$ref": "#/$defs/FormattedPhoneNumberType"
+          "description": "Telefonnummer i visuellt format, t.ex. +46 (0)31-772 10 00",
+          "type": "string",
+          "pattern": "[+]?[-0-9() ]{6,}"
         },
         "textable": {
-          "$ref": "#/$defs/Boolean",
-          "description": "Går det att skicka SMS till detta telefonnummer? Saknat värde tolkas som 'nej'."
+          "description": "Går det att skicka SMS till detta telefonnummer? Saknat värde tolkas som 'nej'.",
+          "type": "boolean"
         }
       },
       "required": [
-        "number"
+        "number",
+        "textable"
       ]
     },
     "PostingSpecification": {
       "type": "object",
+      "description": "PostingSpecification(*, posting: list[top2.common.Identifier], partOfAmount: float)",
       "properties": {
         "posting": {
-          "$ref": "#/$defs/MultipleIdentifiersType",
-          "description": "En kontering, uttryckt som alla relevanta ID:n."
+          "description": "En kontering, uttryckt som alla relevanta ID:n.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Identifier"
+          }
         },
         "partOfAmount": {
-          "type": "number",
-          "description": "Den del av summan som konteras på detta sätt. Flyttal 0..1."
+          "description": "Den del av summan som konteras på detta sätt. Flyttal 0..1.",
+          "type": "number"
         }
       },
       "required": [
-        "partOfAmount",
-        "posting"
+        "posting",
+        "partOfAmount"
       ]
     },
-    "RemunerationOrDeductionType": {
+    "RemunerationCode": {
+      "type": "string",
+      "enum": [
+        "Paid",
+        "Unpaid"
+      ]
+    },
+    "RemunerationOrDeduction": {
       "type": "object",
+      "description": "Ersättningar, t.ex. lön eller tillägg.",
+      "allOf": [
+        {"$ref": "#/$defs/EffectiveTimePeriodMixin"},
+        {"$ref": "#/$defs/TagsMixin"}
+      ],
       "properties": {
         "type": {
-          "$ref": "#/$defs/SingleTagType",
-          "description": "Ersättningstyp, t.ex. månadslön, engångsersättning"
+          "description": "Ersättningstypen, t.ex. månadslön eller engångsersättning.",
+          "$ref": "#/$defs/Tag"
         },
         "value": {
+          "description": "Värde",
           "type": "number"
         },
         "currency": {
+          "description": "Valuta",
           "type": "string"
         },
-        "effectiveTimePeriod": {
-          "$ref": "#/$defs/EffectiveTimePeriodType",
-          "description": "Giltighetsperiod. Om denna utelämnas så känner avsändaren varken till start- eller slutdatum, bara att objektet är giltigt just nu."
-        },
-        "effectiveStatus": {
-          "type": "string",
-          "enum": [
-            "future",
-            "past",
-            "present"
-          ]
-        },
-        "tags": {
-          "$ref": "#/$defs/MultipleTagType",
-          "description": "Ingen, en eller flera taggar som objektet förknippas med just nu"
-        },
-        "tagsWithEffectiveTimePeriod": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/TagsPeriod"
-          },
-          "description": "Ingen, en eller flera taggar som objektet förknippas med under viss tidsperiod - de som är giltiga vid överföringstillfället måste också återfinnas i tags-attributet"
-        },
-        "deployment": {
-          "$ref": "#/$defs/DeploymentType"
-        },
-        "workLifeCycle": {
-          "$ref": "#/$defs/WorkLifeCycleType"
-        },
         "postings": {
+          "description": "Hur summan delas upp på olika konteringar.",
           "type": "array",
           "items": {
             "$ref": "#/$defs/PostingSpecification"
-          },
-          "description": "Hur summan uppdelas på olika konteringar"
+          }
+        },
+        "deployment": {
+          "$ref": "#/$defs/Deployment"
+        },
+        "workLifeCycle": {
+          "$ref": "#/$defs/WorkLifeCycle"
         }
       },
       "required": [
-        "currency",
         "type",
-        "value"
+        "value",
+        "currency"
       ]
     },
     "ScopedOrganizationalRelation": {
       "type": "object",
+      "description": "En kontextualiserad relation med en orgenhet. Används i Organization.filterRelations. Taggen kan t.ex. representera\nfilterkontexten \"en del av\", och peka ut alla orgenheter som en viss orgenhet kan anses vara \"en del av\".",
       "properties": {
         "type": {
-          "$ref": "#/$defs/SingleTagType",
-          "description": "Den struktur där relationen gäller"
-        },
-        "organizationalUnit": {
-          "$ref": "#/$defs/OrganizationType",
-          "description": "Den orgenhet som pekas ut av relationen i denna struktur."
-        }
-      },
-      "required": [
-        "organizationalUnit",
-        "type"
-      ]
-    },
-    "ServiceFunctionType": {
-      "type": "object",
-      "description": "En servicefunktion, t.ex. en expedition, handläggargrupp, eller annat sätt att utföra arbete som inte direkt relaterar till en specifik rolltilldelning. Servicefunktionerna kan tillhöra en eller flera orgenheter. Både fysiska expeditioner med besökstider och handläggargrupper i ett ärendehanteringssystem kan representeras som servicefunktioner.",
-      "properties": {
-        "name": {
-          "$ref": "#/$defs/I18nTextType",
-          "description": "Servicefunktionens namn."
-        },
-        "id": {
-          "$ref": "#/$defs/SingleIdentifierType"
-        },
-        "correlationIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "mergedFromIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "previousCorrelationIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "effectiveTimePeriod": {
-          "$ref": "#/$defs/EffectiveTimePeriodType",
-          "description": "Giltighetsperiod. Om denna utelämnas så känner avsändaren varken till start- eller slutdatum, bara att objektet är giltigt just nu."
-        },
-        "effectiveStatus": {
-          "type": "string",
-          "enum": [
-            "future",
-            "past",
-            "present"
-          ]
-        },
-        "tags": {
-          "$ref": "#/$defs/MultipleTagType",
-          "description": "Ingen, en eller flera taggar som objektet förknippas med just nu"
-        },
-        "tagsWithEffectiveTimePeriod": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/TagsPeriod"
-          },
-          "description": "Ingen, en eller flera taggar som objektet förknippas med under viss tidsperiod - de som är giltiga vid överföringstillfället måste också återfinnas i tags-attributet"
-        },
-        "description": {
-          "$ref": "#/$defs/I18nTextType",
-          "description": "En beskrivning av servicefunktionen."
+          "$ref": "#/$defs/Tag"
         },
         "organizations": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/OrganizationType"
-          },
-          "description": "De orgenheter som denna servicefunktion tillhandahåller tjänster åt."
+            "$ref": "#/$defs/Organization"
+          }
+        }
+      },
+      "required": [
+        "type",
+        "organizations"
+      ]
+    },
+    "ServiceFunction": {
+      "type": "object",
+      "description": "En servicefunktion, t.ex. en expedition, handläggargrupp, eller annat sätt att utföra arbete som inte direkt relaterar\ntill en specifik rolltilldelning. Servicefunktionerna kan tillhöra en eller flera orgenheter. Både fysiska expeditioner\nmed besökstider och handläggargrupper i ett ärendehanteringssystem kan representeras som servicefunktioner.",
+      "allOf": [
+        {"$ref": "#/$defs/OptionalIdMixin"},
+        {"$ref": "#/$defs/EffectiveTimePeriodMixin"},
+        {"$ref": "#/$defs/TagsMixin"}
+      ],
+      "properties": {
+        "name": {
+          "description": "Servicefunktionens namn, t.ex. \"Datatekniska institutionens expedition\".",
+          "$ref": "#/$defs/I18nText"
+        },
+        "description": {
+          "description": "En beskrivning, t.ex. \"Hjälper dig att klaga på tentor och säger nej till passerkortsbehörigheter\"",
+          "$ref": "#/$defs/I18nText"
         },
         "communications": {
-          "$ref": "#/$defs/CommunicationType",
-          "description": "Kommunikationsvägar till servicefunktionen (inklusive eventuella besökstider)"
+          "$ref": "#/$defs/Communication"
         },
         "staffedViaDeployments": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/DeploymentType"
-          },
-          "description": "Den eller de rolltilldelningar via vilka servicefunktionen bemannas. För en studentmottagning kan man t.ex. peka ut de rolltilldelningar som studievägledare som gör att vissa personer förväntas bemannamottagningen."
+            "$ref": "#/$defs/Deployment"
+          }
+        },
+        "organizations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Organization"
+          }
         }
       },
       "required": [
         "name"
       ]
     },
-    "SingleIdentifierType": {
+    "Tag": {
       "type": "object",
-      "description": "En ensam identifierare. Strukturerat som MultipleIdentifiersType, men med antalsbegränsning.",
-      "properties": {},
-      "patternProperties": {
-        "[\\w.-]+": {
-          "type": "object",
-          "description": "Ett ensamt ID, nycklat med typen.",
-          "properties": {},
-          "patternProperties": {
-            "[\\w.-]+": {
-              "$ref": "#/$defs/IdentifierValueType"
-            }
-          }
-        }
-      }
-    },
-    "SingleTagType": {
-      "type": "object",
-      "description": "En uppsättning taggar i strukturen {\"namnrymd\": {\"tagtyp\": {\"värde\": {\"sv\": \"Displaynamn\"}}}}",
-      "properties": {},
-      "patternProperties": {
-        "[-.\\w]+": {
-          "type": "object",
-          "description": "Alla taggar på objektet som definierats av en viss utgivare, nycklade med typ",
-          "properties": {},
-          "patternProperties": {
-            "[-.\\w]+": {
-              "type": "object",
-              "description": "Alla taggar av viss typ, nycklat med tagvärde där värdet är ett språkhanterat displaynamn.",
-              "properties": {},
-              "patternProperties": {
-                "[-.\\w]+": {
-                  "$ref": "#/$defs/I18nTextType"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "TagsPeriod": {
-      "type": "object",
+      "description": "En tag - en egenskap uttryckt som en boolesk variabel med ett sant värde. Dessa definieras oftast av lärosätet själva för\natt uttrycka egenskaper som 'anställningsliknande förhållande' på en person eller 'linjeorganisation' på en\norganisatorisk del.",
       "properties": {
-        "tags": {
-          "$ref": "#/$defs/MultipleTagType"
+        "schemeAgencyId": {
+          "description": "Den entitet som definierar schemeId, eller annorlunda uttryckt den namnrymd där schemeId är definierat. Taggar som definieras i standarden har '*' som schemeAgencyId.",
+          "type": "string"
         },
-        "effectiveTimePeriod": {
-          "$ref": "#/$defs/EffectiveTimePeriodType",
-          "description": "Giltighetsperiod. Om denna utelämnas så känner avsändaren varken till start- eller slutdatum, bara att objektet är giltigt just nu."
+        "schemeId": {
+          "description": "Taggens namnrymd (t.ex. \"organisationstyper\" eller \"anställningsformer\")",
+          "type": "string"
         },
-        "effectiveStatus": {
-          "type": "string",
-          "enum": [
-            "future",
-            "past",
-            "present"
-          ]
+        "value": {
+          "description": "Taggens värde. En avtalsperiod som representerar en fast anställning kan t.ex. vara taggad med {schemeAgencyId: \"*\", schemeId: \"anställningsform\", value: \"fastanställd\"}",
+          "type": "string"
+        },
+        "name": {
+          "description": "Beskrivning av taggen avsedd för mänsklig konsumtion. Inte värdebärande - varje avsändare kan egentligen lägga lite vad de vill här. Mottagaren skall _inte_ agera på .name, bara på .value.",
+          "$ref": "#/$defs/I18nText"
+        },
+        "valueScope": {
+          "description": "Domännamn eller liknande identifierare som ger en kontext för kombinationen (schemeAgencyId, schemeId, value) om samma typ+värde finns i olika kontexter (t.ex. olika instanser av samma applikation). Behöver bara användas när det finns en risk att sådana värden möts i samma mottagare. Oftast på formen \"lärosäte.se\" eller \"lärosäte.se/applikationsinstans\",",
+          "type": "string"
         }
       },
       "required": [
-        "tags"
+        "schemeAgencyId",
+        "schemeId",
+        "value"
       ]
     },
-    "VisitType": {
+    "TagWithEffectiveTimePeriod": {
       "type": "object",
-      "description": "Besöksadress",
+      "description": "TagWithEffectiveTimePeriod(*, effectiveTimePeriod: top2.common.EffectiveTimePeriod = None, effectiveStatus:\ntop2.common.EffectiveStatusEnum = None, tag: list[top2.common.Tag])",
+      "allOf": [
+        {"$ref": "#/$defs/EffectiveTimePeriodMixin"}
+      ],
       "properties": {
-        "street": {
-          "type": "string",
-          "description": "Gatunamn och nummer."
-        },
-        "city": {
-          "type": "string",
-          "description": "Stad"
-        },
-        "visibility": {
-          "$ref": "#/$defs/SingleTagType",
-          "description": "En ensam tag som beskriver det sätt ett objekt får spridas (t.ex. internt, intranät, extranät, publikationer)"
-        },
-        "rank": {
-          "type": "integer",
-          "description": "Rangordning mellan objekt av samma typ med samma spridning. I dessa lägen 'vinner' objekt med lägre värde över de med högre värden. Inget värde räknas som oändligheten. Om flera objekt har samma prioritet väljer mottagaren godtyckligt."
-        },
+        "tag": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Tag"
+          }
+        }
+      },
+      "required": [
+        "tag"
+      ]
+    },
+    "TagsMixin": {
+      "type": "object",
+      "description": "TagsMixin(*, tags: list[top2.common.Tag] = None, tagsWithEffectiveTimePeriod:\nlist[top2.common.TagWithEffectiveTimePeriod] = None)",
+      "properties": {
         "tags": {
-          "$ref": "#/$defs/MultipleTagType",
-          "description": "Ingen, en eller flera taggar som objektet förknippas med just nu"
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Tag"
+          }
         },
         "tagsWithEffectiveTimePeriod": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/TagsPeriod"
-          },
-          "description": "Ingen, en eller flera taggar som objektet förknippas med under viss tidsperiod - de som är giltiga vid överföringstillfället måste också återfinnas i tags-attributet"
-        },
-        "country": {
-          "type": "string",
-          "description": "Land"
-        },
-        "building": {
-          "type": "string",
-          "description": "Byggnadsnamn (t.ex. 'Segerstedtska huset')"
-        },
-        "instructions": {
-          "type": "string",
-          "description": "Instruktioner hur man tar sig till besöksplatsen, t.ex. 'en trappa upp i vänster trapphus, rum 2231 på höger sida' eller 'rum 2231 på plan 2'"
-        },
-        "hours": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/VisitingHoursType"
-          },
-          "description": "Besökstider"
+            "$ref": "#/$defs/TagWithEffectiveTimePeriod"
+          }
+        }
+      }
+    },
+    "TypeMixin": {
+      "type": "object",
+      "description": "TypeMixin(*, type: top2.common.Tag)",
+      "properties": {
+        "type": {
+          "description": "En ensam tag som representerar objektets typ.",
+          "$ref": "#/$defs/Tag"
         }
       },
       "required": [
-        "city",
-        "street"
+        "type"
       ]
     },
-    "VisitingHoursType": {
+    "VisibilityConfigurationMixin": {
       "type": "object",
+      "description": "VisibilityConfigurationMixin(*, visibility: top2.common.Tag = None, rank: int = None)",
+      "properties": {
+        "visibility": {
+          "description": "En ensam tag som beskriver det sätt ett objekt får spridas (t.ex. internt, intranät, extranät, publikationer)",
+          "$ref": "#/$defs/Tag"
+        },
+        "rank": {
+          "description": "Rangordning mellan objekt av samma typ med samma spridning. I dessa lägen 'vinner' objekt med lägre värde över de med högre värden. Inget värde alls räknas som oändligheten, det vill säga lägst i alla rangordningar. Om flera objekt har samma rangordning väljer mottagaren godtyckligt.",
+          "type": "integer"
+        }
+      }
+    },
+    "VisitAddress": {
+      "type": "object",
+      "description": "Besöksadress",
+      "allOf": [
+        {"$ref": "#/$defs/VisibilityConfigurationMixin"},
+        {"$ref": "#/$defs/TagsMixin"}
+      ],
+      "properties": {
+        "street": {
+          "description": "Gatunamn och nummer.",
+          "type": "string"
+        },
+        "city": {
+          "description": "Stad",
+          "type": "string"
+        },
+        "country": {
+          "description": "Land (implicit om det utelämnas)",
+          "type": "string"
+        },
+        "building": {
+          "description": "Byggnadsnamn (t.ex. 'Segerstedtska huset')",
+          "$ref": "#/$defs/I18nText"
+        },
+        "instructions": {
+          "description": "Instruktioner hur man tar sig till besöksplatsen, t.ex. 'en trappa upp i vänster trapphus, rum 2231 på höger sida' eller 'rum 2231 på plan 2'",
+          "$ref": "#/$defs/I18nText"
+        },
+        "visitingHours": {
+          "description": "Besökstider.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/VisitingHours"
+          }
+        }
+      },
+      "required": [
+        "street",
+        "city",
+        "visitingHours"
+      ]
+    },
+    "VisitingHours": {
+      "type": "object",
+      "description": "En post i en lista av öppettider/besökstider.",
       "properties": {
         "description": {
-          "type": "string",
-          "description": "Beskrivning, t.ex. 'vardagar' eller 'påskafton'"
+          "description": "Beskrivning, t.ex. 'vardagar' eller 'påskafton'.",
+          "$ref": "#/$defs/I18nText"
         },
-        "startTime": {
-          "$ref": "#/$defs/WallClockType",
-          "description": "Första tid då besök kan ske (t.ex. '09:00' för besökstider 9-13)."
+        "opens": {
+          "description": "Tid på lokal klocka då besök kan börja.",
+          "type": "string"
         },
-        "stopTime": {
-          "$ref": "#/$defs/WallClockType",
-          "description": "Första tid då besök inte längre kan ske (t.ex. '13:00' för besökstider 9-13)."
+        "closes": {
+          "description": "Tid på lokal klocka då besök inte längre kan börja.",
+          "type": "string"
+        },
+        "other": {
+          "description": "Annan beskrivning, t.ex. \"stängt\"",
+          "$ref": "#/$defs/I18nText"
         }
       },
       "required": [
         "description"
       ]
     },
-    "WallClockType": {
-      "type": "string",
-      "description": "Tid på lokal klocka, t.ex. för besöks- eller arbetstider.",
-      "pattern": "[0-9][0-9]:[0-9][0-9]"
-    },
-    "WorkLifeCycleType": {
+    "WorkLifeCycle": {
       "type": "object",
-      "description": "Anknytningsavtal, som berättar hur en viss person knutits till huvudorganisationen - allt ifrån anställningar till rent muntliga avtal.",
+      "description": "Anknytningsavtal, som berättar hur en viss person knutits till huvudorganisationen - allt ifrån anställningar till rent\nmuntliga avtal.",
+      "allOf": [
+        {"$ref": "#/$defs/MandatoryIdMixin"},
+        {"$ref": "#/$defs/TagsMixin"},
+        {"$ref": "#/$defs/EffectiveTimePeriodMixin"}
+      ],
       "properties": {
-        "id": {
-          "$ref": "#/$defs/SingleIdentifierType"
-        },
-        "correlationIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "mergedFromIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "previousCorrelationIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "effectiveTimePeriod": {
-          "$ref": "#/$defs/EffectiveTimePeriodType",
-          "description": "Giltighetsperiod. Om denna utelämnas så känner avsändaren varken till start- eller slutdatum, bara att objektet är giltigt just nu."
-        },
-        "effectiveStatus": {
-          "type": "string",
-          "enum": [
-            "future",
-            "past",
-            "present"
-          ]
-        },
-        "tags": {
-          "$ref": "#/$defs/MultipleTagType",
-          "description": "Ingen, en eller flera taggar som objektet förknippas med just nu"
-        },
-        "tagsWithEffectiveTimePeriod": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/TagsPeriod"
-          },
-          "description": "Ingen, en eller flera taggar som objektet förknippas med under viss tidsperiod - de som är giltiga vid överföringstillfället måste också återfinnas i tags-attributet"
-        },
         "person": {
-          "$ref": "#/$defs/PersonType"
+          "$ref": "#/$defs/Person"
         },
         "signingOrganization": {
-          "$ref": "#/$defs/OrganizationType",
-          "description": "Den organisation (oftast lärosätet) som är motpart på kontraktet. Vilken del av lärosätet (t.ex. insitution eller avdelning) personen har sin chef/ansvarige pekas ut via .workerHomes."
+          "$ref": "#/$defs/Organization"
         },
         "workerHomes": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/OrganizationalHomeType"
-          },
-          "description": "Organisatorisk(a) hemvist(er). Bara en får vara giltig åt gången, men det går här att lägga in både dåtida och framtida orghemvister om man kan och vill."
+            "$ref": "#/$defs/OrganizationalHome"
+          }
         },
         "workSchedules": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/WorkScheduleType"
-          },
-          "description": "Omfattningar för denna rolltilldelning"
-        },
-        "remunerations": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/RemunerationOrDeductionType"
-          },
-          "description": "Lön eller ersättning. Kan vara flera, och kan variera under giltighetstiden. Lönetillägg för specifika rolltilldelningar (t.ex. prefekttillägg) läggs i rolltilldelningen (DeploymentType.remunerations)"
+            "$ref": "#/$defs/WorkSchedule"
+          }
         },
         "leave": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/LeaveType"
-          },
-          "description": "Frånvaroperioder. Alla förhållanden som minskar omfattningen (.workSchedule) under någon period,t.ex. semester, tjänstledighet, sjukskrivning."
-        }
-      },
-      "required": [
-        "id"
-      ]
-    },
-    "WorkScheduleType": {
-      "type": "object",
-      "description": "En mängd arbetstid som personen i kontexten av ett anknytningsavtal förväntas utföra (en omfattningsperiod). Kan antingen vara ett visst antal timmar (hours) eller en del av heltid (fullTimeEquivalentRatio). Kan alltså tillsammans med giltighetstider uttrycka '200 timmar under 2023', '20% under januari 2024' och '95% av en heltid löpande'. Syftet är att överföra förutsättningar, inte utfall. Avsikten är alltså inte att den skall representera en timrapport.",
-      "properties": {
-        "type": {
-          "$ref": "#/$defs/SingleTagType",
-          "description": "En ensam tag som representerar objektets typ."
+            "$ref": "#/$defs/Leave"
+          }
         },
-        "tags": {
-          "$ref": "#/$defs/MultipleTagType",
-          "description": "Ingen, en eller flera taggar som objektet förknippas med just nu"
-        },
-        "tagsWithEffectiveTimePeriod": {
+        "remunerations": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/TagsPeriod"
-          },
-          "description": "Ingen, en eller flera taggar som objektet förknippas med under viss tidsperiod - de som är giltiga vid överföringstillfället måste också återfinnas i tags-attributet"
-        },
-        "id": {
-          "$ref": "#/$defs/SingleIdentifierType"
-        },
-        "correlationIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "mergedFromIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "previousCorrelationIds": {
-          "$ref": "#/$defs/MultipleIdentifiersType"
-        },
-        "effectiveTimePeriod": {
-          "$ref": "#/$defs/EffectiveTimePeriodType",
-          "description": "Giltighetsperiod. Om denna utelämnas så känner avsändaren varken till start- eller slutdatum, bara att objektet är giltigt just nu."
-        },
-        "effectiveStatus": {
-          "type": "string",
-          "enum": [
-            "future",
-            "past",
-            "present"
-          ]
-        },
+            "$ref": "#/$defs/RemunerationOrDeduction"
+          }
+        }
+      }
+    },
+    "WorkSchedule": {
+      "type": "object",
+      "description": "En mängd arbetstid som personen i kontexten av ett anknytningsavtal förväntas utföra (en omfattningsperiod). Kan antingen\nvara ett visst antal timmar (hours) eller en del av heltid (fullTimeEquivalentRatio). Kan alltså tillsammans med\ngiltighetstider uttrycka '200 timmar under 2023', '20% under januari 2024' och '95% av en heltid löpande'. Syftet är att\növerföra förutsättningar, inte utfall. Avsikten är alltså inte att den skall representera en timrapport.",
+      "allOf": [
+        {"$ref": "#/$defs/EffectiveTimePeriodMixin"},
+        {"$ref": "#/$defs/TagsMixin"},
+        {"$ref": "#/$defs/TypeMixin"},
+        {"$ref": "#/$defs/OptionalIdMixin"}
+      ],
+      "properties": {
         "fullTimeEquivalentRatio": {
-          "type": "number",
-          "description": "Andel av heltid, som ett flyttal"
+          "description": "Andel av heltid, som ett flyttal.",
+          "type": "number"
         },
         "hours": {
-          "type": "integer",
-          "description": "Ett visst antal timmar"
+          "description": "Ett visst antal timmar.",
+          "type": "integer"
         },
         "deployment": {
-          "$ref": "#/$defs/DeploymentType",
-          "description": "En rolltilldelning som denna omfattningsperiod detaljerar"
+          "$ref": "#/$defs/Deployment"
         },
         "workLifeCycle": {
-          "$ref": "#/$defs/WorkLifeCycleType",
-          "description": "En anknytningsperiod som denna omfattningsperiod detaljerar"
+          "$ref": "#/$defs/WorkLifeCycle"
         }
-      },
-      "required": [
-        "type"
-      ]
+      }
     }
   },
   "type": "object",
+  "description": "Toppobjekt med enkla och listvärda referenser till samtliga värdeobjekt. Bra grund för meddelanden!",
   "properties": {
-    "person": {
-      "$ref": "#/$defs/PersonType"
-    },
-    "personList": {
-      "type": "array",
-      "items": {
-        "$ref": "#/$defs/PersonType"
-      }
-    },
-    "organization": {
-      "$ref": "#/$defs/OrganizationType"
-    },
-    "organizationList": {
-      "type": "array",
-      "items": {
-        "$ref": "#/$defs/OrganizationType"
-      }
-    },
-    "organizationalRelation": {
-      "$ref": "#/$defs/OrganizationalRelationType"
-    },
-    "organizationalRelationList": {
-      "type": "array",
-      "items": {
-        "$ref": "#/$defs/OrganizationalRelationType"
-      }
-    },
     "deployment": {
-      "$ref": "#/$defs/DeploymentType"
+      "$ref": "#/$defs/Deployment"
     },
-    "deploymentList": {
+    "deployments": {
       "type": "array",
       "items": {
-        "$ref": "#/$defs/DeploymentType"
-      }
-    },
-    "workLifeCycle": {
-      "$ref": "#/$defs/WorkLifeCycleType"
-    },
-    "workLifeCycleList": {
-      "type": "array",
-      "items": {
-        "$ref": "#/$defs/WorkLifeCycleType"
+        "$ref": "#/$defs/Deployment"
       }
     },
     "job": {
-      "$ref": "#/$defs/JobType"
+      "$ref": "#/$defs/Job"
     },
-    "jobList": {
+    "jobs": {
       "type": "array",
       "items": {
-        "$ref": "#/$defs/JobType"
+        "$ref": "#/$defs/Job"
       }
     },
-    "serviceFunction": {
-      "$ref": "#/$defs/ServiceFunctionType"
+    "organization": {
+      "$ref": "#/$defs/Organization"
     },
-    "serviceFunctionList": {
+    "organizations": {
       "type": "array",
       "items": {
-        "$ref": "#/$defs/ServiceFunctionType"
+        "$ref": "#/$defs/Organization"
       }
     },
-    "communication": {
-      "$ref": "#/$defs/CommunicationType"
+    "person": {
+      "$ref": "#/$defs/Person"
     },
-    "communicationList": {
+    "persons": {
       "type": "array",
       "items": {
-        "$ref": "#/$defs/CommunicationType"
+        "$ref": "#/$defs/Person"
+      }
+    },
+    "work_life_cycle": {
+      "$ref": "#/$defs/WorkLifeCycle"
+    },
+    "work_life_cycles": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/WorkLifeCycle"
       }
     }
-  }
+  },
+  "unevaluatedProperties": false
 }

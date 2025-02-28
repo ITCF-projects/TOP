@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import *
 
 from schemagen import jsontype
-from top2.common import TagsMixin, MandatoryIdMixin, EffectiveTimePeriodMixin
+from top2.common import TagsMixin, MandatoryIdMixin, EffectiveTimePeriodMixin, ExtendableMixin
 
 if TYPE_CHECKING:
     from top2.job import Job
@@ -16,7 +16,7 @@ if TYPE_CHECKING:
 
 @jsontype()
 @dataclass(kw_only=True)
-class Deployment(MandatoryIdMixin, EffectiveTimePeriodMixin, TagsMixin):
+class Deployment(MandatoryIdMixin, EffectiveTimePeriodMixin, TagsMixin, ExtendableMixin):
     """En rolltilldelning - säger att en person förväntas agera i en viss roll för en viss
     del av organisationen under viss tid. Om man varken känner till start- eller slutdatum utelämnas
     effectiveTimePeriod.

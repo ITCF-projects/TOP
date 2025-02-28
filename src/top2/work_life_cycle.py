@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import *
 
 from schemagen import jsontype
-from top2.common import TagsMixin, MandatoryIdMixin, EffectiveTimePeriodMixin, Tag
+from top2.common import TagsMixin, MandatoryIdMixin, EffectiveTimePeriodMixin, Tag, ExtendableMixin
 
 if TYPE_CHECKING:
     from top2.person import Person
@@ -33,7 +33,7 @@ class WorkLifeCycleTags:
 
 @jsontype()
 @dataclass(kw_only=True)
-class OrganizationalHome(EffectiveTimePeriodMixin, TagsMixin):
+class OrganizationalHome(EffectiveTimePeriodMixin, TagsMixin, ExtendableMixin):
     """Säger att den organisatoriska hemvisten för ett visst anknytningsavtal under viss period ligger
     på en viss orgenhet. Den organisatoriska hemvisten används för att beräkna var ansvaret för en
     person ligger (t.ex. chefsansvar).
@@ -48,7 +48,7 @@ class OrganizationalHome(EffectiveTimePeriodMixin, TagsMixin):
 
 @jsontype()
 @dataclass(kw_only=True)
-class WorkLifeCycle(MandatoryIdMixin, TagsMixin, EffectiveTimePeriodMixin):
+class WorkLifeCycle(MandatoryIdMixin, TagsMixin, EffectiveTimePeriodMixin, ExtendableMixin):
     """Anknytningsavtal, som berättar hur en viss person knutits till huvudorganisationen - allt ifrån
     anställningar till rent muntliga avtal.
     """

@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import *
 
 from schemagen import jsontype
-from top2.common import Identifier, MandatoryIdMixin, OptionalIdMixin, EffectiveTimePeriodMixin, TagsMixin
+from top2.common import Identifier, MandatoryIdMixin, OptionalIdMixin, EffectiveTimePeriodMixin, TagsMixin, ExtendableMixin
 
 if TYPE_CHECKING:
     from top2.deployment import Deployment
@@ -13,18 +13,23 @@ if TYPE_CHECKING:
 
 @jsontype()
 @dataclass(kw_only=True)
-class AccessPrivilege(EffectiveTimePeriodMixin, OptionalIdMixin):
-    """En passerbehörighet, identifierad av ett för mottagaren meningsfullt ID."""
+class AccessPrivilege(EffectiveTimePeriodMixin, OptionalIdMixin, ExtendableMixin):
+    """En passerbehörighet, identifierad av ett för mottagaren meningsfullt ID. Tilldelningen av behörigheten
+    görs till en person eller ett passerkort."""
 
     # Behörighetens ID (inte resursen behörigheten gäller för).
     privilegeId: Identifier
     # ID på den resurs som behörigheten gäller för (inte behörighetens egna ID om ett sådant finns).
     resourceId: Identifier
+    # De person(er) som tilldelats behörigheten.
+    assignedToPersons: "list[Person]"
+    # De passerkort som tilldelats behörigheten.
+    assignedToAccessCards: "list[AccessCard]"
 
 
 @jsontype()
 @dataclass(kw_only=True)
-class AccessCard(EffectiveTimePeriodMixin):
+class AccessCard(OptionalIdMixin, EffectiveTimePeriodMixin, ExtendableMixin):
     """Ett passerkort och de behörigheter detta kort skall vara försedda med. Om behörigheter knyts till
     personen snarare än till dennes kort så används istället PersonType.accessPrivileges. Notera att
     giltighetstider i detta objekt rör passerkortet i sig, behörigheterna har egna giltighetstider.
@@ -32,13 +37,13 @@ class AccessCard(EffectiveTimePeriodMixin):
     # Kortets id.
     cardId: Identifier
 
-    # Behörigheter som kortet skall förknippas med (behörigheter för individ skickas i Person.accessPrivileges)
+    # Behörigheter som kortet skall förknippas med (behörigheter för individ läggs i Person.accessPrivileges)
     accessPrivileges: list[AccessPrivilege] = None
 
 
 @jsontype()
 @dataclass(kw_only=True)
-class Name:
+class Name(ExtendableMixin):
     given: str
     family: str
     formattedName: str
@@ -48,7 +53,7 @@ class Name:
 
 @jsontype()
 @dataclass(kw_only=True)
-class Person(MandatoryIdMixin, TagsMixin):
+class Person(MandatoryIdMixin, TagsMixin, ExtendableMixin, EffectiveTimePeriodMixin):
     """A Person."""
     _json_type_name = "Person"
 

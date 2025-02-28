@@ -1,13 +1,13 @@
 from dataclasses import dataclass
 from typing import *
 
-from top2.common import Tag, I18nText, TagsMixin, VisibilityConfigurationMixin
+from top2.common import Tag, I18nText, TagsMixin, VisibilityConfigurationMixin, ExtendableMixin
 from schemagen import jsontype, Regexp
 
 
 @jsontype()
 @dataclass(kw_only=True)
-class Phone:
+class Phone(ExtendableMixin):
     """Telefonnummer."""
 
     # Universellt telefonnummer inklusive landskod, utan separerare, t.ex. +46317721000
@@ -22,8 +22,9 @@ class Phone:
 
 @jsontype()
 @dataclass(kw_only=True)
-class Address(VisibilityConfigurationMixin, TagsMixin):
-    """Postadress"""
+class PostalAddress(VisibilityConfigurationMixin, TagsMixin, ExtendableMixin):
+    """Färdigformatterad postadress, eventuellt med kopior av vanliga filtrerings- och sorteringsvärden
+    i egna fält."""
 
     # Formatterad adress, sådan den skrivs på ett kuvert som postas på svensk brevlåda.
     formattedAddress: list[str]
@@ -56,11 +57,11 @@ class ElectronicAddress(VisibilityConfigurationMixin, TagsMixin):
 
 @jsontype()
 @dataclass(kw_only=True)
-class VisitingHours:
+class VisitingHours(ExtendableMixin):
     """En post i en lista av öppettider/besökstider."""
 
-    # Beskrivning, t.ex. 'vardagar' eller 'påskafton'.
-    description: I18nText
+    # Beskrivning av när tiderna gäller, t.ex. 'vardagar' eller 'påskafton'.
+    descriptionWhen: I18nText
 
     # Tid på lokal klocka då besök kan börja.
     opens: str = None  # regexp="[0-9]{2}:[0-9]{2}
@@ -68,14 +69,14 @@ class VisitingHours:
     # Tid på lokal klocka då besök inte längre kan börja.
     closes: str = None  # regexp="[0-9]{2}:[0-9]{2}
 
-    # Annan beskrivning, t.ex. "stängt"
-    other: I18nText = None
+    # Beskrivning som ersätter opens/closes, t.ex. "stängt".
+    descriptionWhat: I18nText = None
 
 
 @jsontype()
 @dataclass(kw_only=True)
-class VisitAddress(VisibilityConfigurationMixin, TagsMixin):
-    """Besöksadress"""
+class VisitAddress(VisibilityConfigurationMixin, TagsMixin, ExtendableMixin):
+    """Besöksadress, eventuellt med öppettider."""
 
     # Gatunamn och nummer.
     street: str
@@ -99,10 +100,10 @@ class VisitAddress(VisibilityConfigurationMixin, TagsMixin):
 
 @jsontype()
 @dataclass(kw_only=True)
-class Communication:
+class Communication(ExtendableMixin):
     """Kommunikationsvägar till någon entitet. Minst ett av attributen måste ha ett värde som inte
     är en tom lista."""
     phone: list[Phone] = None
-    address: list[Address] = None
+    postalAddresse: list[PostalAddress] = None
     electronic: list[ElectronicAddress] = None
     visit: list[VisitAddress] = None

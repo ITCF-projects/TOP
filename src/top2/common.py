@@ -6,6 +6,28 @@ from typing import *
 from schemagen import jsontype
 
 
+@jsontype()
+class Extension(dict):
+    """En extension nycklas med en URI. För konsumentens avsikter finns ingen speciell betydelse i
+    någon del av URI:n - den är bara ett universellt sätt att skriva en identifierare på. TOP-standarden
+    säger dock att URI:n som minimum skall inehålla domännamn på den som definierar de attribut som
+    ligger i respektive extension. En initial rekommendation är att lärosätena använder http://<lärosätesdomän>/TOP
+    som extension-nyckel.
+    """
+    __json_schema__ = {
+        "type": "object",
+        "patternProperties": {
+            "^[-_a-zA-Z0-9:/?.@]+$": {"type": "object"}
+        }
+    }
+
+
+@jsontype()
+class ExtendableMixin:
+    """Plats att lägga alla sina coola extensions på. Se Extension-typen för en beskrivning av innehållet."""
+    extensions: Extension
+
+
 @jsontype
 class I18nText(dict):
     """Språkhanterad text. Nycklar är språkkod enligt RFC4646/RFC4647 (t.ex. 'en' eller 'sv'), värdet är

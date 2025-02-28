@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import *
 
 from schemagen import jsontype
-from top2.common import Tag, I18nText, TagsMixin, OptionalIdMixin, MandatoryIdMixin, EffectiveTimePeriodMixin
+from top2.common import Tag, I18nText, TagsMixin, OptionalIdMixin, MandatoryIdMixin, EffectiveTimePeriodMixin, ExtendableMixin
 
 if TYPE_CHECKING:
     from top2.deployment import Deployment
@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 
 @jsontype()
 @dataclass(kw_only=True)
-class ServiceFunction(OptionalIdMixin, EffectiveTimePeriodMixin, TagsMixin):
+class ServiceFunction(OptionalIdMixin, EffectiveTimePeriodMixin, TagsMixin, ExtendableMixin):
     """En servicefunktion, t.ex. en expedition, handläggargrupp, eller annat sätt att utföra arbete som inte
     direkt relaterar till en specifik rolltilldelning. Servicefunktionerna kan tillhöra en eller flera
     orgenheter. Både fysiska expeditioner med besökstider och handläggargrupper i ett ärendehanteringssystem
@@ -53,7 +53,7 @@ class ScopedOrganizationalRelation:
 
 @jsontype()
 @dataclass(kw_only=True)
-class Organization(MandatoryIdMixin, EffectiveTimePeriodMixin, TagsMixin):
+class Organization(MandatoryIdMixin, EffectiveTimePeriodMixin, TagsMixin, ExtendableMixin):
     """En organisatorisk enhet (orgenhet) - någon del av organisationen bestående av en grupp människor
     utpekade genom att de tilldelats roller på orgenheten. Kan vara delar i linjen, matrisorganisationer,
     projekt...
@@ -97,7 +97,7 @@ class Organization(MandatoryIdMixin, EffectiveTimePeriodMixin, TagsMixin):
 
 @jsontype()
 @dataclass(kw_only=True)
-class OrganizationalRelation(MandatoryIdMixin, EffectiveTimePeriodMixin, TagsMixin):
+class OrganizationalRelation(MandatoryIdMixin, EffectiveTimePeriodMixin, TagsMixin, ExtendableMixin):
     """En relation mellan två organisatoriska enheter, som säger att i en viss struktur ligger den ena
     ovanför den andra. Vissa lärosäten har många olika strukturer/perspektiv som utgör separata träd,
     t.ex. linjeträd, grundutbildningsorganisation, programorganisation, och utvisningsträd för webben.

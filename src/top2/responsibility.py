@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import *
 
 from schemagen import jsontype
-from top2.common import Tag, TagsMixin, OptionalIdMixin, EffectiveTimePeriodMixin
+from top2.common import Tag, TagsMixin, OptionalIdMixin, EffectiveTimePeriodMixin, ExtendableMixin
 
 if TYPE_CHECKING:
     from top2.person import Person
@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 
 @jsontype()
 @dataclass(kw_only=True)
-class OrganizationResponsibility(EffectiveTimePeriodMixin, TagsMixin, OptionalIdMixin):
+class OrganizationResponsibility(EffectiveTimePeriodMixin, TagsMixin, OptionalIdMixin, ExtendableMixin):
     """Ansvar för viss orgenhet, antingen tilldelat personligen eller via en rolltilldelning.
     """
 
@@ -31,7 +31,7 @@ class OrganizationResponsibility(EffectiveTimePeriodMixin, TagsMixin, OptionalId
 
 @jsontype()
 @dataclass(kw_only=True)
-class DeploymentResponsibility(EffectiveTimePeriodMixin, TagsMixin, OptionalIdMixin):
+class DeploymentResponsibility(EffectiveTimePeriodMixin, TagsMixin, OptionalIdMixin, ExtendableMixin):
     """Ansvar för person som har viss rolltilldelning, t.ex. att vara handledare för en viss praktikant.
     """
     # Ansvarstyp(er) (arbetsledare, handledare...)
@@ -47,7 +47,7 @@ class DeploymentResponsibility(EffectiveTimePeriodMixin, TagsMixin, OptionalIdMi
 
 @jsontype()
 @dataclass(kw_only=True)
-class CalculatedResponsibility(EffectiveTimePeriodMixin, TagsMixin):
+class CalculatedResponsibility(EffectiveTimePeriodMixin, TagsMixin, ExtendableMixin):
     desc = (
         "Färdigberäknat ansvar mellan två personer, där den ena ('responsiblePerson' har ansvar av viss "
         "typ för en annan person ('affectedPerson')."

@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import *
 
 from schemagen import jsontype
-from top2.common import TagsMixin, TypeMixin, OptionalIdMixin, EffectiveTimePeriodMixin
+from top2.common import TagsMixin, TypeMixin, OptionalIdMixin, EffectiveTimePeriodMixin, ExtendableMixin
 
 if TYPE_CHECKING:
     from top2.deployment import Deployment
@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 
 @jsontype()
 @dataclass(kw_only=True)
-class WorkSchedule(EffectiveTimePeriodMixin, TagsMixin, TypeMixin, OptionalIdMixin):
+class WorkSchedule(EffectiveTimePeriodMixin, TagsMixin, TypeMixin, OptionalIdMixin, ExtendableMixin):
     """En mängd arbetstid som personen i kontexten av ett anknytningsavtal förväntas utföra (en
     omfattningsperiod). Kan antingen vara ett visst antal timmar (hours) eller en del av heltid
     (fullTimeEquivalentRatio). Kan alltså tillsammans med giltighetstider uttrycka '200 timmar under 2023',
@@ -35,7 +35,7 @@ class WorkSchedule(EffectiveTimePeriodMixin, TagsMixin, TypeMixin, OptionalIdMix
 
 @jsontype()
 @dataclass(kw_only=True)
-class Leave(EffectiveTimePeriodMixin, TagsMixin, OptionalIdMixin, TypeMixin):
+class Leave(EffectiveTimePeriodMixin, TagsMixin, OptionalIdMixin, TypeMixin, ExtendableMixin):
     """En frånvaroperiod uttrycker semester, föräldraledighet, sjukskrivningar med mera. Det finns möjlighet
     att ange en omfattning om man önskar.
     """

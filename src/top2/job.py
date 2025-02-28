@@ -2,14 +2,14 @@ from dataclasses import dataclass
 from typing import *
 
 from schemagen import jsontype
-from top2.common import I18nText, TagsMixin, MandatoryIdMixin
+from top2.common import I18nText, TagsMixin, MandatoryIdMixin, ExtendableMixin
 
 if TYPE_CHECKING:
     from top2.deployment import Deployment
 
 @jsontype()
 @dataclass(kw_only=True)
-class Job(MandatoryIdMixin, TagsMixin):
+class Job(MandatoryIdMixin, TagsMixin, ExtendableMixin):
     """En viss roll - en uppsättning arbetsuppgifter och ansvar t.ex. 'Studievägledare' eller 'Rektor'.
     Personer kan agera i en roll (d.v.s. utföra de arbetsuppgifter som rollen beskriver), men rollen
     i sig kan inte utföra något. De personer som förväntas agera i en viss roll på en viss orgenhet

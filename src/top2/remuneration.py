@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from typing import *
 
 from schemagen import jsontype
-from top2.common import Tag, TagsMixin, Identifier, EffectiveTimePeriodMixin
+from top2.common import Tag, TagsMixin, Identifier, EffectiveTimePeriodMixin, ExtendableMixin
 
 if TYPE_CHECKING:
     from top2.deployment import Deployment
@@ -18,7 +18,7 @@ class RemunerationCode(enum.Enum):
 
 @jsontype()
 @dataclass(kw_only=True)
-class PostingSpecification:
+class PostingSpecification(ExtendableMixin):
     # En kontering, uttryckt som alla relevanta ID:n.
     posting: list[Identifier]
     # Den del av summan som konteras på detta sätt. Flyttal 0..1.
@@ -27,7 +27,7 @@ class PostingSpecification:
 
 @jsontype()
 @dataclass(kw_only=True)
-class RemunerationOrDeduction(EffectiveTimePeriodMixin, TagsMixin):
+class RemunerationOrDeduction(EffectiveTimePeriodMixin, TagsMixin, ExtendableMixin):
     """Ersättningar, t.ex. lön eller tillägg.
     """
 

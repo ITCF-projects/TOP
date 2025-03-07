@@ -51,8 +51,12 @@ class Struct(Typedef):
             for name in typing.get_type_hints(base, self.schema.types_by_name, inspect.getmodule(base).__dict__).keys():
                 base_hints.add(name)
 
-        with_annotated = typing.get_type_hints(self.typ, self.schema.types_by_name,
-                                               inspect.getmodule(self.typ).__dict__, include_extras=True)
+        try:
+            with_annotated = typing.get_type_hints(self.typ, self.schema.types_by_name,
+                                                   inspect.getmodule(self.typ).__dict__, include_extras=True)
+        except Exception as e:
+            raise RuntimeError(f"Error resolving type hints for {self.typ} (remember to import new classes to __init__.py)") from e
+
         for (name, hint) in typing.get_type_hints(self.typ, self.schema.types_by_name,
                                                   inspect.getmodule(self.typ).__dict__).items():
             if name in base_hints:
@@ -122,7 +126,7 @@ class Struct(Typedef):
 
                 else:
                     raise ValueError(
-                        f"{self.typ.__name__}.{name}: {hint} - type not found (did you forget to decorate it with @jsontype()?"
+                        f"{self.typ.__name__}.{name}: {hint} - type not found (did you forget to decorate it with @jsontype() or import it into the top module?)"
                     )
 
             else:

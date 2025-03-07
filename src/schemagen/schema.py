@@ -16,7 +16,6 @@ class Schema:
         self.typedefs_by_type: dict[type, Typedef] = {}
         self.types_by_name: dict[str, type] = {}
         self.load_module(schemagen.default_jsontypes)
-        self.typedefs_by_type[datetime.datetime] = self.typedefs_by_name["DateTime"]
 
     def try_add(self, name, obj):
         if not isinstance(obj, type):
@@ -25,6 +24,7 @@ class Schema:
             return
 
         if obj in self.typedefs_by_type:
+            # We've already added it.
             return
 
         if isinstance(obj, type) and hasattr(obj, "__json_args__"):
@@ -36,6 +36,8 @@ class Schema:
                 typedef = Struct(self, name, obj)
             self.typedefs_by_name[name] = typedef
             self.typedefs_by_type[obj] = typedef
+            if for_type := obj.__json_args__.get("python_type", None):
+                self.typedefs_by_type[for_type] = typedef
             self.types_by_name[name] = obj
 
             for b in obj.__bases__:

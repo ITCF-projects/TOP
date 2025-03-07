@@ -1,34 +1,13 @@
 import datetime
 import enum
 from dataclasses import dataclass
-from typing import *
 
+from typing import *
 from schemagen import jsontype
 
 
-@jsontype()
-class LokalUtokning(dict):
-    """En extension nycklas med en URI. För konsumentens avsikter finns ingen speciell betydelse i
-    någon del av URI:n - den är bara ett universellt sätt att skriva en identifierare på. TOP-standarden
-    säger dock att URI:n som minimum skall inehålla domännamn på den som definierar de attribut som
-    ligger i respektive extension. En initial rekommendation är att lärosätena använder http://<lärosätesdomän>/TOP
-    som extension-nyckel.
-    """
-    __json_schema__ = {
-        "type": "object",
-        "patternProperties": {
-            "^[-_a-zA-Z0-9:/?.@]+$": {"type": "object"}
-        }
-    }
-
-
-@jsontype()
-class MedLokalUtokning:
-    """Plats att lägga alla sina coola extensions på. Se Extension-typen för en beskrivning av innehållet."""
-    lokalUtokning: LokalUtokning
-
-
 @jsontype
+@dataclass(kw_only=True)
 class SprakhanteradText(dict):
     """Språkhanterad text. Nycklar är språkkod enligt RFC4646/RFC4647 (t.ex. 'en' eller 'sv'), värdet är
     texten på det språket."""
@@ -38,14 +17,6 @@ class SprakhanteradText(dict):
             "^[a-z]{2,3}$": {"type": "string"}
         }
     }
-
-
-@jsontype()
-@dataclass(kw_only=True)
-class Giltighetsperiod:
-    """En tidsperiod inom vilken ett associerat värde är giltigt. Om invalidFrom """
-    giltigFrom: datetime.datetime
-    ogiltigFrom: Optional[datetime.datetime]
 
 
 @jsontype()
@@ -79,6 +50,67 @@ class Identifierare:
     # bara användas när det finns en risk att sådana värden möts i samma mottagare. Oftast på formen
     # "lärosäte.se/applikationsinstans"
     varderymd: str = None
+
+
+@jsontype()
+@dataclass(kw_only=True)
+class MedObligatoriskIdentifierare:
+    # Huvudsakligt ID. Skall "aldrig" ändras, eller i alla fall så sällan det går. Personnummer är dåligt
+    # (ändras ofta), medan ett UUID i en lokal personalkatalog kan vara finfint.
+    id: Identifierare
+
+    # ID:n som kan återfinnas i andra applikationer eller externa system.
+    korrelationsidn: list[Identifierare] = None
+
+    # Om denna post är resultatet av att andra poster slagits samman, så ligger ID:na för de därmed
+    # borttagna posterna här.
+    sammanslagnaIdn: list[Identifierare] = None
+
+    # Om ett korrelations-id försvinner, t.ex. vid ett personnummerbyte, så skickas det id som tidigare
+    # varit korrelations-id här under en tid.
+    tidigareKorrelationsidn: list[Identifierare] = None
+
+
+@jsontype()
+@dataclass(kw_only=True)
+class MedFrivilligIdentifierare:
+    # Huvudsakligt ID (om något finns). Skall "aldrig" ändras, eller i alla fall så sällan det går.
+    # Personnummer är dåligt (ändras ofta), medan ett UUID i en lokal personalkatalog kan vara finfint.
+    id: Identifierare
+
+    # ID:n som kan återfinnas i andra applikationer eller externa system.
+    korrelationsidn: list[Identifierare] = None
+
+    # Om denna post är resultatet av att andra poster slagits samman, så ligger ID:na för de därmed
+    # borttagna posterna här.
+    sammanslagnaIdn: list[Identifierare] = None
+
+    # Om ett korrelations-id försvinner, t.ex. vid ett personnummerbyte, så skickas det id som tidigare
+    # varit korrelations-id här under en tid.
+    tidigareKorrelationsidn: list[Identifierare] = None
+
+
+@jsontype()
+@dataclass(kw_only=True)
+class Giltighetsperiod:
+    """En tidsperiod inom vilken ett associerat värde är giltigt. Om invalidFrom """
+    giltigFrom: datetime.datetime
+    ogiltigFrom: Optional[datetime.datetime]
+
+
+class Giltighetsenum(enum.Enum):
+    TIDIGARE = "tidigare"
+    AKTUELLT = "aktuellt"
+    FRAMTIDA = "framtida"
+
+
+@jsontype()
+@dataclass(kw_only=True)
+class MedGiltighet:
+    # Giltighet. Kan innehålla både en giltighetsperiod och en giltighetsenum. Om värdet utelämnas helt
+    # så känner avsändaren varken till start- eller slutdatum, bara att objektet är giltigt just nu.
+    giltighetsperiod: Giltighetsperiod = None
+    giltighet: Giltighetsenum = None
 
 
 @jsontype()
@@ -121,59 +153,6 @@ class Tagg:
 
 @jsontype()
 @dataclass(kw_only=True)
-class MedObligatoriskIdentifierare:
-    # Huvudsakligt ID. Skall "aldrig" ändras, eller i alla fall så sällan det går. Personnummer är dåligt
-    # (ändras ofta), medan ett UUID i en lokal personalkatalog kan vara finfint.
-    id: Identifierare
-
-    # ID:n som kan återfinnas i andra applikationer eller externa system.
-    korrelationsidn: list[Identifierare] = None
-
-    # Om denna post är resultatet av att andra poster slagits samman, så ligger ID:na för de därmed
-    # borttagna posterna här.
-    sammanslagnaIdn: list[Identifierare] = None
-
-    # Om ett korrelations-id försvinner, t.ex. vid ett personnummerbyte, så skickas det id som tidigare
-    # varit korrelations-id här under en tid.
-    tidigareKorrelationsidn: list[Identifierare] = None
-
-
-@jsontype()
-@dataclass(kw_only=True)
-class MedFrivilligIdentifierare:
-    # Huvudsakligt ID (om något finns). Skall "aldrig" ändras, eller i alla fall så sällan det går.
-    # Personnummer är dåligt (ändras ofta), medan ett UUID i en lokal personalkatalog kan vara finfint.
-    id: Identifierare
-
-    # ID:n som kan återfinnas i andra applikationer eller externa system.
-    korrelationsidn: list[Identifierare] = None
-
-    # Om denna post är resultatet av att andra poster slagits samman, så ligger ID:na för de därmed
-    # borttagna posterna här.
-    sammanslagnaIdn: list[Identifierare] = None
-
-    # Om ett korrelations-id försvinner, t.ex. vid ett personnummerbyte, så skickas det id som tidigare
-    # varit korrelations-id här under en tid.
-    tidigareKorrelationsidn: list[Identifierare] = None
-
-
-class Giltighetsenum(enum.Enum):
-    TIDIGARE = "tidigare"
-    AKTUELLT = "aktuellt"
-    FRAMTIDA = "framtida"
-
-
-@jsontype()
-@dataclass(kw_only=True)
-class MedGiltighet:
-    # Giltighet. Kan innehålla både en giltighetsperiod och en giltighetsenum. Om värdet utelämnas helt
-    # så känner avsändaren varken till start- eller slutdatum, bara att objektet är giltigt just nu.
-    giltighetsperiod: Giltighetsperiod = None
-    giltighet: Giltighetsenum = None
-
-
-@jsontype()
-@dataclass(kw_only=True)
 class MedGiltighetsbegransadTaggning(MedGiltighet):
     # Lista över taggar som sitter/satt/kommer sitta på posten under giltigheten.
     taggar: list[Tagg]
@@ -199,7 +178,7 @@ class MedTyptagg:
 
 @jsontype()
 @dataclass(kw_only=True)
-class Synlighet:
+class Spridning:
     # En tag som beskriver ett sätt posten får spridas (t.ex. internt, intranät, extranät...)
     synlighet: Tagg
 
@@ -211,8 +190,30 @@ class Synlighet:
 
 @jsontype()
 @dataclass(kw_only=True)
-class MedSynlighet:
+class MedSpridning:
     # Postens synligheter, med postlokal ranking per synlighet.
-    synligheter: list[Synlighet] = None
+    synligheter: list[Spridning] = None
+
+
+@jsontype()
+class LokalUtokning(dict):
+    """En extension nycklas med en URI. För konsumentens avsikter finns ingen speciell betydelse i
+    någon del av URI:n - den är bara ett universellt sätt att skriva en identifierare på. TOP-standarden
+    säger dock att URI:n som minimum skall inehålla domännamn på den som definierar de attribut som
+    ligger i respektive extension. En initial rekommendation är att lärosätena använder http://<lärosätesdomän>/TOP
+    som extension-nyckel.
+    """
+    __json_schema__ = {
+        "type": "object",
+        "patternProperties": {
+            "^[-_a-zA-Z0-9:/?.@]+$": {"type": "object"}
+        }
+    }
+
+
+@jsontype()
+class MedLokalUtokning:
+    """Plats att lägga alla sina coola extensions på. Se Extension-typen för en beskrivning av innehållet."""
+    lokalUtokning: LokalUtokning
 
 

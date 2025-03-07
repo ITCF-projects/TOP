@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import *
 
-from top2.common import Tagg, SprakhanteradText, MedTaggning, MedSynlighet, MedLokalUtokning
+from top2.common import Tagg, SprakhanteradText, MedTaggning, MedSpridning, MedLokalUtokning
 from schemagen import jsontype, Regexp
 
 
@@ -22,7 +22,7 @@ class Telefonnummer(MedLokalUtokning):
 
 @jsontype()
 @dataclass(kw_only=True)
-class Snigelpost(MedSynlighet, MedTaggning, MedLokalUtokning):
+class Snigelpost(MedSpridning, MedTaggning, MedLokalUtokning):
     """Färdigformatterad postadress, eventuellt med kopior av vanliga filtrerings- och sorteringsvärden
     i egna fält."""
 
@@ -44,7 +44,7 @@ class Snigelpost(MedSynlighet, MedTaggning, MedLokalUtokning):
 
 @jsontype()
 @dataclass(kw_only=True)
-class ElektroniskAdress(MedSynlighet, MedTaggning):
+class ElektroniskAdress(MedSpridning, MedTaggning):
     """Elektronisk adress"""
 
     # Media. Standarden definierar taggar för t.ex. web och epost, men det är fritt att definiera egna
@@ -75,7 +75,7 @@ class Besokstider(MedLokalUtokning):
 
 @jsontype()
 @dataclass(kw_only=True)
-class Besoksadress(MedSynlighet, MedTaggning, MedLokalUtokning):
+class Besoksadress(MedSpridning, MedTaggning, MedLokalUtokning):
     """Besöksadress, eventuellt med öppettider."""
 
     # Gatunamn och nummer.

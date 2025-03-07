@@ -10,8 +10,8 @@ from top2.common import (
     Tagg,
     MedTaggning,
     MedGiltighetsbegransadTaggning,
-    MedSynlighet,
-    Synlighet,
+    MedSpridning,
+    Spridning,
 )
 from top2.kommunikation import (
     Snigelpost,

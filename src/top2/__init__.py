@@ -42,5 +42,5 @@ from top2.ansvar import (
     Rolltilldelningsansvar,
     Organisationsdelsansvar,
 )
-from top2.anknytningsperiod import Hemvistperiod, Anknytningsperiod, Skatt
+from top2.anknytningsavtal import Hemvistperiod, Anknytningsavtal, Skatt
 from top2.omfattningsperiod import Omfattningsperiod, Franvaroperiod

@@ -7,7 +7,7 @@ from top2.common import MedTaggning, MedTyptagg, MedFrivilligIdentifierare, MedG
 if TYPE_CHECKING:
     from top2.rolltilldelning import Rolltilldelning
     from top2.ersattningar import RemunerationCode
-    from top2.anknytningsperiod import Anknytningsperiod
+    from top2.anknytningsavtal import Anknytningsavtal
 
 
 @jsontype()
@@ -33,7 +33,7 @@ class Omfattningsperiod(MedGiltighet, MedTaggning, MedTyptagg, MedFrivilligIdent
     rolltilldelning: "Rolltilldelning" = None
 
     # Den anknytningsperiod som denna omfattningsperiod detaljerar.
-    anknytningsperiod: "Anknytningsperiod" = None
+    anknytningsperiod: "Anknytningsavtal" = None
 
 
 @jsontype()
@@ -57,4 +57,4 @@ class Franvaroperiod(MedGiltighet, MedTaggning, MedFrivilligIdentifierare, MedTy
     slutdatumArPreliminart: bool = None
 
     # Den anknytningsperiod som denna frånvaroperiod detaljerar.
-    anknyntningsperiod: "Anknytningsperiod" = None
+    anknyntningsperiod: "Anknytningsavtal" = None

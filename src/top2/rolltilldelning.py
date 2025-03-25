@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import *
 
 from schemagen import jsontype
+from top2 import Anknytningsavtal
 from top2.common import MedTaggning, MedObligatoriskIdentifierare, MedGiltighet, MedLokalUtokning
 
 if TYPE_CHECKING:
@@ -19,12 +20,16 @@ if TYPE_CHECKING:
 @jsontype()
 @dataclass(kw_only=True)
 class Rolltilldelning(MedObligatoriskIdentifierare, MedGiltighet, MedTaggning, MedLokalUtokning):
-    """En rolltilldelning - säger att en person förväntas agera i en viss roll för en viss
-    del av organisationen under viss tid. Om man varken känner till start- eller slutdatum utelämnas
-    effectiveTimePeriod.
+    """En rolltilldelning - säger att en person, baserat i ett visst avtal, förväntas agera i en viss
+    roll för en viss del av organisationen under viss tid. Om man varken känner till start- eller
+    slutdatum utelämnas effectiveTimePeriod. Giltigheten begränsas indirekt av giltigheten på det
+    avtal som ligger till grund för rolltilldelningen.
     """
 
-    person: "Person" = None
+    # Eftersom rolltilldelning är en detaljering av ett avtal så tar jag bort den direkta länken
+    # till person.
+    # person: "Person" = None
+    anknyntningsavtal: "Anknytningsavtal" = None
 
     # Den del av organisationen där personen tilldelats rollen. Andra änden av Organisation.deployments.
     organisationsdel: "Organisationsdel" = None

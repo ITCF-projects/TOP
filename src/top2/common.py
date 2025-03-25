@@ -57,9 +57,9 @@ class Identifierare:
 class MedObligatoriskIdentifierare:
     # Huvudsakligt ID. Skall "aldrig" ändras, eller i alla fall så sällan det går. Personnummer är dåligt
     # (ändras ofta), medan ett UUID i en lokal personalkatalog kan vara finfint.
-    id: Identifierare
+    postid: Identifierare
 
-    # ID:n som kan återfinnas i andra applikationer eller externa system.
+    # ID som kan återfinnas i andra applikationer eller externa system.
     korrelationsidn: list[Identifierare] = None
 
     # Om denna post är resultatet av att andra poster slagits samman, så ligger ID:na för de därmed
@@ -76,7 +76,7 @@ class MedObligatoriskIdentifierare:
 class MedFrivilligIdentifierare:
     # Huvudsakligt ID (om något finns). Skall "aldrig" ändras, eller i alla fall så sällan det går.
     # Personnummer är dåligt (ändras ofta), medan ett UUID i en lokal personalkatalog kan vara finfint.
-    id: Identifierare
+    postid: Identifierare = None
 
     # ID:n som kan återfinnas i andra applikationer eller externa system.
     korrelationsidn: list[Identifierare] = None
@@ -110,7 +110,7 @@ class MedGiltighet:
     # Giltighet. Kan innehålla både en giltighetsperiod och en giltighetsenum. Om värdet utelämnas helt
     # så känner avsändaren varken till start- eller slutdatum, bara att objektet är giltigt just nu.
     giltighetsperiod: Giltighetsperiod = None
-    giltighet: Giltighetsenum = None
+    utvarderadGiltighet: Giltighetsenum = None
 
 
 @jsontype()
@@ -155,7 +155,7 @@ class Tagg:
 @dataclass(kw_only=True)
 class MedGiltighetsbegransadTaggning(MedGiltighet):
     # Lista över taggar som sitter/satt/kommer sitta på posten under giltigheten.
-    taggar: list[Tagg]
+    tagg: Tagg
 
 
 @jsontype()

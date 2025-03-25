@@ -6,7 +6,7 @@ from top2.rolltilldelning import Rolltilldelning
 from top2.roll import Roll
 from top2.organisationsdel import Organisationsdel
 from top2.person import Person, Passerkort, Passerbehorighet
-from top2.anknytningsperiod import Anknytningsperiod
+from top2.anknytningsavtal import Anknytningsavtal
 
 
 @jsontype()
@@ -14,8 +14,8 @@ from top2.anknytningsperiod import Anknytningsperiod
 class Meddelande:
     """Toppobjekt med enkla och listvärda referenser till samtliga värdeobjekt. Bra grund för meddelanden!"""
 
-    anknytningsperiod: Anknytningsperiod = None
-    anknytningsperioder: list[Anknytningsperiod] = None
+    anknytningsperiod: Anknytningsavtal = None
+    anknytningsperioder: list[Anknytningsavtal] = None
     organisationsdel: Organisationsdel = None
     organisationsdelar: list[Organisationsdel] = None
     passerkort: Passerkort = None

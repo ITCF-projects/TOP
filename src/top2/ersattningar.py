@@ -8,7 +8,7 @@ from top2.common import Tagg, MedTaggning, Identifierare, MedGiltighet, MedLokal
 
 if TYPE_CHECKING:
     from top2.rolltilldelning import Rolltilldelning
-    from top2.anknytningsperiod import Anknytningsperiod
+    from top2.anknytningsavtal import Anknytningsavtal
 
 
 @jsontype()
@@ -50,7 +50,7 @@ class Engangsersattning(MedTaggning, MedLokalUtokning):
     detaljerarRolltilldelning: "Rolltilldelning" = None
 
     # Den anknytningsperiod som denna ersättning detaljerar.
-    detaljerarAnknytningsperiod: "Anknytningsperiod" = None
+    detaljerarAnknytningsperiod: "Anknytningsavtal" = None
 
 
 @jsontype()
@@ -76,5 +76,5 @@ class LopandeErsattning(MedGiltighet, MedTaggning, MedLokalUtokning):
     detaljerarRolltilldelning: "Rolltilldelning" = None
 
     # Den anknytningsperiod som denna period detaljerar.
-    detaljerarAnknytningsperiod: "Anknytningsperiod" = None
+    detaljerarAnknytningsperiod: "Anknytningsavtal" = None
 

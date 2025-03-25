@@ -34,26 +34,29 @@ class Hemvistperiod(MedGiltighet, MedTyptagg, MedTaggning, MedLokalUtokning):
     organisationsdel: "Organisationsdel"
 
     # Det anknytningsavtal som denna orghemvist detaljerar.
-    anknytningsperiod: "Anknytningsperiod" = None
+    anknytningsperiod: "Anknytningsavtal" = None
 
 
 @jsontype()
 @dataclass(kw_only=True)
-class Anknytningsperiod(MedObligatoriskIdentifierare, MedTaggning, MedGiltighet, MedLokalUtokning):
+class Anknytningsavtal(MedObligatoriskIdentifierare, MedTaggning, MedGiltighet, MedLokalUtokning):
     """Anknytningsavtal, som berättar hur en viss person knutits till huvudorganisationen - allt ifrån
     anställningar till rent muntliga avtal.
     """
     person: "Person" = None
 
-    # Typ av anknytningsperiod, t.ex.
+    # Typ av anknytningsavtal, t.ex. "anställning", "delegering" eller "muntligt avtal".
     typ: Tagg
 
-    # Den organisation (oftast lärosätet) som är motpart på kontraktet. Vilken del av lärosätet (t.ex.
-    # institution eller avdelning) personen har sin chef/ansvarige pekas ut via workerHomes.
+    # Den organisationsdel som är motpart i avtalet. För anställningsavtal är detta lärosätet som helhet,
+    # och vilken organisationsdel (t.ex. institution eller avdelning) personen har sin chef/ansvarige
+    # pekas ut via hemvistperioder. För muntliga avtal är motparten den institution eller liknande vars
+    # chef gjort överenskommelsen.
     organisationellAvtalspart: "Organisationsdel" = None
 
-    # Organisatorisk(a) hemvist(er). Bara en får vara giltig åt gången, men det går här att lägga in
-    # både dåtida och framtida orghemvister om man kan och vill.
+    # Organisatorisk(a) hemvist(er) - på vilken organisationsdel placerar detta avtal just nu personen.
+    # Bara en får vara giltig åt gången, men det går här att lägga in både dåtida och framtida
+    # orghemvister om man kan och vill.
     hemvistperioder: "list[Hemvistperiod]" = None
 
     # Omfattningar för denna rolltilldelning.
@@ -77,9 +80,14 @@ class Anknytningsperiod(MedObligatoriskIdentifierare, MedTaggning, MedGiltighet,
     # ta det här avtalet.
     huvudavtal: bool = None
 
-    # Detta avtal är underordnat ett annat (t.ex. kan en delegering vara underordnad en anställning).
-    # Om det utpekade avtalet, som detta är underordnat, tagit slut så är detta avtal inte giltigt.
-    underordnat: "Anknytningsperiod" = None
+    # Detta avtal är underordnat ett annat (t.ex. kan en delegering vara underordnad en anställning),
+    # det är ett "hängavtal". Giltigheten på detta avtal begränsas därmed av giltigheten på det
+    # utpekade avtalet.
+    underordnat: "Anknytningsavtal" = None
+
+    # Andra avtal som är underordnade detta. De underordnade avtalen kan aldrig vara giltiga när detta
+    # avtal inte är det.
+    underordnade: "list[Anknytningsavtal]" = None
 
     # Om vi vill veta varför ett visst avtal har avslutats så kan vi skriva något om det här.
     avslutsorsak: str = None

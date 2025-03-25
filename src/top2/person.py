@@ -9,17 +9,17 @@ if TYPE_CHECKING:
     from top2.rolltilldelning import Rolltilldelning
     from top2.kommunikation import Kommunikation
     from top2.ansvar import BeraknatAnsvar, Organisationsdelsansvar
-    from top2.anknytningsperiod import Anknytningsperiod
+    from top2.anknytningsavtal import Anknytningsavtal
 
 
 @jsontype()
 @dataclass(kw_only=True)
-class Passerbehorighet(MedGiltighet, MedFrivilligIdentifierare, MedLokalUtokning):
+class Passerbehorighet(MedGiltighet, MedLokalUtokning):
     """En passerbehörighet, identifierad av ett för mottagaren meningsfullt ID. Tilldelningen av behörigheten
     görs till en person eller ett passerkort."""
 
     # Behörighetens ID (inte resursen behörigheten gäller för).
-    id: Identifierare
+    postid: Identifierare
     # ID på den resurs som behörigheten gäller för (inte behörighetens egna ID om ett sådant finns).
     resursId: Identifierare
     # De person(er) som tilldelats behörigheten.
@@ -36,7 +36,7 @@ class Passerkort(MedFrivilligIdentifierare, MedGiltighet, MedLokalUtokning):
     giltighetstider i detta objekt rör passerkortet i sig, behörigheterna har egna giltighetstider.
     """
     # Kortets id.
-    id: Identifierare
+    postid: Identifierare
 
     # Behörigheter som kortet skall förknippas med (behörigheter för individ läggs i Person.accessPrivileges)
     passerbehorigheter: list[Passerbehorighet] = None
@@ -87,7 +87,7 @@ class Person(MedObligatoriskIdentifierare, MedTaggning, MedLokalUtokning, MedGil
     passerkort: list[Passerkort] = None
 
     # Anknytningsavtal för denna person.
-    anknytningsavtal: "list[Anknytningsperiod]" = None
+    anknytningsavtal: "list[Anknytningsavtal]" = None
 
     # Rolltilldelningar för denna person.
     rolltilldelningar: "list[Rolltilldelning]" = None

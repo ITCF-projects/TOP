@@ -8,7 +8,7 @@ if TYPE_CHECKING:
     from top2.rolltilldelning import Rolltilldelning
     from top2.kommunikation import Kommunikation
     from top2.ansvar import Organisationsdelsansvar
-    from top2.anknytningsperiod import Hemvistperiod
+    from top2.anknytningsavtal import Hemvistperiod
 
 
 @jsontype()

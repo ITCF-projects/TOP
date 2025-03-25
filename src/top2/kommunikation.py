@@ -17,7 +17,7 @@ class Telefonnummer(MedLokalUtokning):
     formatterat: Annotated[str, Regexp("[+]?[-0-9() ]{6,}")] = None
 
     # Går det att skicka SMS till detta telefonnummer? Saknat värde tolkas som 'nej'.
-    smsKanTasEmot: bool = False
+    kanTaEmotSMS: bool = False
 
 
 @jsontype()

@@ -57,7 +57,7 @@ class ElektroniskAdress(MedSpridning, MedTaggning):
 
 @jsontype()
 @dataclass(kw_only=True)
-class Besokstider(MedLokalUtokning):
+class Besokstider(MedTaggning, MedLokalUtokning):
     """En post i en lista av öppettider/besökstider."""
 
     # Beskrivning av när tiderna gäller, t.ex. 'vardagar' eller 'påskafton'.

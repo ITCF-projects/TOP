@@ -40,8 +40,34 @@ class Hemvistperiod(MedGiltighet, MedTyptagg, MedTaggning, MedLokalUtokning):
 @jsontype()
 @dataclass(kw_only=True)
 class Anknytningsavtal(MedObligatoriskIdentifierare, MedTaggning, MedGiltighet, MedLokalUtokning):
-    """Anknytningsavtal, som berättar hur en viss person knutits till huvudorganisationen - allt ifrån
-    anställningar till rent muntliga avtal.
+    """Ett anknytningsavtal säger att en person knutits till lärosätet och hur, men säger inte vad
+    personen gör (det finns i Rolltilldelning).
+
+    Den vanligaste formen av anknytningsavtal är ett anställningsavtal. Ett annat exempel är när
+    en professor muntligen bjuder in en forskarkollega från Harvard för att sprida stjärnglans
+    genom ett löst samarbete. En konsult som hyrs in på enstaka timmar i ett projekt, en
+    bemanningskonsult som hyrs in på årsbasis, avtalet som tar in en företags/industridoktorand,
+    och ett beslut om att någon ges emeriti-status är andra exempel.
+
+    Varje anknytningsavtal har en typ som säger hur personen knutits in till lärosätet (t.ex.
+    "emeritus", "anställd", "forskande gäst" eller "bemanningspersonal").
+
+    Under ett långvarigt anknytningsavtal kan viss data naturligt variera utan att avtalet skrivs om.
+    Dessa har egna entitetstyper:
+
+        * Under en _ersättningsperiod_ utgår ersättning - t.ex. lön - till personen.
+        * Under en _omfattningsperiod_ finns en bestämd omfattning (dvs ett visst antal timmar eller
+            timmar/vecka) av tid som personen tillför lärosätet.
+        * Under en _frånvaroperiod_ minskar omfattningen t.ex. på grund av semester, tjänstledighet,
+            sjukskrivningar, föräldraledighet eller liknande.
+        * En _hemvistperiod_ säger var personen har sin organisatoriska hemvist - normalt där ens chef är.
+
+    Till skillnad från Primula så skapas alltså inte ett nytt anknytningsavtal varje gång någon byter lön,
+    får tjänstledigt, eller byter enhet i organisationen, utan dessa varierar inom samma avtal.
+
+    Det är mycket vanligt att behöva förmedla vilka avtalsperioder som motsvarar t.ex.
+    "anställningsliknande former", och därför har avtalsperioder ett flervärt "tag"-fält där sådan tolkad
+    information kan läggas.
     """
     person: "Person" = None
 

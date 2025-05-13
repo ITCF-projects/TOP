@@ -27,7 +27,7 @@ from top2.meddelande import Meddelande
 from top2.organisationsdel import (
     Organisationsdel,
     OrganisatoriskRelation,
-    Kontextualiseradorganisationsdelsrelation,
+    KontextualiseradOrganisationsdelsrelation,
     Servicefunktion,
 )
 from top2.person import Passerkort, Passerbehorighet, Person, Bisyssla

@@ -59,7 +59,15 @@ class Bisyssla:
 @jsontype()
 @dataclass(kw_only=True)
 class Person(MedObligatoriskIdentifierare, MedTaggning, MedLokalUtokning, MedGiltighet):
-    """A Person."""
+    """En person av kött och blod. Datat är så normaliserat som avsändaren klarar av - i normalfallet
+    motsvaras varje fysisk person av som mest _en_ datapost. Ingen avsändare skall t.ex. skicka flera
+    personposter med olika ID:n när en person har flera parallella anställningar.
+
+    Personobjekt innehåller vissa rena individegenskaper, t.ex. namn och diverse identifierare
+    (t.ex. personnummer). Kontaktinformation till personen, både i professionell och privat kontext
+    kan också finnas med här. Den främsta informationen framkommer dock i hur personen hänger ihop
+    med lärosätets organisation, vilket beskrivs av _anknytningsavtal_ och _rolltilldelningar_.
+    """
 
     # APERSON fornamn/efternamn
 

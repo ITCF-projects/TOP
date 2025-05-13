@@ -101,8 +101,19 @@ class Besoksadress(MedSpridning, MedTaggning, MedLokalUtokning):
 @jsontype()
 @dataclass(kw_only=True)
 class Kommunikation(MedLokalUtokning):
-    """Kommunikationsvägar till någon entitet. Minst ett av attributen måste ha ett värde som inte
-    är en tom lista."""
+    """Ett kommunikationsvägar-objekt innehåller upp till fyra listor av adresser/kontaktinformation
+    för fyra olika typer av kontakt - epost, telefon, fysiskt besök, övriga elektroniska adresser.
+
+    Gemensamt för alla typerna är att avsändaren kan förse dem med en lista av vilka kanaler varje
+    adress/nummer får spridas. Till exempel så kan Lilla Lärosätets rektor välja att adressen
+    `rektor@lillalarosatet.se` publiceras på externwebben, medan hennes personliga adress
+    `hedda.master@lillalarosatet.se` inte publiceras där.
+
+    Tillsammans med synligheten kan man också ge en prioritet. När man måste bestämma en ordning
+    mellan flera synliga objekt (för att ringa upp, för att visa på personkortet på hemsidan, eller
+    för att sortera flera epostadresser t.ex.), så sorterar man dem på fallande värde, och tar det
+    som har högst prioritetsvärde först. Saknas prioritet räknas den som 0.
+    """
     telefon: list[Telefonnummer] = None
     snigelpost: list[Snigelpost] = None
     elektronisk: list[ElektroniskAdress] = None

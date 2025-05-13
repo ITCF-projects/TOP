@@ -2,12 +2,11 @@ from dataclasses import dataclass
 from typing import *
 
 from schemagen import jsontype
-from top2 import Anknytningsavtal
 from top2.common import MedTaggning, MedObligatoriskIdentifierare, MedGiltighet, MedLokalUtokning
 
 if TYPE_CHECKING:
     from top2.roll import Roll
-    from top2.person import Person
+    from top2.anknytningsavtal import Anknytningsavtal
     from top2.organisationsdel import Organisationsdel, Servicefunktion
     from top2.ersattningar import LopandeErsattning, Engangsersattning
     from top2.kommunikation import Kommunikation

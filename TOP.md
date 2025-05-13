@@ -53,7 +53,7 @@ För att en mottagare varken skall behöva känna till reglerna eller ha ett kom
 
 I huvudsak kan TOP beskrivas som ett sätt att formera information om ett lärosätes organisatoriska struktur, vilka personer som är verksamma vid lärosätet, hur personerna verkar, vilka egenskaper som kan förknippas med organisation, personer och verksamhet, samt hur allt detta varierar över tid.
 
-Vi börjar överblicken i begreppet **organisatorisk enhet** (nedan förkortat orgenhet), som är någon form av gruppering som är viktig för hur lärosätet organiserar en viss aspekt av sitt arbete. De flesta lärosäten har "institutioner", många har "fakulteter", som bägge är exempel på typer av orgenheter i linjen. 
+Vi börjar överblicken i begreppet **organisatorisk enhet** (nedan förkortat organisationsdel), som är någon form av gruppering som är viktig för hur lärosätet organiserar en viss aspekt av sitt arbete. De flesta lärosäten har "institutioner", många har "fakulteter", som bägge är exempel på typer av orgenheter i linjen. 
 
 > Lilla Lärosätet väljer att ha orgenheterna 
 > * Lärosätet (typ "Lärosäte", taggar "Resultatenhet" och "Linjeorganisation")
@@ -68,9 +68,9 @@ Orgenheterna struktureras med en eller flera typer av **orgenhetsrelationer**. D
 > * Två orgenhetrelationer av typ "Linjeträd" bildar linjeträdet: den ena säger att "Lärosätet" ligger över "Institutionen för Småskalighet", den andra säger att "Institutionen för Småskalighet" ligger över "Avdelningen för Smått Tänkande".
 > * Två ytterligare relationer av typ "Hör till" knyter in de andra orgenheterna - en placerar projektet under Lärosätet, den andra placerar programmet under institutionen.
 
-Orgenhetsrelationerna representerar _varje enskild_ relation i en eller flera strukturer, alltså varje kant i en organisationskarta. Men ett mycket vanligt behov för en mottagare är att kunna hitta relevant data - ofta t.ex. "alla som hör till Institution X eller någon orgenhet under den i linjeträdet". För det urvalet krävs att man har samtliga orgenheter och orgenhetsrelationer lokalt, vilket vi inte vill kräva av en mottagare. Därför har vi också begreppet **filtreringsrelation**, där man överför färdiga listor över andra orgenheter som är relevanta för filtrering.
+Orgenhetsrelationerna representerar _varje enskild_ relation i en eller flera strukturer, alltså varje kant i en organisationskarta. Men ett mycket vanligt behov för en mottagare är att kunna hitta relevant data - ofta t.ex. "alla som hör till Institution X eller någon organisationsdel under den i linjeträdet". För det urvalet krävs att man har samtliga orgenheter och orgenhetsrelationer lokalt, vilket vi inte vill kräva av en mottagare. Därför har vi också begreppet **filtreringsrelation**, där man överför färdiga listor över andra orgenheter som är relevanta för filtrering.
 
-> Eftersom Miniatyrmänniskan skall erbjuda inloggning baserat på att personer har ett visst förhållande till institutionen eller någon orgenhet därunder i linjeträdet, så väljer Lilla Lärosätet att överföra en filtreringsrelation som de kallar "Delträd i linjen". Avdelningen är "en del av" Institutionen och "en del av" Lärosätet, vilket syns genom att bägge dessa ligger med i filtreringsrelationerna för Avdelningen. I Lilla Lärosätets egna system finns bara orgenhetsrelationerna, men man räknar ut de här filtreringsrelationerna när man skickar iväg data.
+> Eftersom Miniatyrmänniskan skall erbjuda inloggning baserat på att personer har ett visst förhållande till institutionen eller någon organisationsdel därunder i linjeträdet, så väljer Lilla Lärosätet att överföra en filtreringsrelation som de kallar "Delträd i linjen". Avdelningen är "en del av" Institutionen och "en del av" Lärosätet, vilket syns genom att bägge dessa ligger med i filtreringsrelationerna för Avdelningen. I Lilla Lärosätets egna system finns bara orgenhetsrelationerna, men man räknar ut de här filtreringsrelationerna när man skickar iväg data.
 
 Orgenheterna kan inte av sig själva utföra nytta, för detta behövs **personer** - individer av kött och blod. Vi försöker att representera både personens egenskaper, hur de hänger fast i lärosätet och vad de förväntas utföra för nytta. 
 
@@ -82,7 +82,7 @@ Personer knyts till lärosätet genom **anknytningsavtal**, där den vanligaste 
 
 Ett anknytningsavtal kan under sin löptid innefatta många olika egenskaper. Under en 25 år lång anställning (som är _ett_ avtal) kommer en person att byta lön, organisatorisk hemvist, tjänsteomfattning med mera massor av gånger. Varje sådan egenskap representeras därför av ett eller flera intervall eller _perioder_ av något slag - en egenskap med start- och eventuellt slutdatum.
 
-Anknytningsavtalet kan ha ingen, en eller flera **ersättningsperioder** (en anställd kan t.ex. under en viss period få en viss lön), **frånvaroperioder** (t.ex. semester, sjukskrivning eller VAB), **omfattningsperioder** (t.ex. 80% tjänstgöringsgrad), **hemvistperioder** (som pekar ut den orgenhet där personens chef normalt sett återfinns).
+Anknytningsavtalet kan ha ingen, en eller flera **ersättningsperioder** (en anställd kan t.ex. under en viss period få en viss lön), **frånvaroperioder** (t.ex. semester, sjukskrivning eller VAB), **omfattningsperioder** (t.ex. 80% tjänstgöringsgrad), **hemvistperioder** (som pekar ut den organisationsdel där personens chef normalt sett återfinns).
 
 > På Lilla Lärosätet finns en ersättningsperiod vardera för de fyra anställda, med typen "Månadslön" - en summa och enheten "per månad". Emilia Fodat har en ersättningsperiod av typen "Timlön" med en summa och "per arbetad timme". Vilken ersättning man ger till konsulterna bedömer man inte att någon behöver veta, så dem utelämnar man ersättningsperioder för.
 > 
@@ -96,7 +96,7 @@ En uppsättning arbetsuppgifter, befogenheter, förväntade beteenden, ansvar os
 
 > På Lilla Lärosätet har man identifierat rollerna "Rektor", "Prefekt", "Professor", "Lektor", "Projektledare", "Projektdeltagare", "Administratör" och "Amanuens".
 
-Att en person tilldelats en viss roll på en viss orgenhet under viss period uttrycks som en **rolltilldelning**. En sådan _kan_ förnkippas med ersättningsperioder (t.ex. lönetillägg för prefekter) och omfattningsperioder (som kan vara den faktiska tid en person förväntas lägga, borträknat ledigheter med mera).
+Att en person tilldelats en viss roll på en viss organisationsdel under viss period uttrycks som en **rolltilldelning**. En sådan _kan_ förnkippas med ersättningsperioder (t.ex. lönetillägg för prefekter) och omfattningsperioder (som kan vara den faktiska tid en person förväntas lägga, borträknat ledigheter med mera).
 
 > På Lilla Lärosätet har bland annat Hedda Master en rolltilldelning med rollen "Rektor" för orgenheten "Lärosätet", och Putte Socrates har två rolltilldelningar - dels en som "Professor" för Avdelningen och dels en som "Prefekt" för Institutionen. Han tycker att det är mycket viktigare att vara prefekt än professor, och vill att prefektrollen alltid visas först, så den är flaggad som primär.
 > 
@@ -104,9 +104,9 @@ Att en person tilldelats en viss roll på en viss orgenhet under viss period utt
 > 
 > De övriga har rolltilldelningar så som man kan förvänta sig.
 
-Lärosätena tilldelar personer vissa ansvar för vissa orgenheter. Till exempel kan en person få linjechefsansvar, ekonomiskt ansvar eller arbetsmiljöansvar för en viss orgenhet. Detta uttrycks som **ansvarsperioder**, och dessa kan antingen peka ut en någon som personligen ansvarig, eller peka ut en rolltilldelning som innebär vissa ansvar. Linjechefsansvaret för en orgenhet tilldelas t.ex. oftast genom att rolltilldelningen som Enhetschef.
+Lärosätena tilldelar personer vissa ansvar för vissa orgenheter. Till exempel kan en person få linjechefsansvar, ekonomiskt ansvar eller arbetsmiljöansvar för en viss organisationsdel. Detta uttrycks som **ansvarsperioder**, och dessa kan antingen peka ut en någon som personligen ansvarig, eller peka ut en rolltilldelning som innebär vissa ansvar. Linjechefsansvaret för en organisationsdel tilldelas t.ex. oftast genom att rolltilldelningen som Enhetschef.
 
-> På Lilla Lärosätet har Hedda ett personligt förordnande som Rektor, vilket ger henne både ekonomiskt och arbetsledande ansvar för orgenhet Lärosätet. Putte får via sin rolltilldelning som Prefekt bägge ansvaren för Institutionen. Han har också via rolltilldelningen som Professor dessa ansvar för Avdelningen. Linda Projektil har ett arbetsledande ansvar för Projektet via sin rolltilldelning som Projektledare, men Hedda Master håller i pengarna och har det ekonomiska ansvaret där.
+> På Lilla Lärosätet har Hedda ett personligt förordnande som Rektor, vilket ger henne både ekonomiskt och arbetsledande ansvar för organisationsdel Lärosätet. Putte får via sin rolltilldelning som Prefekt bägge ansvaren för Institutionen. Han har också via rolltilldelningen som Professor dessa ansvar för Avdelningen. Linda Projektil har ett arbetsledande ansvar för Projektet via sin rolltilldelning som Projektledare, men Hedda Master håller i pengarna och har det ekonomiska ansvaret där.
 > 
 > Eftersom man inte _måste_ peka ut ansvar överallt i sina överföringar, så väljer Lilla Lärosätet att inte tala om vem som har vilket ansvar för Programmet.
 
@@ -201,15 +201,15 @@ Det är tillåtet att skicka vidare utökningar som någon annan definierat, om 
 
 ## 2.3 Entiteter, attribut, relationer
 
-Här definieras de begrepp som återfinns i schemat och deras attribut. För varje entitet definieras både dess egna attribut och namngivna pseudoattribut som representerar bakreferenser från andra entiteter. Till exempel så pekar en rolltilldelning ut en orgenhet, och ur orgenhetens perspektiv finns ett listvärt attribut där man kan lägga alla rolltilldelningar som pekar på just den orgenheten.
+Här definieras de begrepp som återfinns i schemat och deras attribut. För varje entitet definieras både dess egna attribut och namngivna pseudoattribut som representerar bakreferenser från andra entiteter. Till exempel så pekar en rolltilldelning ut en organisationsdel, och ur orgenhetens perspektiv finns ett listvärt attribut där man kan lägga alla rolltilldelningar som pekar på just den orgenheten.
 
 Samtliga entiteter har fyra attribut `id`, `mergedFromIds`, `correlationIds` och `previousCorrelationIds` som används för att identifiera dem maskinläsbart. Se avsnitt 3.1 för en förklaring av hur dessa skall användas.
 
 Många entiteter har giltighetsattributen `effectiveStatus` och `effectiveTimePeriod`. Se 3.1.2 för en förklaring hur dessa skall användas.
 
-### 2.3.1 <a name="orgenhet">Orgenhet</a>
+### 2.3.1 <a name="organisationsdel">Organisationsdel</a>
 
-Begrepp "Organisatorisk enhet" (förkortat "orgenhet") representerar någon form av gruppering som är viktig för hur lärosätet organiserar någon aspekt av sitt arbete. Inga gränser sätts för vad som är eller inte är en orgenhet, varje lärosäte avgör utifrån behov och förmåga. Exempel på möjliga orgenheter är:
+Representerar någon form av gruppering som är viktig för hur lärosätet organiserar någon aspekt av sitt arbete. Inga gränser sätts för vad som är eller inte är en organisationsdel, varje lärosäte avgör utifrån behov och förmåga. Exempel på möjliga orgenheter är:
 
 * Fakultet
 * Institution
@@ -220,28 +220,28 @@ Begrepp "Organisatorisk enhet" (förkortat "orgenhet") representerar någon form
 * Centran (av viss storlek, eller även "kaffereps-centran")
 * Excellensinitiativ (ja, det begreppet finns på ett lärosäte)
 
-Gemensamt är att de är väl definierade grupper med gemensamma mål och tydliga relationer till andra orgenheter, där någon person ansvarar för gruppens ekonomi, och någon person ansvarar för att arbetsleda gruppens gemensamma arbete.
+Gemensamt är att de är väl definierade grupper med gemensamma mål och tydliga relationer till andra organisationsdelar, där någon person ansvarar för gruppens ekonomi, och någon person ansvarar för att arbetsleda gruppens gemensamma arbete.
 
 #### 2.3.1.1 Attribut
 
 * `id`/`mergedFromIds`/`correlationIds`/`previousCorrelationIds` - se 3.1.1
 * `name` - ett språkhanterat namn, t.ex. svenska "Institutionen för Småsaker"/engelska "Department of Details".
 * `types` - orgenhetens typ(er), uttryckta som en eller flera taggar. 
-* `tags` - andra taggningar utöver typ(er). Vi har ingen sektorgemensam samsyn på vilka typer som finns, och på vissa lärosäten har en och samma orgenhet flera typer beroende på kontext (t.ex. "linjeenhet" eller "forskningsområde"). Därför är det fritt för lärosäten att välja vad som är en "typ" och vad som är en "taggning". Mottagare bör vara beredda att läsa ut taggar ur bägge dessa fält.
+* `tags` - andra taggningar utöver typ(er). Vi har ingen sektorgemensam samsyn på vilka typer som finns, och på vissa lärosäten har en och samma organisationsdel flera typer beroende på kontext (t.ex. "linjeenhet" eller "forskningsområde"). Därför är det fritt för lärosäten att välja vad som är en "typ" och vad som är en "taggning". Mottagare bör vara beredda att läsa ut taggar ur bägge dessa fält.
 * `communications` - kontaktväg(ar) till orgenheten i sig, t.ex. en "info"-brevlåda eller en besöksadress.
-* `filterRelations` - flera listor av orgenheter, uppdelade per begrepp, som kan användas för filtrering. Till exempel relationen "en del av" som kan användas när mottagaren skall agera endast på objekt giltiga för en orgenhet som är "en del av institution X".
+* `filterRelations` - flera listor av orgenheter, uppdelade per begrepp, som kan användas för filtrering. Till exempel relationen "en del av" som kan användas när mottagaren skall agera endast på objekt giltiga för en organisationsdel som är "en del av institution X".
 
 #### 2.3.1.2 Bakreferenser
 
 * `deployments` - bakreferens till  [Rolltilldelning](#rolltilldelning)
 * `homed`- bakreferens till Hemvistperioder (TODO: 2.3.???)
 * `responsible` - bakreferens till Ansvarsperioder (TODO: 2.3.???)
-* `childRelations` - bakreferens till alla [Orgenhetsrelationer](#orgenhetsrelation) som pekar ut denna orgenhets barn.
-* `parentRelations` - bakreferens till alla [Orgenhetsrelationer](#orgenhetsrelation) som pekar ut denna orgenhets föräldrar.
+* `childRelations` - bakreferens till alla [Orgenhetsrelationer](#organisatoriskrelation) som pekar ut denna orgenhets barn.
+* `parentRelations` - bakreferens till alla [Orgenhetsrelationer](#organisatoriskrelation) som pekar ut denna orgenhets föräldrar.
 
-### 2.3.2 <a name="orgenhetsrelation">Orgenhetsrelation</a>
+### 2.3.2 <a name="organisatoriskrelation">OrganisatoriskRelation</a>
 
-Vi har alla någon form av struktur bland våra orgenheter. Det är vanligt att ha flera olika strukturer, t.ex.: 
+Vi har alla någon form av struktur bland våra organisationsdeler. Det är vanligt att ha flera olika strukturer, t.ex.: 
 
 * linjeträd som representerar arbetsrättsliga ansvar
 * attestträd som representerar ekonomiska beslutsvägar
@@ -250,15 +250,15 @@ Vi har alla någon form av struktur bland våra orgenheter. Det är vanligt att 
 
 För vissa lärosäten kanske träden är identiska, men för de flesta skiljer sig dessa träd åt. Det är däremot långt ifrån vanligt att ha flera än två-tre av dessa dimensioner i ett IT-system. 
 
-Varje orgenhetsrelation representerar ett riktat förhållande i något av träden som lägger en orgenhet "under" en annan under någon tidsperiod. Ur relationens perspektiv så pekar den ut en "förälder" och ett "barn". Ur orgenheternas perspektiv så har de `[0..*]` relationer som pekar ut dess föräldrar i olika träd, och `[0..*]` relationer som pekar ut dess barn.
+Varje organisatorisk relation representerar ett riktat förhållande i något av träden som lägger en organisationsdel "under" en annan under någon tidsperiod. Ur relationens perspektiv så pekar den ut en "förälder" och ett "barn". Ur organisationsdelarnas perspektiv så har de `[0..*]` relationer som pekar ut dess föräldrar i olika träd, och `[0..*]` relationer som pekar ut dess barn.
 
 #### 2.3.2.1 Attribut
 
 * `id`/`mergedFromIds`/`correlationIds`/`previousCorrelationIds` - se 3.1.1
 * `type` - vilken form av relation är detta? Linjelänk, värdskap, ekonomiskt ansvar kan vara exempel.
 * `tags` - övriga taggningar - se 3.2.2
-* `parent` pekar ut den orgenhet som är förälder i denna relation.
-* `child` pekar ut den orgenhet som är barn i denna relation.
+* `parent` pekar ut den organisationsdel som är förälder i denna relation.
+* `child` pekar ut den organisationsdel som är barn i denna relation.
 * `effectiveTimePeriod` är den tidsperiod denna relation är giltig.
 
 ### 2.3.3 <a name="kommunikationsvag">Kommunikationsväg</a>
@@ -375,7 +375,7 @@ Som mottagare är man förmodligen oftast intresserad av antingen hemvisten elle
 * `tags` - övriga egenskaper (ofta beräknade) som är relevanta för mottagaren - se 3.1.2
 * `effectiveTimePeriod` - giltighet - se 3.1.3
 * `workLifeCycle` - det anknytningsavtal som denna hemvistperiod detaljerar - se 2.6.5
-* `organization` - den orgenhet som denna hemvistperiod pekar ut som hemvist.
+* `organization` - den organisationsdel som denna hemvistperiod pekar ut som hemvist.
 
 ### 2.3.7 <a name="ersattningsperiod">Ersättningsperiod</a> (detaljerar ett [Anknytningsavtal](#anknytningsavtal) eller en [Rolltilldening](#rolltilldelning))
 
@@ -473,7 +473,7 @@ Roller på lärosätena måste dock inte vara lika formellt definierade som roll
 
 ### 2.3.11 <a name="rolltilldelning">Rolltilldelning</a>
 
-Rolltilldelningen säger att en viss person tilldelats ansvar och möjlighet att agera i en viss roll, för en viss orgenhet, under någon viss tidsperiod. Rolltilldelningen kan förknippas med både omfattningsperioder och ersättningsperioder.
+Rolltilldelningen säger att en viss person tilldelats ansvar och möjlighet att agera i en viss roll, för en viss organisationsdel, under någon viss tidsperiod. Rolltilldelningen kan förknippas med både omfattningsperioder och ersättningsperioder.
 
 På många lärosäten har fast antällda personer ett enda anknytningsavtal åt gången, men många har flera olika rolltilldelningar. Det är t.ex. vanligt att en person är anställd som professor någonstans i organisationen, men har ett parallellt förtroendeuppdrag som prefekt för en institution. Hon knyts inte två gånger till lärosätet, anställningen är densamma, men hon har två samtidiga rolltilldelningar. 
 
@@ -488,7 +488,7 @@ Att någon är chef eller arbetsledare är normalt sett en Ansvarsperiod för or
 * `effectiveTimePeriod` - giltighet - se 3.1.3
 * `job` - den Roll (2.2.10) som denna rolltilldelning tilldelar.
 * `person` - den person (2.2.4) som denna rolltilldelningar gäller.
-* `organization` - den orgenhet (2.2.1) där personen `person` agerar i rollen `job`.
+* `organization` - den organisationsdel (2.2.1) där personen `person` agerar i rollen `job`.
 * `workSchedules` - eventuella Omfattningsperioder (2.2.8) som detaljerar denna rolltilldelning.
 * `remunerations` - eventuella Ersättningsperioder (2.2.7) som detaljerar denna rolltilldelning.
 * `explicitlyResponsible` - eventuella Ansvarsperioder för rolltilldelning (2.2.13) som detaljerar denna rolltilldelning.
@@ -498,13 +498,13 @@ Att någon är chef eller arbetsledare är normalt sett en Ansvarsperiod för or
 * `organizationalResponsibilities` - eventuella Ansvarsperioder för organisation (2.2.12) som pekar ut denna rolltilldelning som källan för ansvarig person.
 * `staffsServiceFunctions` - eventuella Servicefunktioner (2.2.14) som bemannas via denna rolltilldelning.
 
-### 2.3.12 <a name="ansvarsperiodorgenhet">Ansvarsperiod för orgenhet</a>
+### 2.3.12 <a name="ansvarsperiodorgenhet">Ansvarsperiod för organisationsdel</a>
 
-Uttrycker en viss typ av ansvar (identifierat av en tag) för en viss orgenhet, och att detta tilldelas en individ personligen eller att det följer av en viss rolltilldelning.
+Uttrycker en viss typ av ansvar (identifierat av en tag) för en viss organisationsdel, och att detta tilldelas en individ personligen eller att det följer av en viss rolltilldelning.
 
 Ekonomiskt ansvar är ofta delegerat på individnivå, medan chefskap följer av en rolltilldelning (t.ex. med en roll som Enhetschef).
 
-Även om man i sina interna system kan räkna ut rolltilldelningen som ger ett visst ansvar (t.ex. genom att veta att chefen för en viss orgenhet är den/de som har en rolltilldelning med rollen Enhetschef eller tf. Enhetschef), så ingår det inte i standarden att överföra den kunskapen. Avsändaren förväntas använda kunskapen för att peka ut de rolltilldelningar som man kan räkna fram med den grundkunskapen. 
+Även om man i sina interna system kan räkna ut rolltilldelningen som ger ett visst ansvar (t.ex. genom att veta att chefen för en viss organisationsdel är den/de som har en rolltilldelning med rollen Enhetschef eller tf. Enhetschef), så ingår det inte i standarden att överföra den kunskapen. Avsändaren förväntas använda kunskapen för att peka ut de rolltilldelningar som man kan räkna fram med den grundkunskapen. 
 
 #### 2.3.12.1 Attribut
 
@@ -512,7 +512,7 @@ Ekonomiskt ansvar är ofta delegerat på individnivå, medan chefskap följer av
 * `tags` - övriga egenskaper (ofta beräknade) som är relevanta för mottagaren - se 3.1.2
 * `effectiveTimePeriod` - giltighet - se 3.1.3
 * `type` - ansvarstypen uttryckt som en enda tag, t.ex. *:responsibility:arbetsledare (Arbetsledare).
-* `organization` - den orgenhet som ansvaret gäller för.
+* `organization` - den organisationsdel som ansvaret gäller för.
 * `persons` - den/de person som individuellt tilldelats ansvaret.
 * `deployments` - den/de rolltilldelningar via vilket ansvaret tilldelas.
 
@@ -704,7 +704,7 @@ Alla objekt som är meningsfulla att skicka på toppnivån har ett enkelvärt oc
 
 Schemat tillåter oändligt många kombinationer av attribut och nästlade objekt. De objekt som beskrivs här är för dem som vill ha så få DTO:er som möjligt, som innehåller så mycket data per styck som möjligt.
 
-#### 3.3.2.1 Orgenhet
+#### 3.3.2.1 organisationsdel
 
 Strukturen enligt följande. 
 
@@ -714,13 +714,13 @@ TODO: Inte komplett
 {
   organization: {
     parentRelations: [
-      // Alla orgenhetsrelationer där denna orgenhet är barn. Föräldern kodas med enbart ID.
+      // Alla orgenhetsrelationer där denna organisationsdel är barn. Föräldern kodas med enbart ID.
     ],
     filterRelations: [
       // Alla filtreringsrelationer. Orgenheter i listorna kodas med ID, taggar och namn.
     ],
     serviceFunctions: [
-      // Alla serviefunktioner som är knutna till denna orgenhet.
+      // Alla serviefunktioner som är knutna till denna organisationsdel.
       {
         // Alla attribut för servicefunktionen. Attributet för vilka orgenheter servicefunktionen
         // är knuten till har bara {id: ...} för organisation.
@@ -742,7 +742,7 @@ TODO: Inte komplett
       {
         workerHomes: [
           {
-            // Orgenhet kodas med ID, taggar och namn.
+            // organisationsdel kodas med ID, taggar och namn.
           }
         ]
       }
@@ -752,7 +752,7 @@ TODO: Inte komplett
     ],
     deployments: [
       {
-        // Orgenhet kodas med ID, taggar och namn.
+        // organisationsdel kodas med ID, taggar och namn.
       }
     ]
     // Alla övriga personattribut
@@ -768,7 +768,7 @@ Asynkrona ändpunkter förväntas kunna producera meddelanden innehållande obje
 
 > Asynkrona ändpunkter _skall_ producera ett nytt meddelande så snart data i ett tidigare meddelande ändrats, men _får_ producera meddelanden även om ingen data ändrats. 
 
-Regeln omfattar all data i meddelandet. Om t.ex. ett personobjekts rolltilldelningar innehåller svenskt namn på en orgenhet, så måste det personobjektet sändas om när orgenheten byter svenskt namn eftersom dess data inte längre är korrekt.
+Regeln omfattar all data i meddelandet. Om t.ex. ett personobjekts rolltilldelningar innehåller svenskt namn på en organisationsdel, så måste det personobjektet sändas om när orgenheten byter svenskt namn eftersom dess data inte längre är korrekt.
 
 Den som tar emot meddelanden av någon viss typ skall alltså med säkerhet veta att det den senast tagit emot är korrekt i sin helhet tills dess den tar emot ett nytt meddelande för samma id, och att om någon del av innehållet ändras så kommer den att få ett nytt meddelande.
 
@@ -1222,7 +1222,7 @@ Se [TOP.json](./TOP.json.manual)
         },
         "organization": {
           "$ref": "#/$defs/OrganizationType",
-          "description": "Den orgenhet där personen tilldelats rollen. Andra änden av OrganisationType.deployments."
+          "description": "Den organisationsdel där personen tilldelats rollen. Andra änden av OrganisationType.deployments."
         },
         "communications": {
           "$ref": "#/$defs/CommunicationType",
@@ -1251,7 +1251,7 @@ Se [TOP.json](./TOP.json.manual)
           "items": {
             "$ref": "#/$defs/OrganizationResponsibilityType"
           },
-          "description": "De ansvar som denna rolltilldelning medför (t.ex. linjechefsansvar för en orgenhet orsakad av en rolltilldelning som enhetschef. Andra änden av OrganizationResponsibilityType.deployment."
+          "description": "De ansvar som denna rolltilldelning medför (t.ex. linjechefsansvar för en organisationsdel orsakad av en rolltilldelning som enhetschef. Andra änden av OrganizationResponsibilityType.deployment."
         },
         "explicitlyResponsible": {
           "type": "array",
@@ -1362,7 +1362,7 @@ Se [TOP.json](./TOP.json.manual)
     },
     "JobType": {
       "type": "object",
-      "description": "En viss roll - en uppsättning arbetsuppgifter och ansvar t.ex. 'Studievägledare' eller 'Rektor'. Personer kan agera i en roll (d.v.s. utföra de arbetsuppgifter som rollen beskriver), men rollen i sig kan inte utföra något. De personer som förväntas agera i en viss roll på en viss orgenhet har en rolltilldelning (DeploymentType) där.",
+      "description": "En viss roll - en uppsättning arbetsuppgifter och ansvar t.ex. 'Studievägledare' eller 'Rektor'. Personer kan agera i en roll (d.v.s. utföra de arbetsuppgifter som rollen beskriver), men rollen i sig kan inte utföra något. De personer som förväntas agera i en viss roll på en viss organisationsdel har en rolltilldelning (DeploymentType) där.",
       "properties": {
         "id": {
           "$ref": "#/$defs/SingleIdentifierType"
@@ -1522,7 +1522,7 @@ Se [TOP.json](./TOP.json.manual)
     },
     "OrganizationResponsibilityType": {
       "type": "object",
-      "description": "Ansvar för viss orgenhet, antingen tilldelat personligen eller via en rolltilldelning. Som mest en avperson, organization, deployment får utelämnas.",
+      "description": "Ansvar för viss organisationsdel, antingen tilldelat personligen eller via en rolltilldelning. Som mest en avperson, organization, deployment får utelämnas.",
       "properties": {
         "type": {
           "$ref": "#/$defs/SingleTagType",
@@ -1588,7 +1588,7 @@ Se [TOP.json](./TOP.json.manual)
     },
     "OrganizationType": {
       "type": "object",
-      "description": "En organisatorisk enhet (orgenhet) - någon del av organisationen bestående av en grupp människor utpekade genom att de tilldelats roller på orgenheten. Kan vara delar i linjen, matrisorganisationer, projekt...",
+      "description": "En organisatorisk enhet (organisationsdel) - någon del av organisationen bestående av en grupp människor utpekade genom att de tilldelats roller på orgenheten. Kan vara delar i linjen, matrisorganisationer, projekt...",
       "properties": {
         "id": {
           "$ref": "#/$defs/SingleIdentifierType"
@@ -1656,7 +1656,7 @@ Se [TOP.json](./TOP.json.manual)
           "items": {
             "$ref": "#/$defs/OrganizationResponsibilityType"
           },
-          "description": "Personer med vissa ansvar för denna orgenhet, utpekade personligen eller via en rolltilldelning."
+          "description": "Personer med vissa ansvar för denna organisationsdel, utpekade personligen eller via en rolltilldelning."
         },
         "parentRelations": {
           "type": "array",
@@ -1677,7 +1677,7 @@ Se [TOP.json](./TOP.json.manual)
           "items": {
             "$ref": "#/$defs/ScopedOrganizationalRelation"
           },
-          "description": "Orgenheter som är relevanta för filtrering, uppdelade per relation. Vanligt är t.ex. relationen 'en del av', där man för orgenhet X har en lista av alla orgenheter som X anses vara 'en del av'."
+          "description": "Orgenheter som är relevanta för filtrering, uppdelade per relation. Vanligt är t.ex. relationen 'en del av', där man för organisationsdel X har en lista av alla orgenheter som X anses vara 'en del av'."
         }
       },
       "required": [
@@ -1688,7 +1688,7 @@ Se [TOP.json](./TOP.json.manual)
     },
     "OrganizationalHomeType": {
       "type": "object",
-      "description": "Säger att den organisatoriska hemvisten för ett visst anknytningsavtal under viss period ligger på en viss orgenhet. Den organisatoriska hemvisten används för att beräkna var ansvaret för en person ligger (t.ex. chefsansvar).",
+      "description": "Säger att den organisatoriska hemvisten för ett visst anknytningsavtal under viss period ligger på en viss organisationsdel. Den organisatoriska hemvisten används för att beräkna var ansvaret för en person ligger (t.ex. chefsansvar).",
       "properties": {
         "organization": {
           "$ref": "#/$defs/OrganizationType",
@@ -1735,11 +1735,11 @@ Se [TOP.json](./TOP.json.manual)
         },
         "parent": {
           "$ref": "#/$defs/OrganizationType",
-          "description": "Den orgenhet som är förälder/ovanför i denna relation."
+          "description": "Den organisationsdel som är förälder/ovanför i denna relation."
         },
         "child": {
           "$ref": "#/$defs/OrganizationType",
-          "description": "Den orgenhet som är barn/under i denna relation."
+          "description": "Den organisationsdel som är barn/under i denna relation."
         },
         "types": {
           "$ref": "#/$defs/MultipleTagType",
@@ -2032,7 +2032,7 @@ Se [TOP.json](./TOP.json.manual)
         },
         "organizationalUnit": {
           "$ref": "#/$defs/OrganizationType",
-          "description": "Den orgenhet som pekas ut av relationen i denna struktur."
+          "description": "Den organisationsdel som pekas ut av relationen i denna struktur."
         }
       },
       "required": [

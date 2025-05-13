@@ -40,7 +40,7 @@ class Servicefunktion(MedFrivilligIdentifierare, MedGiltighet, MedTaggning, MedL
 
 @jsontype()
 @dataclass(kw_only=True)
-class Kontextualiseradorganisationsdelsrelation:
+class KontextualiseradOrganisationsdelsrelation:
     """En kontextualiserad relation med en orgenhet. Används i Organization.filterRelations. Taggen kan
     t.ex. representera filterkontexten "en del av", och peka ut alla orgenheter som en viss orgenhet
     kan anses vara "en del av".
@@ -55,9 +55,22 @@ class Kontextualiseradorganisationsdelsrelation:
 @jsontype()
 @dataclass(kw_only=True)
 class Organisationsdel(MedObligatoriskIdentifierare, MedGiltighet, MedTaggning, MedLokalUtokning):
-    """En organisatorisk enhet (orgenhet) - någon del av organisationen bestående av en grupp människor
-    utpekade genom att de tilldelats roller på orgenheten. Kan vara delar i linjen, matrisorganisationer,
-    projekt...
+    """Representerar någon form av gruppering som är viktig för hur lärosätet organiserar någon
+    aspekt av sitt arbete. Inga gränser sätts för vad som är eller inte är en organisationsdel,
+    varje lärosäte avgör utifrån behov och förmåga. Exempel på möjliga orgenheter är:
+
+        * Fakultet
+        * Institution
+        * Utbildningsprogram (om lärosätet har matrisorganisation t.ex.)
+        * Administrativ enhet
+        * Utvecklingsprojekt (kanske bara centralt finansierade eller av viss storlek)
+        * Kurstillfälle (ur genomförande perspektivet)
+        * Centran (av viss storlek, eller även "kaffereps-centran")
+        * Excellensinitiativ (ja, det begreppet finns på ett lärosäte)
+
+    Gemensamt är att de är väl definierade grupper med gemensamma mål och tydliga relationer till
+    andra organisationsdelar, där någon person ansvarar för gruppens ekonomi, och någon person
+    ansvarar för att arbetsleda gruppens gemensamma arbete.
     """
 
     # Orgenhetens namn.
@@ -93,15 +106,27 @@ class Organisationsdel(MedObligatoriskIdentifierare, MedGiltighet, MedTaggning, 
 
     # Orgenheter som är relevanta för filtrering, uppdelade per relationstyp. Vanligt är t.ex. relationen
     # 'en del av', där man för orgenhet X har en lista av alla orgenheter som X anses vara 'en del av'.
-    filterrelationer: "list[Kontextualiseradorganisationsdelsrelation]" = None
+    filterrelationer: "list[KontextualiseradOrganisationsdelsrelation]" = None
 
 
 @jsontype()
 @dataclass(kw_only=True)
 class OrganisatoriskRelation(MedObligatoriskIdentifierare, MedGiltighet, MedTaggning, MedLokalUtokning):
-    """En relation mellan två organisatoriska enheter, som säger att i en viss struktur ligger den ena
-    ovanför den andra. Vissa lärosäten har många olika strukturer/perspektiv som utgör separata träd,
-    t.ex. linjeträd, grundutbildningsorganisation, programorganisation, och utvisningsträd för webben.
+    """Vi har alla någon form av struktur bland våra organisationsdelar. Det är vanligt att ha flera
+    olika strukturer, t.ex.:
+
+        * linjeträd som representerar arbetsrättsliga ansvar
+        * attestträd som representerar ekonomiska beslutsvägar
+        * organisationsträd i Ladok som representerar beslutsvägar för examination.
+        * ett träd som visas ut på hemsidan.
+
+    För vissa lärosäten kanske träden är identiska, men för de flesta skiljer sig dessa träd åt. Det
+    är däremot långt ifrån vanligt att ha flera än två-tre av dessa dimensioner i ett IT-system.
+
+    Varje organisationsdelsrelation representerar ett riktat förhållande i något av träden som
+    lägger en organisationsdel "under" en annan under någon tidsperiod. Ur relationens perspektiv så
+    pekar den ut en "förälder" och ett "barn". Ur organisationsdelarnas perspektiv så har de `[0..*]`
+    relationer som pekar ut dess föräldrar i olika träd, och `[0..*]` relationer som pekar ut dess barn.
     """
     # Den/de strukturer/träd/perspektiv som denna relation gäller för.
     typer: list[Tagg]

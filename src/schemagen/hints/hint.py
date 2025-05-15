@@ -19,4 +19,13 @@ class Hint:
     def json_schema_use(self) -> dict:
         raise NotImplementedError()
 
+    def cardinalize(self, s: str) -> str:
+        if not self.optional:
+            return s + "!"
+        if self.is_list:
+            return f"Lista av {s}"
+        return s
+
+    def to_markdown(self) -> str:
+        raise NotImplementedError()
 

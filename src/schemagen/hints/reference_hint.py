@@ -12,4 +12,6 @@ class ReferenceHint(Hint):
     def json_schema_use(self) -> dict:
         return self.referenced_typedef.json_schema_use()
 
-
+    def to_markdown(self) -> str:
+        name = self.referenced_typedef.name
+        return self.cardinalize(f"[`{name}`]({name})")

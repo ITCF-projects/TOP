@@ -71,3 +71,9 @@ class Schema:
                 out.append(lines.pop(0))
         return "\n".join(out)
 
+    def make_markdown_string(self, top_chapter: int) -> str:
+        md = [f"# {top_chapter} Entiteter", ""]
+        for (i, (n, t)) in enumerate(self.typedefs_by_name.items()):
+            md.extend(t.markdown_doc(top_chapter, i+1))
+        return "\n".join(md)
+

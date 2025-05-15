@@ -14,4 +14,6 @@ class IntegerHint(Hint):
             base_schema["maximum"] = self.value_range[1]
         return base_schema
 
+    def to_markdown(self) -> str:
+        return "`" + self.cardinalize("integer") + "`"
 

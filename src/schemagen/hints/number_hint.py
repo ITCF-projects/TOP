@@ -10,4 +10,6 @@ class NumberHint(Hint):
         base_schema = {"type": "number"}
         return base_schema
 
+    def to_markdown(self) -> str:
+        return "`" + self.cardinalize("number") + "`"
 

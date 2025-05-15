@@ -16,4 +16,12 @@ class StringHint(Hint):
             base_schema["enum"] = self.enum
         return base_schema
 
+    def to_markdown(self) -> str:
+        md = "`" + self.cardinalize("boolean") + "`"
+        if self.enum:
+            return md + ' Value one of "' + '", "'.join(self.enum) + '")'
+        elif self.regexp:
+            return md + f' Must match regexp: `{self.regexp}`'
+        return md
+
 

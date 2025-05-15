@@ -10,4 +10,6 @@ class BooleanHint(Hint):
         base_schema = {"type": "boolean"}
         return base_schema
 
+    def to_markdown(self) -> str:
+        return "`" + self.cardinalize("boolean") + "`"
 

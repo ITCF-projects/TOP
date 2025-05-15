@@ -9,6 +9,7 @@ class Typedef:
     def __init__(self, schema: "Schema", name: str):
         self.schema = schema
         self.name = name
+        self.description = ""
 
     def schema_closed(self):
         pass
@@ -39,4 +40,14 @@ class Typedef:
     def json_schema_use(self) -> dict:
         return {"$ref": f"#/$defs/{self.name}"}
 
+    def specific_markdown_doc(self, top_chapter: int, sub_chapter: int) -> list[int]:
+        return []
 
+    def markdown_doc(self, top_chapter: int, sub_chapter: int=0) -> list[str]:
+        md = [
+            f'## {top_chapter}.{sub_chapter} <a name="{self.name}">{self.name}</a>',
+            '',
+            self.description.replace("    ", ""),
+            ''
+        ] + self.specific_markdown_doc(top_chapter, sub_chapter)
+        return md

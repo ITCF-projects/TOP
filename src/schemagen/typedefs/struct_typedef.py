@@ -20,14 +20,14 @@ class Struct(Typedef):
     def __init__(self, schema: "Schema", name: str, typ: type):
         super().__init__(schema, name)
         self.typ = typ
-        self.properties = {}
+        self.properties: dict[str, Hint] = {}
         self.bases: "list[Typedef]" = []
         self.description = self.typ.__json_args__.get("description", self.typ.__doc__)
 
     def schema_closed(self):
         # Ugly ass hack! I'm proud! Could be reduced to an ugly hack (as opposed to ugly _ass_ hack)
         # by using the AST module.
-        vardef = re.compile(r"^\s+([_a-zA-Z0-9]+)\s*:\s*[A-za-z]+.*")
+        vardef = re.compile(r'^\s+([_a-zA-Z0-9]+)\s*:\s*[\"A-za-z]+.*')
         comments = {}
         comment_lines = []
         for srcline in inspect.getsource(self.typ).splitlines():
@@ -146,6 +146,18 @@ class Struct(Typedef):
                 reflowed[-1] += " "
             reflowed[-1] += word
         return "\n".join(reflowed)
+
+    def specific_markdown_doc(self, top_chapter: int, sub_chapter: int):
+        md = [f"### {top_chapter}.{sub_chapter}.1 Attribut", ""]
+        for (i, (name, hint)) in enumerate(self.properties.items()):
+            md += [
+                f"### {top_chapter}.{sub_chapter}.{i+1} `{name}`",
+                f"Typ: {hint.to_markdown()}"
+            ]
+            if hint.doc:
+                md += ["", hint.doc.replace("    ", "")]
+            md += ["\n"]
+        return md
 
     def json_schema_definition(self, *, as_toplevel: bool) -> dict:
         base_schema = {"type": "object"}

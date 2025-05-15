@@ -69,6 +69,8 @@ class Anknytningsavtal(MedObligatoriskIdentifierare, MedTaggning, MedGiltighet, 
     "anställningsliknande former", och därför har avtalsperioder ett flervärt "tag"-fält där sådan tolkad
     information kan läggas.
     """
+
+    # Den person som detta anknytningsavtal gäller.
     person: "Person" = None
 
     # Typ av anknytningsavtal, t.ex. "anställning", "delegering" eller "muntligt avtal".
@@ -104,7 +106,7 @@ class Anknytningsavtal(MedObligatoriskIdentifierare, MedTaggning, MedGiltighet, 
 
     # Om du, av någon anledning, inte kan hantera att personer omfattas av mer än ett avtal,
     # ta det här avtalet.
-    huvudavtal: bool = None
+    arHuvudavtal: bool = None
 
     # Detta avtal är underordnat ett annat (t.ex. kan en delegering vara underordnad en anställning),
     # det är ett "hängavtal". Giltigheten på detta avtal begränsas därmed av giltigheten på det

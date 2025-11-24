@@ -1,4 +1,4 @@
-# 4 Entiteter
+ # 4 Entiteter
 
 ## 4.1 <a name="Date">Date</a>
 
@@ -69,90 +69,96 @@ Organisatorisk(a) hemvist(er) - på vilken organisationsdel placerar detta avtal
 ### 4.3.5 `omfattningsperioder`
 Typ: Lista av [`Omfattningsperiod`](Omfattningsperiod)
 
-Omfattningar för denna rolltilldelning.
+Omfattningar för detta anknytningsavtal.
 
 
-### 4.3.6 `franvaroperioder`
+### 4.3.6 `rolltilldelningar`
+Typ: Lista av [`Rolltilldelning`](Rolltilldelning)
+
+Rolltilldelningar i kontexten av detta avtal.
+
+
+### 4.3.7 `franvaroperioder`
 Typ: Lista av [`Franvaroperiod`](Franvaroperiod)
 
 Frånvaroperioder. Alla förhållanden som minskar omfattningen (.workSchedule) under någon period, t.ex. semester, tjänstledighet eller sjukskrivning.
 
 
-### 4.3.7 `lopandeErsattningar`
+### 4.3.8 `lopandeErsattningar`
 Typ: Lista av [`LopandeErsattning`](LopandeErsattning)
 
 Lön eller ersättning. Kan vara flera, och kan variera under giltighetstiden. Lönetillägg för specifika rolltilldelningar (t.ex. prefekttillägg) läggs i rolltilldelningen.
 
 
-### 4.3.8 `engangsersattningar`
+### 4.3.9 `engangsersattningar`
 Typ: Lista av [`Engangsersattning`](Engangsersattning)
 
-Engångsersättningar för denna rolltilldelning.
+Engångsersättningar för detta anknytningsavtal.
 
 
-### 4.3.9 `begransningskod`
+### 4.3.10 `begransningskod`
 Typ: `boolean`
 
 Begränsningskoden talar om varför någon inte har en fastanställning.
 
 
-### 4.3.10 `huvudavtal`
+### 4.3.11 `arHuvudavtal`
 Typ: `boolean`
 
 Om du, av någon anledning, inte kan hantera att personer omfattas av mer än ett avtal, ta det här avtalet.
 
 
-### 4.3.11 `underordnat`
+### 4.3.12 `underordnat`
 Typ: [`Anknytningsavtal`](Anknytningsavtal)
 
 Detta avtal är underordnat ett annat (t.ex. kan en delegering vara underordnad en anställning), det är ett "hängavtal". Giltigheten på detta avtal begränsas därmed av giltigheten på det utpekade avtalet.
 
 
-### 4.3.12 `underordnade`
+### 4.3.13 `underordnade`
 Typ: Lista av [`Anknytningsavtal`](Anknytningsavtal)
 
 Andra avtal som är underordnade detta. De underordnade avtalen kan aldrig vara giltiga när detta avtal inte är det.
 
 
-### 4.3.13 `avslutsorsak`
+### 4.3.14 `avslutsorsak`
 Typ: `boolean`
 
 Om vi vill veta varför ett visst avtal har avslutats så kan vi skriva något om det här.
 
 
-### 4.3.14 `avslutsorsakskoder`
+### 4.3.15 `avslutsorsakskoder`
 Typ: Lista av [`Tagg`](Tagg)
 
 aanstperiod.avslutdkod_id -> avslutskod.typ (typ är t.ex. "1" för S1). Det finns för t.ex. anställningar formella koder till pensionsmyndigheten (S1-S9). Dessa är taggar som man kan lägga in här.
 
 
-### 4.3.15 `anstallningsnummer`
+### 4.3.16 `anstallningsnummer`
 Typ: `integer`
 
 Anställningsnummer används vid rapporter till Skatteverket med mera.
 
 
-### 4.3.16 `befattningsnamn`
+### 4.3.17 `befattningsnamn`
 Typ: `boolean`
 
 Befattningarna är lönenära och matchar nästan, men inte riktigt, rollen.
 
 
-### 4.3.17 `befattningskategori`
+### 4.3.18 `befattningskategori`
 Typ: `boolean`
 
 
-### 4.3.18 `befattningskodSCB`
+### 4.3.19 `befattningskodSCB`
 Typ: `boolean`
 
 
-### 4.3.19 `BESTA`
+### 4.3.20 `BESTA`
 Typ: `boolean`
 
 BESTA-kod (9 tecken).
 
 
-### 4.3.20 `skatt`
+### 4.3.21 `skatt`
 Typ: [`Skatt`](Skatt)
 
 
@@ -582,7 +588,8 @@ Domännamn eller liknande identifierare som ger en kontext för kombinationen (s
 ## 4.21 <a name="Kommunikation">Kommunikation</a>
 
 Ett kommunikationsvägar-objekt innehåller upp till fyra listor av adresser/kontaktinformation
-för fyra olika typer av kontakt - epost, telefon, fysiskt besök, övriga elektroniska adresser.
+för fyra olika typer av kontakt - epost (och andra elektroniska adresser), telefon (och fax mm),
+fysiskt besök, och snigelpost.
 
 Gemensamt för alla typerna är att avsändaren kan förse dem med en lista av vilka kanaler varje
 adress/nummer får spridas. Till exempel så kan Lilla Lärosätets rektor välja att adressen
@@ -615,7 +622,7 @@ Typ: Lista av [`Besoksadress`](Besoksadress)
 
 ## 4.22 <a name="Kontering">Kontering</a>
 
-Kontering(*, konton: list[top2.common.Identifierare], varde: float)
+Kontering(*, taggar: list[top2.common.Tagg] = None, giltighetsbegransadeTaggar: list[top2.common.MedGiltighetsbegransadTaggning] = None, konton: list[top2.common.Identifierare], varde: float)
 
 ### 4.22.1 Attribut
 
@@ -714,7 +721,9 @@ Lista över taggar som sitter/satt/kommer sitta på posten under giltigheten.
 
 ## 4.27 <a name="Meddelande">Meddelande</a>
 
-Toppobjekt med enkla och listvärda referenser till samtliga värdeobjekt. Bra grund för meddelanden!
+Toppobjekt med enkla och listvärda referenser till samtliga värdeobjekt. Bra grund för meddelanden,
+även t.ex. en lysande topp-Query för ett GraphQL-gränssnitt.
+
 
 ### 4.27.1 Attribut
 
@@ -817,7 +826,7 @@ Den anknytningsperiod som denna omfattningsperiod detaljerar.
 
 ## 4.29 <a name="Organisationsdel">Organisationsdel</a>
 
-Representerar någon form av gruppering som är viktig för hur lärosätet organiserar någon
+Representerar någon form av gruppering som är viktig för hur lärosätet organiserar en viss
 aspekt av sitt arbete. Inga gränser sätts för vad som är eller inte är en organisationsdel,
 varje lärosäte avgör utifrån behov och förmåga. Exempel på möjliga orgenheter är:
 
@@ -846,7 +855,7 @@ Orgenhetens namn.
 ### 4.29.2 `typer`
 Typ: Lista av [`Tagg`](Tagg)
 
-Orgenhetens typ(er). Övriga taggningar som inte kan sägas vara dess typ läggs i stället i .tags. "Institution" är tydligt en typ av organisation, men om "resultatenhet" är en typ eller en taggning är upp till varje lärosäte att avgöra.
+Orgenhetens typ(er). Övriga taggningar som inte kan sägas vara dess typ läggs i stället i de vanliga taggningsattributen. "Institution" är t.ex. tydligt en typ av organisation, men om "resultatenhet" är en typ eller en taggning är upp till varje lärosäte att avgöra.
 
 
 ### 4.29.3 `kommunikationsvagar`
@@ -1164,7 +1173,7 @@ Registrerade bisysslor
 En viss roll - en uppsättning arbetsuppgifter och ansvar t.ex. 'Studievägledare' eller 'Rektor'.
 Personer kan agera i en roll (d.v.s. utföra de arbetsuppgifter som rollen beskriver), men rollen
 i sig kan inte utföra något. De personer som förväntas agera i en viss roll på en viss orgenhet
-har en rolltilldelning (DeploymentType) där.
+har en rolltilldelning där.
 
 
 ### 4.36.1 Attribut
@@ -1189,10 +1198,14 @@ Rolltilldelningar för denna roll.
 
 ## 4.37 <a name="Rolltilldelning">Rolltilldelning</a>
 
-En rolltilldelning - säger att en person, baserat i ett visst avtal, förväntas agera i en viss
-roll för en viss del av organisationen under viss tid. Om man varken känner till start- eller
-slutdatum utelämnas effectiveTimePeriod. Giltigheten begränsas indirekt av giltigheten på det
-avtal som ligger till grund för rolltilldelningen.
+En rolltilldelning säger att en person förväntas agera i en viss roll för en viss del av organisationen
+under viss tid. Förhoppningsvis har personen också tilldelats möjligheten att uppfylla de ansvar som rollen
+medför - eller så används Rolltilldelningen som bas för att automatiskt utdela sådana behörigheter.
+
+Det är rekommenderat (men inte tvingande) att peka ut det anknytningsavtal inom vilket denna rolltilldelning
+skett. Många personer agerar i flera olika roller på ett lärosäte i kontexten av t.ex. en anställning, och
+det ger tydlighet att peka ut den kontexten. Om ett avtal pekas ut, så begränsas rolltilldelningens
+giltighet både av sin egen giltighet men även av giltigheten på det utpekade anknytningsavtalet.
 
 
 ### 4.37.1 Attribut
@@ -1200,13 +1213,13 @@ avtal som ligger till grund för rolltilldelningen.
 ### 4.37.1 `anknyntningsavtal`
 Typ: [`Anknytningsavtal`](Anknytningsavtal)
 
-Eftersom rolltilldelning är en detaljering av ett avtal så tar jag bort den direkta länken till person. person: "Person" = None
+Det anknytningsavtal som denna rolltilldelning detaljerar. Reverse: Anknytningsavtal.rolltilldelningar
 
 
 ### 4.37.2 `organisationsdel`
 Typ: [`Organisationsdel`](Organisationsdel)
 
-Den del av organisationen där personen tilldelats rollen. Andra änden av Organisation.deployments.
+Den del av organisationen där personen tilldelats rollen.
 
 
 ### 4.37.3 `kommunikationsvagar`

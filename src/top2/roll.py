@@ -13,7 +13,7 @@ class Roll(MedObligatoriskIdentifierare, MedTaggning, MedLokalUtokning):
     """En viss roll - en uppsättning arbetsuppgifter och ansvar t.ex. 'Studievägledare' eller 'Rektor'.
     Personer kan agera i en roll (d.v.s. utföra de arbetsuppgifter som rollen beskriver), men rollen
     i sig kan inte utföra något. De personer som förväntas agera i en viss roll på en viss orgenhet
-    har en rolltilldelning (DeploymentType) där.
+    har en rolltilldelning där.
     """
 
     # Rollens namn, t.ex. {'sv': 'Studievägledare', 'en': 'Study counsellor'}

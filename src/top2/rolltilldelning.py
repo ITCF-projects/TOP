@@ -19,10 +19,14 @@ if TYPE_CHECKING:
 @jsontype()
 @dataclass(kw_only=True)
 class Rolltilldelning(MedObligatoriskIdentifierare, MedGiltighet, MedTaggning, MedLokalUtokning):
-    """En rolltilldelning - säger att en person, baserat i ett visst avtal, förväntas agera i en viss
-    roll för en viss del av organisationen under viss tid. Om man varken känner till start- eller
-    slutdatum utelämnas effectiveTimePeriod. Giltigheten begränsas indirekt av giltigheten på det
-    avtal som ligger till grund för rolltilldelningen.
+    """En rolltilldelning säger att en person förväntas agera i en viss roll för en viss del av organisationen
+    under viss tid. Förhoppningsvis har personen också tilldelats möjligheten att uppfylla de ansvar som rollen
+    medför - eller så används Rolltilldelningen som bas för att automatiskt utdela sådana behörigheter.
+
+    Det är rekommenderat (men inte tvingande) att peka ut det anknytningsavtal inom vilket denna rolltilldelning
+    skett. Många personer agerar i flera olika roller på ett lärosäte i kontexten av t.ex. en anställning, och
+    det ger tydlighet att peka ut den kontexten. Om ett avtal pekas ut, så begränsas rolltilldelningens
+    giltighet både av sin egen giltighet men även av giltigheten på det utpekade anknytningsavtalet.
     """
 
     # Det anknytningsavtal som denna rolltilldelning detaljerar.

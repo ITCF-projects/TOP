@@ -12,7 +12,9 @@ from top2.anknytningsavtal import Anknytningsavtal
 @jsontype()
 @dataclasses.dataclass(kw_only=True)
 class Meddelande:
-    """Toppobjekt med enkla och listvärda referenser till samtliga värdeobjekt. Bra grund för meddelanden!"""
+    """Toppobjekt med enkla och listvärda referenser till samtliga värdeobjekt. Bra grund för meddelanden,
+    även t.ex. en lysande topp-Query för ett GraphQL-gränssnitt.
+    """
 
     anknytningsperiod: Anknytningsavtal = None
     anknytningsperioder: list[Anknytningsavtal] = None

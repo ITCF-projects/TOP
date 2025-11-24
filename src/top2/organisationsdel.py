@@ -55,7 +55,7 @@ class KontextualiseradOrganisationsdelsrelation:
 @jsontype()
 @dataclass(kw_only=True)
 class Organisationsdel(MedObligatoriskIdentifierare, MedGiltighet, MedTaggning, MedLokalUtokning):
-    """Representerar någon form av gruppering som är viktig för hur lärosätet organiserar någon
+    """Representerar någon form av gruppering som är viktig för hur lärosätet organiserar en viss
     aspekt av sitt arbete. Inga gränser sätts för vad som är eller inte är en organisationsdel,
     varje lärosäte avgör utifrån behov och förmåga. Exempel på möjliga orgenheter är:
 
@@ -76,9 +76,9 @@ class Organisationsdel(MedObligatoriskIdentifierare, MedGiltighet, MedTaggning, 
     # Orgenhetens namn.
     namn: SprakhanteradText = None
 
-    # Orgenhetens typ(er). Övriga taggningar som inte kan sägas vara dess typ läggs i stället i .tags.
-    # "Institution" är tydligt en typ av organisation, men om "resultatenhet" är en typ eller en taggning
-    # är upp till varje lärosäte att avgöra.
+    # Orgenhetens typ(er). Övriga taggningar som inte kan sägas vara dess typ läggs i stället i de vanliga
+    # taggningsattributen. "Institution" är t.ex. tydligt en typ av organisation, men om "resultatenhet" är
+    # en typ eller en taggning är upp till varje lärosäte att avgöra.
     typer: list[Tagg] = None
 
     # Kommunikationsvägar till orgenheten som abstrakt entitet, t.ex. en info@institution-epostadress.

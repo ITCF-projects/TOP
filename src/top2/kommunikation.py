@@ -7,7 +7,7 @@ from schemagen import jsontype, Regexp
 
 @jsontype()
 @dataclass(kw_only=True)
-class Telefonnummer(MedLokalUtokning):
+class Telefonnummer(MedSpridning, MedTaggning, MedLokalUtokning):
     """Telefonnummer."""
 
     # Universellt telefonnummer inklusive landskod, utan separerare, t.ex. +46317721000
@@ -44,7 +44,7 @@ class Snigelpost(MedSpridning, MedTaggning, MedLokalUtokning):
 
 @jsontype()
 @dataclass(kw_only=True)
-class ElektroniskAdress(MedSpridning, MedTaggning):
+class ElektroniskAdress(MedSpridning, MedTaggning, MedLokalUtokning):
     """Elektronisk adress"""
 
     # Media. Standarden definierar taggar för t.ex. web och epost, men det är fritt att definiera egna
@@ -102,7 +102,8 @@ class Besoksadress(MedSpridning, MedTaggning, MedLokalUtokning):
 @dataclass(kw_only=True)
 class Kommunikation(MedLokalUtokning):
     """Ett kommunikationsvägar-objekt innehåller upp till fyra listor av adresser/kontaktinformation
-    för fyra olika typer av kontakt - epost, telefon, fysiskt besök, övriga elektroniska adresser.
+    för fyra olika typer av kontakt - epost (och andra elektroniska adresser), telefon (och fax mm),
+    fysiskt besök, och snigelpost.
 
     Gemensamt för alla typerna är att avsändaren kan förse dem med en lista av vilka kanaler varje
     adress/nummer får spridas. Till exempel så kan Lilla Lärosätets rektor välja att adressen

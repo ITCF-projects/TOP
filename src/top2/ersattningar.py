@@ -19,7 +19,7 @@ class RemunerationCode(enum.Enum):
 
 @jsontype()
 @dataclass(kw_only=True)
-class Kontering(MedLokalUtokning):
+class Kontering(MedTaggning, MedLokalUtokning):
     # Alla relevanta ID:n för att göra en tillräckligt detaljerad specifikation (konto, kostnadsställe, mm)
     konton: list[Identifierare]
     # Den del av värdet som konteras på detta sätt. När en ersättning konteras skall summan av alla

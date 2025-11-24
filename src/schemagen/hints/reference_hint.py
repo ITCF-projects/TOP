@@ -5,9 +5,10 @@ from schemagen.hints.hint import Hint
 
 
 class ReferenceHint(Hint):
-    def __init__(self, doc: str, optional: bool, is_list: bool, referenced_typedef: "Typedef"):
+    def __init__(self, doc: str, optional: bool, is_list: bool, referenced_typedef: "Typedef", reverese: tuple[str, str] = None):
         super().__init__(doc, optional, is_list)
         self.referenced_typedef = referenced_typedef
+        self.reverse = reverese
 
     def json_schema_use(self) -> dict:
         return self.referenced_typedef.json_schema_use()

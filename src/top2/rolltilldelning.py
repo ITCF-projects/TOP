@@ -25,12 +25,11 @@ class Rolltilldelning(MedObligatoriskIdentifierare, MedGiltighet, MedTaggning, M
     avtal som ligger till grund för rolltilldelningen.
     """
 
-    # Eftersom rolltilldelning är en detaljering av ett avtal så tar jag bort den direkta länken
-    # till person.
-    # person: "Person" = None
+    # Det anknytningsavtal som denna rolltilldelning detaljerar.
+    # Reverse: Anknytningsavtal.rolltilldelningar
     anknyntningsavtal: "Anknytningsavtal" = None
 
-    # Den del av organisationen där personen tilldelats rollen. Andra änden av Organisation.deployments.
+    # Den del av organisationen där personen tilldelats rollen.
     organisationsdel: "Organisationsdel" = None
 
     # Kommunikationsvägar till personen i kontexten av denna rolltilldelning.

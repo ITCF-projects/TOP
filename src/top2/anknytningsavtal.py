@@ -9,6 +9,7 @@ if TYPE_CHECKING:
     from top2.organisationsdel import Organisationsdel
     from top2.ersattningar import LopandeErsattning, Engangsersattning
     from top2.omfattningsperiod import Franvaroperiod, Omfattningsperiod
+    from top2.rolltilldelning import Rolltilldelning
 
 
 @jsontype()
@@ -87,8 +88,11 @@ class Anknytningsavtal(MedObligatoriskIdentifierare, MedTaggning, MedGiltighet, 
     # orghemvister om man kan och vill.
     hemvistperioder: "list[Hemvistperiod]" = None
 
-    # Omfattningar för denna rolltilldelning.
+    # Omfattningar för detta anknytningsavtal.
     omfattningsperioder: "list[Omfattningsperiod]" = None
+
+    # Rolltilldelningar i kontexten av detta avtal.
+    rolltilldelningar: "list[Rolltilldelning]" = None
 
     # Frånvaroperioder. Alla förhållanden som minskar omfattningen (.workSchedule) under någon period,
     # t.ex. semester, tjänstledighet eller sjukskrivning.
@@ -98,7 +102,7 @@ class Anknytningsavtal(MedObligatoriskIdentifierare, MedTaggning, MedGiltighet, 
     # specifika rolltilldelningar (t.ex. prefekttillägg) läggs i rolltilldelningen.
     lopandeErsattningar: "list[LopandeErsattning]" = None
 
-    # Engångsersättningar för denna rolltilldelning.
+    # Engångsersättningar för detta anknytningsavtal.
     engangsersattningar: "list[Engangsersattning]" = None
 
     # Begränsningskoden talar om varför någon inte har en fastanställning.

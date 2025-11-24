@@ -23,10 +23,14 @@ class Struct(Typedef):
         self.properties: dict[str, Hint] = {}
         self.bases: "list[Typedef]" = []
         self.description = self.typ.__json_args__.get("description", self.typ.__doc__)
+        self.all_reverse_references: set[tuple[str, str]] = set()
 
     def schema_closed(self):
-        # Ugly ass hack! I'm proud! Could be reduced to an ugly hack (as opposed to ugly _ass_ hack)
-        # by using the AST module.
+        ### Start of ugly ass hack!
+        # We want to capture comments directly preceding attribute declarations in the source code,
+        # which is currently done by looking through the source code with a bit of logic and a regexp.
+        # It could be reduced to an ugly hack (as opposed to ugly _ass_ hack) by using the AST module.
+
         vardef = re.compile(r'^\s+([_a-zA-Z0-9]+)\s*:\s*[\"A-za-z]+.*')
         comments = {}
         comment_lines = []
@@ -41,6 +45,7 @@ class Struct(Typedef):
                 comment_lines = []
             else:
                 comment_lines = []
+        ### End of ugly ass hack.
 
         for b in self.typ.__bases__:
             if base_td := self.schema.typedefs_by_type.get(b, None):

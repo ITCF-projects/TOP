@@ -1,4 +1,4 @@
- # 4 Entiteter
+# 4 Entiteter
 
 ## 4.1 <a name="Date">Date</a>
 

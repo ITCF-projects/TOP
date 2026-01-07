@@ -464,7 +464,7 @@ Typ: `boolean`
 Om sann så är slutdatumet på perioden preliminärt, t.ex. slutdatum på en längre sjukskrivning som kan få en fortsättning. Om falsk så förväntas personens frånvaro sluta enligt giltigheten, t.ex. en beviljad semesterperiod.
 
 
-### 4.15.5 `anknyntningsperiod`
+### 4.15.5 `anknytningsperiod`
 Typ: [`Anknytningsavtal`](Anknytningsavtal)
 
 Den anknytningsperiod som denna frånvaroperiod detaljerar.
@@ -538,7 +538,7 @@ person ligger (t.ex. chefsansvar).
 ### 4.19.1 `organisationsdel`
 Typ: [`Organisationsdel`](Organisationsdel)!
 
-Den organisatoriska enhet som ansvarar för den person som anknyntningsavtalet gäller.
+Den organisatoriska enhet som ansvarar för den person som anknytningsavtalet gäller.
 
 
 ### 4.19.2 `anknytningsperiod`
@@ -1210,7 +1210,7 @@ giltighet både av sin egen giltighet men även av giltigheten på det utpekade 
 
 ### 4.37.1 Attribut
 
-### 4.37.1 `anknyntningsavtal`
+### 4.37.1 `anknytningsavtal`
 Typ: [`Anknytningsavtal`](Anknytningsavtal)
 
 Det anknytningsavtal som denna rolltilldelning detaljerar. Reverse: Anknytningsavtal.rolltilldelningar

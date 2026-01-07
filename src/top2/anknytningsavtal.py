@@ -31,7 +31,7 @@ class Hemvistperiod(MedGiltighet, MedTyptagg, MedTaggning, MedLokalUtokning):
     person ligger (t.ex. chefsansvar).
     """
 
-    # Den organisatoriska enhet som ansvarar för den person som anknyntningsavtalet gäller.
+    # Den organisatoriska enhet som ansvarar för den person som anknytningsavtalet gäller.
     organisationsdel: "Organisationsdel"
 
     # Det anknytningsavtal som denna orghemvist detaljerar.

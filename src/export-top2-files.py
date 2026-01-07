@@ -13,12 +13,12 @@ sch.close_schema()
 md = sch.make_markdown_string(4)
 
 # Skriv new markdownen till en fil.
-with open("TOP-entities.md", "w") as fp:
+with open("../TOP-entities.md", "w") as fp:
     fp.write(md)
 
 # Exportera ut TOP-schemat som JSON-schema, med "Meddelande"-entiteten som toppentitet.
 js = sch.make_single_schema_string("Meddelande")
-with open("TOP.json", "w") as fp:
+with open("../TOP.json", "w") as fp:
     fp.write(js)
 
 

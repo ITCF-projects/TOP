@@ -31,7 +31,7 @@ class Rolltilldelning(MedObligatoriskIdentifierare, MedGiltighet, MedTaggning, M
 
     # Det anknytningsavtal som denna rolltilldelning detaljerar.
     # Reverse: Anknytningsavtal.rolltilldelningar
-    anknyntningsavtal: "Anknytningsavtal" = None
+    anknytningsavtal: "Anknytningsavtal" = None
 
     # Den del av organisationen där personen tilldelats rollen.
     organisationsdel: "Organisationsdel" = None

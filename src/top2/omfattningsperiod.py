@@ -57,4 +57,4 @@ class Franvaroperiod(MedGiltighet, MedTaggning, MedFrivilligIdentifierare, MedTy
     slutdatumArPreliminart: bool = None
 
     # Den anknytningsperiod som denna frånvaroperiod detaljerar.
-    anknyntningsperiod: "Anknytningsavtal" = None
+    anknytningsperiod: "Anknytningsavtal" = None

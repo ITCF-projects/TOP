@@ -3,7 +3,7 @@ import datetime
 from typing import *
 
 from schemagen import jsontype
-from top2.common import Identifierare, MedObligatoriskIdentifierare, MedFrivilligIdentifierare, MedGiltighet, MedTaggning, MedLokalUtokning, Tagg
+from top2.common import Identifierare, Identifiering, FrivilligIdentifiering, Giltighet, Taggning, LokalUtokning, Tagg
 
 if TYPE_CHECKING:
     from top2.rolltilldelning import Rolltilldelning
@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 
 @jsontype()
 @dataclass(kw_only=True)
-class Passerbehorighet(MedGiltighet, MedLokalUtokning):
+class Passerbehorighet:
     """En passerbehörighet, identifierad av ett för mottagaren meningsfullt ID. Tilldelningen av behörigheten
     görs till en person eller ett passerkort."""
 
@@ -27,19 +27,29 @@ class Passerbehorighet(MedGiltighet, MedLokalUtokning):
     # De passerkort som tilldelats behörigheten.
     tilldeladPasserkort: "list[Passerkort]"
 
+    # Giltighet för denna passerbehörighet.
+    giltighet: Giltighet = None
+    # Lokala utökningar.
+    lokalUtokning: LokalUtokning = None
+
 
 @jsontype()
 @dataclass(kw_only=True)
-class Passerkort(MedFrivilligIdentifierare, MedGiltighet, MedLokalUtokning):
+class Passerkort:
     """Ett passerkort och de behörigheter detta kort skall vara försedda med. Om behörigheter knyts till
     personen snarare än till dennes kort så används istället PersonType.accessPrivileges. Notera att
     giltighetstider i detta objekt rör passerkortet i sig, behörigheterna har egna giltighetstider.
     """
-    # Kortets id.
-    postid: Identifierare
+    # Identifiering av passerkortet.
+    identifiering: FrivilligIdentifiering = None
 
     # Behörigheter som kortet skall förknippas med (behörigheter för individ läggs i Person.accessPrivileges)
     passerbehorigheter: list[Passerbehorighet] = None
+
+    # Giltighet för detta passerkort.
+    giltighet: Giltighet = None
+    # Lokala utökningar.
+    lokalUtokning: LokalUtokning = None
 
 
 @jsontype()
@@ -58,7 +68,7 @@ class Bisyssla:
 
 @jsontype()
 @dataclass(kw_only=True)
-class Person(MedObligatoriskIdentifierare, MedTaggning, MedLokalUtokning, MedGiltighet):
+class Person:
     """En person av kött och blod. Datat är så normaliserat som avsändaren klarar av - i normalfallet
     motsvaras varje fysisk person av som mest _en_ datapost. Ingen avsändare skall t.ex. skicka flera
     personposter med olika ID:n när en person har flera parallella anställningar.
@@ -68,6 +78,16 @@ class Person(MedObligatoriskIdentifierare, MedTaggning, MedLokalUtokning, MedGil
     kan också finnas med här. Den främsta informationen framkommer dock i hur personen hänger ihop
     med lärosätets organisation, vilket beskrivs av _anknytningsavtal_ och _rolltilldelningar_.
     """
+
+    # Identifiering av personen.
+    identifiering: Identifiering
+
+    # Giltighet för denna personpost.
+    giltighet: Giltighet = None
+    # Taggning av personen.
+    taggning: Taggning = None
+    # Lokala utökningar.
+    lokalUtokning: LokalUtokning = None
 
     # APERSON fornamn/efternamn
 

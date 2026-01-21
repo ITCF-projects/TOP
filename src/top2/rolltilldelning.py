@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import *
 
 from schemagen import jsontype
-from top2.common import MedTaggning, MedObligatoriskIdentifierare, MedGiltighet, MedLokalUtokning
+from top2.common import Taggning, Identifiering, Giltighet, LokalUtokning
 
 if TYPE_CHECKING:
     from top2.roll import Roll
@@ -18,7 +18,7 @@ if TYPE_CHECKING:
 
 @jsontype()
 @dataclass(kw_only=True)
-class Rolltilldelning(MedObligatoriskIdentifierare, MedGiltighet, MedTaggning, MedLokalUtokning):
+class Rolltilldelning:
     """En rolltilldelning säger att en person förväntas agera i en viss roll för en viss del av organisationen
     under viss tid. Förhoppningsvis har personen också tilldelats möjligheten att uppfylla de ansvar som rollen
     medför - eller så används Rolltilldelningen som bas för att automatiskt utdela sådana behörigheter.
@@ -28,6 +28,15 @@ class Rolltilldelning(MedObligatoriskIdentifierare, MedGiltighet, MedTaggning, M
     det ger tydlighet att peka ut den kontexten. Om ett avtal pekas ut, så begränsas rolltilldelningens
     giltighet både av sin egen giltighet men även av giltigheten på det utpekade anknytningsavtalet.
     """
+
+    # Identifiering av rolltilldelningen.
+    identifiering: Identifiering
+    # Giltighet för denna rolltilldelning.
+    giltighet: Giltighet = None
+    # Taggning av rolltilldelningen.
+    taggning: Taggning = None
+    # Lokala utökningar.
+    lokalUtokning: LokalUtokning = None
 
     # Det anknytningsavtal som denna rolltilldelning detaljerar.
     # Reverse: Anknytningsavtal.rolltilldelningar

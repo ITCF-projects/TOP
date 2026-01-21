@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import *
 
 from schemagen import jsontype
-from top2.common import Tagg, MedTaggning, MedFrivilligIdentifierare, MedGiltighet, MedLokalUtokning
+from top2.common import Tagg, Taggning, FrivilligIdentifiering, Giltighet, LokalUtokning
 
 if TYPE_CHECKING:
     from top2.person import Person
@@ -12,9 +12,18 @@ if TYPE_CHECKING:
 
 @jsontype()
 @dataclass(kw_only=True)
-class Organisationsdelsansvar(MedGiltighet, MedTaggning, MedFrivilligIdentifierare, MedLokalUtokning):
+class Organisationsdelsansvar:
     """Ansvar för viss orgenhet, antingen tilldelat personligen eller via en rolltilldelning.
     """
+
+    # Identifiering av ansvaret.
+    identifiering: FrivilligIdentifiering = None
+    # Giltighet för detta ansvar.
+    giltighet: Giltighet = None
+    # Taggning av ansvaret.
+    taggning: Taggning = None
+    # Lokala utökningar.
+    lokalUtokning: LokalUtokning = None
 
     # Ansvarstyp(er) (chef, ekonomiskt ansvarig, arbetsledare...)
     typ: Tagg
@@ -31,9 +40,19 @@ class Organisationsdelsansvar(MedGiltighet, MedTaggning, MedFrivilligIdentifiera
 
 @jsontype()
 @dataclass(kw_only=True)
-class Rolltilldelningsansvar(MedGiltighet, MedTaggning, MedFrivilligIdentifierare, MedLokalUtokning):
+class Rolltilldelningsansvar:
     """Ansvar för person som har viss rolltilldelning, t.ex. att vara handledare för en viss praktikant.
     """
+
+    # Identifiering av ansvaret.
+    identifiering: FrivilligIdentifiering = None
+    # Giltighet för detta ansvar.
+    giltighet: Giltighet = None
+    # Taggning av ansvaret.
+    taggning: Taggning = None
+    # Lokala utökningar.
+    lokalUtokning: LokalUtokning = None
+
     # Ansvarstyp(er) (arbetsledare, handledare...)
     typ: Tagg
 
@@ -47,11 +66,17 @@ class Rolltilldelningsansvar(MedGiltighet, MedTaggning, MedFrivilligIdentifierar
 
 @jsontype()
 @dataclass(kw_only=True)
-class BeraknatAnsvar(MedGiltighet, MedTaggning, MedLokalUtokning):
-    desc = (
-        "Färdigberäknat ansvar mellan två personer, där den ena ('responsiblePerson' har ansvar av viss "
-        "typ för en annan person ('affectedPerson')."
-    )
+class BeraknatAnsvar:
+    """Färdigberäknat ansvar mellan två personer, där den ena ('responsiblePerson' har ansvar av viss
+    typ för en annan person ('affectedPerson').
+    """
+
+    # Giltighet för detta ansvar.
+    giltighet: Giltighet = None
+    # Taggning av ansvaret.
+    taggning: Taggning = None
+    # Lokala utökningar.
+    lokalUtokning: LokalUtokning = None
 
     # Ansvarstyp (chef, ekonomiskt ansvarig, arbetsledare...)
     typ: Tagg

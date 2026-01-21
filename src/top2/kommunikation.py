@@ -1,14 +1,21 @@
 from dataclasses import dataclass
 from typing import *
 
-from top2.common import Tagg, SprakhanteradText, MedTaggning, MedSpridning, MedLokalUtokning
+from top2.common import Tagg, SprakhanteradText, Taggning, Spridning, LokalUtokning
 from schemagen import jsontype, Regexp
 
 
 @jsontype()
 @dataclass(kw_only=True)
-class Telefonnummer(MedSpridning, MedTaggning, MedLokalUtokning):
+class Telefonnummer:
     """Telefonnummer."""
+
+    # Synligheter för detta telefonnummer.
+    synligheter: list[Spridning] = None
+    # Taggning av telefonnumret.
+    taggning: Taggning = None
+    # Lokala utökningar.
+    lokalUtokning: LokalUtokning = None
 
     # Universellt telefonnummer inklusive landskod, utan separerare, t.ex. +46317721000
     nummer: Annotated[str, Regexp("[+][0-9]{6,}")]
@@ -22,9 +29,16 @@ class Telefonnummer(MedSpridning, MedTaggning, MedLokalUtokning):
 
 @jsontype()
 @dataclass(kw_only=True)
-class Snigelpost(MedSpridning, MedTaggning, MedLokalUtokning):
+class Snigelpost:
     """Färdigformatterad postadress, eventuellt med kopior av vanliga filtrerings- och sorteringsvärden
     i egna fält."""
+
+    # Synligheter för denna adress.
+    synligheter: list[Spridning] = None
+    # Taggning av adressen.
+    taggning: Taggning = None
+    # Lokala utökningar.
+    lokalUtokning: LokalUtokning = None
 
     # Formatterad adress, sådan den skrivs på ett kuvert som postas på svensk brevlåda.
     formatteradAdress: list[str]
@@ -44,8 +58,15 @@ class Snigelpost(MedSpridning, MedTaggning, MedLokalUtokning):
 
 @jsontype()
 @dataclass(kw_only=True)
-class ElektroniskAdress(MedSpridning, MedTaggning, MedLokalUtokning):
+class ElektroniskAdress:
     """Elektronisk adress"""
+
+    # Synligheter för denna adress.
+    synligheter: list[Spridning] = None
+    # Taggning av adressen.
+    taggning: Taggning = None
+    # Lokala utökningar.
+    lokalUtokning: LokalUtokning = None
 
     # Media. Standarden definierar taggar för t.ex. web och epost, men det är fritt att definiera egna
     # för specifika media.
@@ -57,8 +78,13 @@ class ElektroniskAdress(MedSpridning, MedTaggning, MedLokalUtokning):
 
 @jsontype()
 @dataclass(kw_only=True)
-class Besokstider(MedTaggning, MedLokalUtokning):
+class Besokstider:
     """En post i en lista av öppettider/besökstider."""
+
+    # Taggning av besökstiderna.
+    taggning: Taggning = None
+    # Lokala utökningar.
+    lokalUtokning: LokalUtokning = None
 
     # Beskrivning av när tiderna gäller, t.ex. 'vardagar' eller 'påskafton'.
     galler: SprakhanteradText
@@ -75,8 +101,15 @@ class Besokstider(MedTaggning, MedLokalUtokning):
 
 @jsontype()
 @dataclass(kw_only=True)
-class Besoksadress(MedSpridning, MedTaggning, MedLokalUtokning):
+class Besoksadress:
     """Besöksadress, eventuellt med öppettider."""
+
+    # Synligheter för denna adress.
+    synligheter: list[Spridning] = None
+    # Taggning av adressen.
+    taggning: Taggning = None
+    # Lokala utökningar.
+    lokalUtokning: LokalUtokning = None
 
     # Gatunamn och nummer.
     gatuadress: str
@@ -100,7 +133,7 @@ class Besoksadress(MedSpridning, MedTaggning, MedLokalUtokning):
 
 @jsontype()
 @dataclass(kw_only=True)
-class Kommunikation(MedLokalUtokning):
+class Kommunikation:
     """Ett kommunikationsvägar-objekt innehåller upp till fyra listor av adresser/kontaktinformation
     för fyra olika typer av kontakt - epost (och andra elektroniska adresser), telefon (och fax mm),
     fysiskt besök, och snigelpost.
@@ -115,6 +148,10 @@ class Kommunikation(MedLokalUtokning):
     för att sortera flera epostadresser t.ex.), så sorterar man dem på fallande värde, och tar det
     som har högst prioritetsvärde först. Saknas prioritet räknas den som 0.
     """
+
+    # Lokala utökningar.
+    lokalUtokning: LokalUtokning = None
+
     telefon: list[Telefonnummer] = None
     snigelpost: list[Snigelpost] = None
     elektronisk: list[ElektroniskAdress] = None

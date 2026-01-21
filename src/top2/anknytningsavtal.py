@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import *
 
 from schemagen import jsontype
-from top2.common import MedTaggning, MedObligatoriskIdentifierare, MedGiltighet, Tagg, MedLokalUtokning, MedTyptagg
+from top2.common import Taggning, Identifiering, Giltighet, Tagg, LokalUtokning
 
 if TYPE_CHECKING:
     from top2.person import Person
@@ -14,7 +14,12 @@ if TYPE_CHECKING:
 
 @jsontype()
 @dataclass(kw_only=True)
-class Skatt(MedGiltighet):
+class Skatt:
+    """Skatteinformation."""
+
+    # Giltighet för denna skatteinformation.
+    giltighet: Giltighet = None
+
     SINK: float
     tabell: str
     kolumn: str
@@ -25,11 +30,20 @@ class Skatt(MedGiltighet):
 
 @jsontype()
 @dataclass(kw_only=True)
-class Hemvistperiod(MedGiltighet, MedTyptagg, MedTaggning, MedLokalUtokning):
+class Hemvistperiod:
     """Säger att den organisatoriska hemvisten för ett visst anknytningsavtal under viss period ligger
     på en viss orgenhet. Den organisatoriska hemvisten används för att beräkna var ansvaret för en
     person ligger (t.ex. chefsansvar).
     """
+
+    # Giltighet för denna hemvistperiod.
+    giltighet: Giltighet = None
+    # Typ av hemvist.
+    typ: Tagg = None
+    # Taggning av hemvistperioden.
+    taggning: Taggning = None
+    # Lokala utökningar.
+    lokalUtokning: LokalUtokning = None
 
     # Den organisatoriska enhet som ansvarar för den person som anknytningsavtalet gäller.
     organisationsdel: "Organisationsdel"
@@ -40,7 +54,7 @@ class Hemvistperiod(MedGiltighet, MedTyptagg, MedTaggning, MedLokalUtokning):
 
 @jsontype()
 @dataclass(kw_only=True)
-class Anknytningsavtal(MedObligatoriskIdentifierare, MedTaggning, MedGiltighet, MedLokalUtokning):
+class Anknytningsavtal:
     """Ett anknytningsavtal säger att en person knutits till lärosätet och hur, men säger inte vad
     personen gör (det finns i Rolltilldelning).
 
@@ -70,6 +84,15 @@ class Anknytningsavtal(MedObligatoriskIdentifierare, MedTaggning, MedGiltighet, 
     "anställningsliknande former", och därför har avtalsperioder ett flervärt "tag"-fält där sådan tolkad
     information kan läggas.
     """
+
+    # Identifiering av anknytningsavtalet.
+    identifiering: Identifiering
+    # Giltighet för detta anknytningsavtal.
+    giltighet: Giltighet = None
+    # Taggning av anknytningsavtalet.
+    taggning: Taggning = None
+    # Lokala utökningar.
+    lokalUtokning: LokalUtokning = None
 
     # Den person som detta anknytningsavtal gäller.
     person: "Person" = None

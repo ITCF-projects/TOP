@@ -42,512 +42,609 @@ information kan läggas.
 
 ### 4.3.1 Attribut
 
-### 4.3.1 `person`
+### 4.3.1 `identifiering`
+Typ: [`Identifiering`](Identifiering)!
+
+Identifiering av anknytningsavtalet.
+
+
+### 4.3.2 `giltighet`
+Typ: [`Giltighet`](Giltighet)
+
+Giltighet för detta anknytningsavtal.
+
+
+### 4.3.3 `taggning`
+Typ: [`Taggning`](Taggning)
+
+Taggning av anknytningsavtalet.
+
+
+### 4.3.4 `lokalUtokning`
+Typ: [`LokalUtokning`](LokalUtokning)
+
+Lokala utökningar.
+
+
+### 4.3.5 `person`
 Typ: [`Person`](Person)
 
 Den person som detta anknytningsavtal gäller.
 
 
-### 4.3.2 `typ`
+### 4.3.6 `typ`
 Typ: [`Tagg`](Tagg)!
 
 Typ av anknytningsavtal, t.ex. "anställning", "delegering" eller "muntligt avtal".
 
 
-### 4.3.3 `organisationellAvtalspart`
+### 4.3.7 `organisationellAvtalspart`
 Typ: [`Organisationsdel`](Organisationsdel)
 
 Den organisationsdel som är motpart i avtalet. För anställningsavtal är detta lärosätet som helhet, och vilken organisationsdel (t.ex. institution eller avdelning) personen har sin chef/ansvarige pekas ut via hemvistperioder. För muntliga avtal är motparten den institution eller liknande vars chef gjort överenskommelsen.
 
 
-### 4.3.4 `hemvistperioder`
+### 4.3.8 `hemvistperioder`
 Typ: Lista av [`Hemvistperiod`](Hemvistperiod)
 
 Organisatorisk(a) hemvist(er) - på vilken organisationsdel placerar detta avtal just nu personen. Bara en får vara giltig åt gången, men det går här att lägga in både dåtida och framtida orghemvister om man kan och vill.
 
 
-### 4.3.5 `omfattningsperioder`
+### 4.3.9 `omfattningsperioder`
 Typ: Lista av [`Omfattningsperiod`](Omfattningsperiod)
 
 Omfattningar för detta anknytningsavtal.
 
 
-### 4.3.6 `rolltilldelningar`
+### 4.3.10 `rolltilldelningar`
 Typ: Lista av [`Rolltilldelning`](Rolltilldelning)
 
 Rolltilldelningar i kontexten av detta avtal.
 
 
-### 4.3.7 `franvaroperioder`
+### 4.3.11 `franvaroperioder`
 Typ: Lista av [`Franvaroperiod`](Franvaroperiod)
 
 Frånvaroperioder. Alla förhållanden som minskar omfattningen (.workSchedule) under någon period, t.ex. semester, tjänstledighet eller sjukskrivning.
 
 
-### 4.3.8 `lopandeErsattningar`
+### 4.3.12 `lopandeErsattningar`
 Typ: Lista av [`LopandeErsattning`](LopandeErsattning)
 
 Lön eller ersättning. Kan vara flera, och kan variera under giltighetstiden. Lönetillägg för specifika rolltilldelningar (t.ex. prefekttillägg) läggs i rolltilldelningen.
 
 
-### 4.3.9 `engangsersattningar`
+### 4.3.13 `engangsersattningar`
 Typ: Lista av [`Engangsersattning`](Engangsersattning)
 
 Engångsersättningar för detta anknytningsavtal.
 
 
-### 4.3.10 `begransningskod`
+### 4.3.14 `begransningskod`
 Typ: `boolean`
 
 Begränsningskoden talar om varför någon inte har en fastanställning.
 
 
-### 4.3.11 `arHuvudavtal`
+### 4.3.15 `arHuvudavtal`
 Typ: `boolean`
 
 Om du, av någon anledning, inte kan hantera att personer omfattas av mer än ett avtal, ta det här avtalet.
 
 
-### 4.3.12 `underordnat`
+### 4.3.16 `underordnat`
 Typ: [`Anknytningsavtal`](Anknytningsavtal)
 
 Detta avtal är underordnat ett annat (t.ex. kan en delegering vara underordnad en anställning), det är ett "hängavtal". Giltigheten på detta avtal begränsas därmed av giltigheten på det utpekade avtalet.
 
 
-### 4.3.13 `underordnade`
+### 4.3.17 `underordnade`
 Typ: Lista av [`Anknytningsavtal`](Anknytningsavtal)
 
 Andra avtal som är underordnade detta. De underordnade avtalen kan aldrig vara giltiga när detta avtal inte är det.
 
 
-### 4.3.14 `avslutsorsak`
+### 4.3.18 `avslutsorsak`
 Typ: `boolean`
 
 Om vi vill veta varför ett visst avtal har avslutats så kan vi skriva något om det här.
 
 
-### 4.3.15 `avslutsorsakskoder`
+### 4.3.19 `avslutsorsakskoder`
 Typ: Lista av [`Tagg`](Tagg)
 
 aanstperiod.avslutdkod_id -> avslutskod.typ (typ är t.ex. "1" för S1). Det finns för t.ex. anställningar formella koder till pensionsmyndigheten (S1-S9). Dessa är taggar som man kan lägga in här.
 
 
-### 4.3.16 `anstallningsnummer`
+### 4.3.20 `anstallningsnummer`
 Typ: `integer`
 
 Anställningsnummer används vid rapporter till Skatteverket med mera.
 
 
-### 4.3.17 `befattningsnamn`
+### 4.3.21 `befattningsnamn`
 Typ: `boolean`
 
 Befattningarna är lönenära och matchar nästan, men inte riktigt, rollen.
 
 
-### 4.3.18 `befattningskategori`
+### 4.3.22 `befattningskategori`
 Typ: `boolean`
 
 
-### 4.3.19 `befattningskodSCB`
+### 4.3.23 `befattningskodSCB`
 Typ: `boolean`
 
 
-### 4.3.20 `BESTA`
+### 4.3.24 `BESTA`
 Typ: `boolean`
 
 BESTA-kod (9 tecken).
 
 
-### 4.3.21 `skatt`
+### 4.3.25 `skatt`
 Typ: [`Skatt`](Skatt)
 
 
-## 4.4 <a name="MedObligatoriskIdentifierare">MedObligatoriskIdentifierare</a>
+## 4.4 <a name="BeraknatAnsvar">BeraknatAnsvar</a>
 
-MedObligatoriskIdentifierare(*, postid: top2.common.Identifierare, korrelationsidn: list[top2.common.Identifierare] = None, sammanslagnaIdn: list[top2.common.Identifierare] = None, tidigareKorrelationsidn: list[top2.common.Identifierare] = None)
+Färdigberäknat ansvar mellan två personer, där den ena ('responsiblePerson' har ansvar av viss
+typ för en annan person ('affectedPerson').
+
 
 ### 4.4.1 Attribut
 
-### 4.4.1 `postid`
-Typ: [`Identifierare`](Identifierare)!
+### 4.4.1 `giltighet`
+Typ: [`Giltighet`](Giltighet)
 
-Huvudsakligt ID. Skall "aldrig" ändras, eller i alla fall så sällan det går. Personnummer är dåligt (ändras ofta), medan ett UUID i en lokal personalkatalog kan vara finfint.
-
-
-### 4.4.2 `korrelationsidn`
-Typ: Lista av [`Identifierare`](Identifierare)
-
-ID som kan återfinnas i andra applikationer eller externa system.
+Giltighet för detta ansvar.
 
 
-### 4.4.3 `sammanslagnaIdn`
-Typ: Lista av [`Identifierare`](Identifierare)
+### 4.4.2 `taggning`
+Typ: [`Taggning`](Taggning)
 
-Om denna post är resultatet av att andra poster slagits samman, så ligger ID:na för de därmed borttagna posterna här.
-
-
-### 4.4.4 `tidigareKorrelationsidn`
-Typ: Lista av [`Identifierare`](Identifierare)
-
-Om ett korrelations-id försvinner, t.ex. vid ett personnummerbyte, så skickas det id som tidigare varit korrelations-id här under en tid.
+Taggning av ansvaret.
 
 
-## 4.5 <a name="MedTaggning">MedTaggning</a>
+### 4.4.3 `lokalUtokning`
+Typ: [`LokalUtokning`](LokalUtokning)
 
-MedTaggning(*, taggar: list[top2.common.Tagg] = None, giltighetsbegransadeTaggar: list[top2.common.MedGiltighetsbegransadTaggning] = None)
-
-### 4.5.1 Attribut
-
-### 4.5.1 `taggar`
-Typ: Lista av [`Tagg`](Tagg)
-
-Lista över taggar som sitter på posten just nu, där vi inte känner till någon historik/framtid.
+Lokala utökningar.
 
 
-### 4.5.2 `giltighetsbegransadeTaggar`
-Typ: Lista av [`MedGiltighetsbegransadTaggning`](MedGiltighetsbegransadTaggning)
-
-Lista över taggar som suttit/sitter/kommer att sitta på posten, där vi känner till historik/framtid.
-
-
-## 4.6 <a name="MedGiltighet">MedGiltighet</a>
-
-MedGiltighet(*, giltighetsperiod: top2.common.Giltighetsperiod = None, utvarderadGiltighet: top2.common.Giltighetsenum = None)
-
-### 4.6.1 Attribut
-
-### 4.6.1 `giltighetsperiod`
-Typ: [`Giltighetsperiod`](Giltighetsperiod)
-
-Giltighet. Kan innehålla både en giltighetsperiod och en giltighetsenum. Om värdet utelämnas helt så känner avsändaren varken till start- eller slutdatum, bara att objektet är giltigt just nu.
-
-
-### 4.6.2 `utvarderadGiltighet`
-Typ: `boolean` Value one of "TIDIGARE", "AKTUELLT", "FRAMTIDA")
-
-
-## 4.7 <a name="MedLokalUtokning">MedLokalUtokning</a>
-
-Plats att lägga alla sina coola extensions på. Se Extension-typen för en beskrivning av innehållet.
-
-### 4.7.1 Attribut
-
-### 4.7.1 `lokalUtokning`
-Typ: [`LokalUtokning`](LokalUtokning)!
-
-
-## 4.8 <a name="BeraknatAnsvar">BeraknatAnsvar</a>
-
-BeraknatAnsvar(*, taggar: list[top2.common.Tagg] = None, giltighetsbegransadeTaggar: list[top2.common.MedGiltighetsbegransadTaggning] = None, giltighetsperiod: top2.common.Giltighetsperiod = None, utvarderadGiltighet: top2.common.Giltighetsenum = None, typ: top2.common.Tagg, ansvarig: 'Person' = None, berord: 'Person' = None)
-
-### 4.8.1 Attribut
-
-### 4.8.1 `typ`
+### 4.4.4 `typ`
 Typ: [`Tagg`](Tagg)!
 
 Ansvarstyp (chef, ekonomiskt ansvarig, arbetsledare...)
 
 
-### 4.8.2 `ansvarig`
+### 4.4.5 `ansvarig`
 Typ: [`Person`](Person)
 
 Den person som har ansvaret (t.ex. arbetsledaren).
 
 
-### 4.8.3 `berord`
+### 4.4.6 `berord`
 Typ: [`Person`](Person)
 
 Den person som ansvaret gäller för (t.ex. den arbetsledde).
 
 
-## 4.9 <a name="Besoksadress">Besoksadress</a>
+## 4.5 <a name="Besoksadress">Besoksadress</a>
 
 Besöksadress, eventuellt med öppettider.
 
-### 4.9.1 Attribut
+### 4.5.1 Attribut
 
-### 4.9.1 `gatuadress`
+### 4.5.1 `synligheter`
+Typ: Lista av [`Spridning`](Spridning)
+
+Synligheter för denna adress.
+
+
+### 4.5.2 `taggning`
+Typ: [`Taggning`](Taggning)
+
+Taggning av adressen.
+
+
+### 4.5.3 `lokalUtokning`
+Typ: [`LokalUtokning`](LokalUtokning)
+
+Lokala utökningar.
+
+
+### 4.5.4 `gatuadress`
 Typ: `boolean!`
 
 Gatunamn och nummer.
 
 
-### 4.9.2 `stad`
+### 4.5.5 `stad`
 Typ: `boolean!`
 
 Stad
 
 
-### 4.9.3 `land`
+### 4.5.6 `land`
 Typ: `boolean`
 
 Land (implicit om det utelämnas)
 
 
-### 4.9.4 `byggnad`
+### 4.5.7 `byggnad`
 Typ: [`SprakhanteradText`](SprakhanteradText)
 
 Byggnadsnamn (t.ex. 'Segerstedtska huset')
 
 
-### 4.9.5 `hittaIHuset`
+### 4.5.8 `hittaIHuset`
 Typ: [`SprakhanteradText`](SprakhanteradText)
 
 Instruktioner hur man tar sig till besöksplatsen, t.ex. 'en trappa upp i vänster trapphus, rum 2231 på höger sida' eller 'rum 2231 på plan 2'
 
 
-### 4.9.6 `besokstider`
+### 4.5.9 `besokstider`
 Typ: [`Besokstider`](Besokstider)!
 
 Besökstider.
 
 
-## 4.10 <a name="MedSpridning">MedSpridning</a>
-
-MedSpridning(*, synligheter: list[top2.common.Spridning] = None)
-
-### 4.10.1 Attribut
-
-### 4.10.1 `synligheter`
-Typ: Lista av [`Spridning`](Spridning)
-
-Postens synligheter, med postlokal ranking per synlighet.
-
-
-## 4.11 <a name="Besokstider">Besokstider</a>
+## 4.6 <a name="Besokstider">Besokstider</a>
 
 En post i en lista av öppettider/besökstider.
 
-### 4.11.1 Attribut
+### 4.6.1 Attribut
 
-### 4.11.1 `galler`
+### 4.6.1 `taggning`
+Typ: [`Taggning`](Taggning)
+
+Taggning av besökstiderna.
+
+
+### 4.6.2 `lokalUtokning`
+Typ: [`LokalUtokning`](LokalUtokning)
+
+Lokala utökningar.
+
+
+### 4.6.3 `galler`
 Typ: [`SprakhanteradText`](SprakhanteradText)!
 
 Beskrivning av när tiderna gäller, t.ex. 'vardagar' eller 'påskafton'.
 
 
-### 4.11.2 `oppnar`
+### 4.6.4 `oppnar`
 Typ: `boolean`
 
 Tid på lokal klocka då besök kan börja.
 
 
-### 4.11.3 `stanger`
+### 4.6.5 `stanger`
 Typ: `boolean`
 
 Tid på lokal klocka då besök inte längre kan börja.
 
 
-### 4.11.4 `avvikelse`
+### 4.6.6 `avvikelse`
 Typ: [`SprakhanteradText`](SprakhanteradText)
 
 Beskrivning som ersätter opens/closes, t.ex. "stängt".
 
 
-## 4.12 <a name="Bisyssla">Bisyssla</a>
+## 4.7 <a name="Bisyssla">Bisyssla</a>
 
 Bisyssla(*, foretag: str, organisationsnummer: str, forvantadFortsattning: str, person: 'Person' = None)
 
-### 4.12.1 Attribut
+### 4.7.1 Attribut
 
-### 4.12.1 `foretag`
+### 4.7.1 `foretag`
 Typ: `boolean!`
 
 BEMANNINGAR är alla formulär BEMANNINGSFALT är alla fälten med namn och kopplat till id i bemanningar BISYSSLA-tabellerna är kopior av BEMANNING-tabellernas innehåll för just bisysslor. För typ combobox är BUFFER kommaseparerade värden... GBEMANNINGSARENDE / GBEMANNINGSARENDEFALT.arende_id aanstallning_id/aperson_id kopplar till individ
 
 
-### 4.12.2 `organisationsnummer`
+### 4.7.2 `organisationsnummer`
 Typ: `boolean!`
 
 
-### 4.12.3 `forvantadFortsattning`
+### 4.7.3 `forvantadFortsattning`
 Typ: `boolean!`
 
 
-### 4.12.4 `person`
+### 4.7.4 `person`
 Typ: [`Person`](Person)
 
 
-## 4.13 <a name="ElektroniskAdress">ElektroniskAdress</a>
+## 4.8 <a name="ElektroniskAdress">ElektroniskAdress</a>
 
 Elektronisk adress
 
-### 4.13.1 Attribut
+### 4.8.1 Attribut
 
-### 4.13.1 `media`
+### 4.8.1 `synligheter`
+Typ: Lista av [`Spridning`](Spridning)
+
+Synligheter för denna adress.
+
+
+### 4.8.2 `taggning`
+Typ: [`Taggning`](Taggning)
+
+Taggning av adressen.
+
+
+### 4.8.3 `lokalUtokning`
+Typ: [`LokalUtokning`](LokalUtokning)
+
+Lokala utökningar.
+
+
+### 4.8.4 `media`
 Typ: [`Tagg`](Tagg)!
 
 Media. Standarden definierar taggar för t.ex. web och epost, men det är fritt att definiera egna för specifika media.
 
 
-### 4.13.2 `adress`
+### 4.8.5 `adress`
 Typ: `boolean!`
 
 Adressen. Utseendet beror på media. För epost är det t.ex. en epostadress, för web en URL.
 
 
-## 4.14 <a name="Engangsersattning">Engangsersattning</a>
+## 4.9 <a name="Engangsersattning">Engangsersattning</a>
 
 Engångsersättning, t.ex. ett arvode.
 
-### 4.14.1 Attribut
+### 4.9.1 Attribut
 
-### 4.14.1 `typ`
+### 4.9.1 `taggning`
+Typ: [`Taggning`](Taggning)
+
+Taggning av ersättningen.
+
+
+### 4.9.2 `lokalUtokning`
+Typ: [`LokalUtokning`](LokalUtokning)
+
+Lokala utökningar.
+
+
+### 4.9.3 `typ`
 Typ: [`Tagg`](Tagg)!
 
 Typen av ersättning, t.ex. arvode.
 
 
-### 4.14.2 `utbetalningsdatum`
+### 4.9.4 `utbetalningsdatum`
 Typ: [`Date`](Date)!
 
 
-### 4.14.3 `varde`
+### 4.9.5 `varde`
 Typ: `number!`
 
 Monetärt värde, per utbetalning.
 
 
-### 4.14.4 `valuta`
+### 4.9.6 `valuta`
 Typ: `boolean!`
 
 Valuta
 
 
-### 4.14.5 `konteringar`
+### 4.9.7 `konteringar`
 Typ: Lista av [`Kontering`](Kontering)
 
 Hur summan delas upp på olika konteringar.
 
 
-### 4.14.6 `detaljerarRolltilldelning`
+### 4.9.8 `detaljerarRolltilldelning`
 Typ: [`Rolltilldelning`](Rolltilldelning)
 
 Den rolltilldelningsperiod som denna ersättning detaljerar.
 
 
-### 4.14.7 `detaljerarAnknytningsperiod`
+### 4.9.9 `detaljerarAnknytningsperiod`
 Typ: [`Anknytningsavtal`](Anknytningsavtal)
 
 Den anknytningsperiod som denna ersättning detaljerar.
 
 
-## 4.15 <a name="Franvaroperiod">Franvaroperiod</a>
+## 4.10 <a name="Franvaroperiod">Franvaroperiod</a>
 
 En frånvaroperiod uttrycker semester, föräldraledighet, sjukskrivningar med mera. Det finns möjlighet
 att ange en omfattning om man önskar.
 
 
-### 4.15.1 Attribut
+### 4.10.1 Attribut
 
-### 4.15.1 `heltidsandel`
+### 4.10.1 `identifiering`
+Typ: [`FrivilligIdentifiering`](FrivilligIdentifiering)
+
+Identifiering av frånvaroperioden.
+
+
+### 4.10.2 `giltighet`
+Typ: [`Giltighet`](Giltighet)
+
+Giltighet för denna frånvaroperiod.
+
+
+### 4.10.3 `taggning`
+Typ: [`Taggning`](Taggning)
+
+Taggning av frånvaroperioden.
+
+
+### 4.10.4 `typ`
+Typ: [`Tagg`](Tagg)
+
+Typ av frånvaro.
+
+
+### 4.10.5 `lokalUtokning`
+Typ: [`LokalUtokning`](LokalUtokning)
+
+Lokala utökningar.
+
+
+### 4.10.6 `heltidsandel`
 Typ: `number`
 
 Andel av heltid, som ett flyttal.
 
 
-### 4.15.2 `timmar`
+### 4.10.7 `timmar`
 Typ: `integer`
 
 Ett visst antal timmar.
 
 
-### 4.15.3 `betaldFranvaro`
+### 4.10.8 `betaldFranvaro`
 Typ: `boolean`
 
 Betald eller obetald frånvaro.
 
 
-### 4.15.4 `slutdatumArPreliminart`
+### 4.10.9 `slutdatumArPreliminart`
 Typ: `boolean`
 
 Om sann så är slutdatumet på perioden preliminärt, t.ex. slutdatum på en längre sjukskrivning som kan få en fortsättning. Om falsk så förväntas personens frånvaro sluta enligt giltigheten, t.ex. en beviljad semesterperiod.
 
 
-### 4.15.5 `anknytningsperiod`
+### 4.10.10 `anknytningsperiod`
 Typ: [`Anknytningsavtal`](Anknytningsavtal)
 
 Den anknytningsperiod som denna frånvaroperiod detaljerar.
 
 
-## 4.16 <a name="MedFrivilligIdentifierare">MedFrivilligIdentifierare</a>
+## 4.11 <a name="FrivilligIdentifiering">FrivilligIdentifiering</a>
 
-MedFrivilligIdentifierare(*, postid: top2.common.Identifierare = None, korrelationsidn: list[top2.common.Identifierare] = None, sammanslagnaIdn: list[top2.common.Identifierare] = None, tidigareKorrelationsidn: list[top2.common.Identifierare] = None)
+Identifiering av en post, med frivilligt huvud-ID och eventuella korrelations-ID:n.
 
-### 4.16.1 Attribut
+### 4.11.1 Attribut
 
-### 4.16.1 `postid`
+### 4.11.1 `postid`
 Typ: [`Identifierare`](Identifierare)
 
 Huvudsakligt ID (om något finns). Skall "aldrig" ändras, eller i alla fall så sällan det går. Personnummer är dåligt (ändras ofta), medan ett UUID i en lokal personalkatalog kan vara finfint.
 
 
-### 4.16.2 `korrelationsidn`
+### 4.11.2 `korrelationsidn`
 Typ: Lista av [`Identifierare`](Identifierare)
 
 ID:n som kan återfinnas i andra applikationer eller externa system.
 
 
-### 4.16.3 `sammanslagnaIdn`
+### 4.11.3 `sammanslagnaIdn`
 Typ: Lista av [`Identifierare`](Identifierare)
 
 Om denna post är resultatet av att andra poster slagits samman, så ligger ID:na för de därmed borttagna posterna här.
 
 
-### 4.16.4 `tidigareKorrelationsidn`
+### 4.11.4 `tidigareKorrelationsidn`
 Typ: Lista av [`Identifierare`](Identifierare)
 
 Om ett korrelations-id försvinner, t.ex. vid ett personnummerbyte, så skickas det id som tidigare varit korrelations-id här under en tid.
 
 
-## 4.17 <a name="MedTyptagg">MedTyptagg</a>
+## 4.12 <a name="Giltighet">Giltighet</a>
 
-MedTyptagg(*, typ: top2.common.Tagg)
+Giltighet för en post. Kan innehålla både en giltighetsperiod och en giltighetsenum. Om värdet
+utelämnas helt så känner avsändaren varken till start- eller slutdatum, bara att objektet är giltigt just nu.
 
-### 4.17.1 Attribut
+### 4.12.1 Attribut
 
-### 4.17.1 `typ`
+### 4.12.1 `giltighetsperiod`
+Typ: [`Giltighetsperiod`](Giltighetsperiod)
+
+Tidsperiod under vilken posten är giltig.
+
+
+### 4.12.2 `utvarderadGiltighet`
+Typ: `boolean` Value one of "TIDIGARE", "AKTUELLT", "FRAMTIDA")
+
+Utvärderad giltighet (tidigare, aktuellt, framtida).
+
+
+## 4.13 <a name="GiltighetsbegransadTagg">GiltighetsbegransadTagg</a>
+
+En tagg med giltighetsbegränsning.
+
+### 4.13.1 Attribut
+
+### 4.13.1 `tagg`
 Typ: [`Tagg`](Tagg)!
 
-En ensam tag som representerar objektets typ.
+Den tagg som sitter/satt/kommer sitta på posten under giltigheten.
 
 
-## 4.18 <a name="Giltighetsperiod">Giltighetsperiod</a>
+### 4.13.2 `giltighet`
+Typ: [`Giltighet`](Giltighet)
+
+Giltighet för denna taggning.
+
+
+## 4.14 <a name="Giltighetsperiod">Giltighetsperiod</a>
 
 En tidsperiod inom vilken ett associerat värde är giltigt. Om invalidFrom 
 
-### 4.18.1 Attribut
+### 4.14.1 Attribut
 
-### 4.18.1 `giltigFrom`
+### 4.14.1 `giltigFrom`
 Typ: [`DateTime`](DateTime)!
 
 
-### 4.18.2 `ogiltigFrom`
+### 4.14.2 `ogiltigFrom`
 Typ: [`DateTime`](DateTime)
 
 
-## 4.19 <a name="Hemvistperiod">Hemvistperiod</a>
+## 4.15 <a name="Hemvistperiod">Hemvistperiod</a>
 
 Säger att den organisatoriska hemvisten för ett visst anknytningsavtal under viss period ligger
 på en viss orgenhet. Den organisatoriska hemvisten används för att beräkna var ansvaret för en
 person ligger (t.ex. chefsansvar).
 
 
-### 4.19.1 Attribut
+### 4.15.1 Attribut
 
-### 4.19.1 `organisationsdel`
+### 4.15.1 `giltighet`
+Typ: [`Giltighet`](Giltighet)
+
+Giltighet för denna hemvistperiod.
+
+
+### 4.15.2 `typ`
+Typ: [`Tagg`](Tagg)
+
+Typ av hemvist.
+
+
+### 4.15.3 `taggning`
+Typ: [`Taggning`](Taggning)
+
+Taggning av hemvistperioden.
+
+
+### 4.15.4 `lokalUtokning`
+Typ: [`LokalUtokning`](LokalUtokning)
+
+Lokala utökningar.
+
+
+### 4.15.5 `organisationsdel`
 Typ: [`Organisationsdel`](Organisationsdel)!
 
 Den organisatoriska enhet som ansvarar för den person som anknytningsavtalet gäller.
 
 
-### 4.19.2 `anknytningsperiod`
+### 4.15.6 `anknytningsperiod`
 Typ: [`Anknytningsavtal`](Anknytningsavtal)
 
 Det anknytningsavtal som denna orghemvist detaljerar.
 
 
-## 4.20 <a name="Identifierare">Identifierare</a>
+## 4.16 <a name="Identifierare">Identifierare</a>
 
 Identifierare med typ och värde. Två identifierare är identiska endast om namnrymd, typnamn, varde
 och varderymd (om den är angiven) är identiska.
@@ -559,33 +656,63 @@ På samma sätt finns varderymd som är en namnrymd för värdet. Dess syfte är
 identifierare från t.ex. testinstanser utan risk att de misstas för skarpa värden.
 
 
-### 4.20.1 Attribut
+### 4.16.1 Attribut
 
-### 4.20.1 `namnrymd`
+### 4.16.1 `namnrymd`
 Typ: `boolean!`
 
 Namnrymd för typen, väsentligen är detta den som definierat typnamnet. Det möjliggör att t.ex. både Chalmers och GU kan ha typer som heter "person-id". Skall vara '*' om TOP definierar typen, annars något URL-liknande med minst ett domännamn för den som definierat semantiken för typen.
 
 
-### 4.20.2 `typnamn`
+### 4.16.2 `typnamn`
 Typ: `boolean!`
 
 Kombinationen av (typDefinieradAv, typnamn) är en unikt definierad typ av identifierare, med semantik enligt vad typDefinieradAv bestämt.
 
 
-### 4.20.3 `varde`
+### 4.16.3 `varde`
 Typ: `boolean!`
 
 Värde
 
 
-### 4.20.4 `varderymd`
+### 4.16.4 `varderymd`
 Typ: `boolean`
 
 Domännamn eller liknande identifierare som ger en kontext för kombinationen (schemeAgencyId, schemeId, value) om samma typ+värde finns i olika kontexter (t.ex. olika instanser av samma applikation). Behöver bara användas när det finns en risk att sådana värden möts i samma mottagare. Oftast på formen "lärosäte.se/applikationsinstans"
 
 
-## 4.21 <a name="Kommunikation">Kommunikation</a>
+## 4.17 <a name="Identifiering">Identifiering</a>
+
+Identifiering av en post, med obligatoriskt huvud-ID och eventuella korrelations-ID:n.
+
+### 4.17.1 Attribut
+
+### 4.17.1 `postid`
+Typ: [`Identifierare`](Identifierare)!
+
+Huvudsakligt ID. Skall "aldrig" ändras, eller i alla fall så sällan det går. Personnummer är dåligt (ändras ofta), medan ett UUID i en lokal personalkatalog kan vara finfint.
+
+
+### 4.17.2 `korrelationsidn`
+Typ: Lista av [`Identifierare`](Identifierare)
+
+ID som kan återfinnas i andra applikationer eller externa system.
+
+
+### 4.17.3 `sammanslagnaIdn`
+Typ: Lista av [`Identifierare`](Identifierare)
+
+Om denna post är resultatet av att andra poster slagits samman, så ligger ID:na för de därmed borttagna posterna här.
+
+
+### 4.17.4 `tidigareKorrelationsidn`
+Typ: Lista av [`Identifierare`](Identifierare)
+
+Om ett korrelations-id försvinner, t.ex. vid ett personnummerbyte, så skickas det id som tidigare varit korrelations-id här under en tid.
+
+
+## 4.18 <a name="Kommunikation">Kommunikation</a>
 
 Ett kommunikationsvägar-objekt innehåller upp till fyra listor av adresser/kontaktinformation
 för fyra olika typer av kontakt - epost (och andra elektroniska adresser), telefon (och fax mm),
@@ -602,188 +729,212 @@ för att sortera flera epostadresser t.ex.), så sorterar man dem på fallande v
 som har högst prioritetsvärde först. Saknas prioritet räknas den som 0.
 
 
-### 4.21.1 Attribut
+### 4.18.1 Attribut
 
-### 4.21.1 `telefon`
+### 4.18.1 `lokalUtokning`
+Typ: [`LokalUtokning`](LokalUtokning)
+
+Lokala utökningar.
+
+
+### 4.18.2 `telefon`
 Typ: Lista av [`Telefonnummer`](Telefonnummer)
 
 
-### 4.21.2 `snigelpost`
+### 4.18.3 `snigelpost`
 Typ: Lista av [`Snigelpost`](Snigelpost)
 
 
-### 4.21.3 `elektronisk`
+### 4.18.4 `elektronisk`
 Typ: Lista av [`ElektroniskAdress`](ElektroniskAdress)
 
 
-### 4.21.4 `besok`
+### 4.18.5 `besok`
 Typ: Lista av [`Besoksadress`](Besoksadress)
 
 
-## 4.22 <a name="Kontering">Kontering</a>
+## 4.19 <a name="Kontering">Kontering</a>
 
-Kontering(*, taggar: list[top2.common.Tagg] = None, giltighetsbegransadeTaggar: list[top2.common.MedGiltighetsbegransadTaggning] = None, konton: list[top2.common.Identifierare], varde: float)
+Kontering av en ersättning.
 
-### 4.22.1 Attribut
+### 4.19.1 Attribut
 
-### 4.22.1 `konton`
+### 4.19.1 `taggning`
+Typ: [`Taggning`](Taggning)
+
+Taggning av konteringen.
+
+
+### 4.19.2 `lokalUtokning`
+Typ: [`LokalUtokning`](LokalUtokning)
+
+Lokala utökningar.
+
+
+### 4.19.3 `konton`
 Typ: [`Identifierare`](Identifierare)!
 
 Alla relevanta ID:n för att göra en tillräckligt detaljerad specifikation (konto, kostnadsställe, mm)
 
 
-### 4.22.2 `varde`
+### 4.19.4 `varde`
 Typ: `number!`
 
 Den del av värdet som konteras på detta sätt. När en ersättning konteras skall summan av alla Kontering bli samma som ersättnings totalvärde. Valutan är samma som ersättningens valuta.
 
 
-## 4.23 <a name="KontextualiseradOrganisationsdelsrelation">KontextualiseradOrganisationsdelsrelation</a>
+## 4.20 <a name="KontextualiseradOrganisationsdelsrelation">KontextualiseradOrganisationsdelsrelation</a>
 
 En kontextualiserad relation med en orgenhet. Används i Organization.filterRelations. Taggen kan
 t.ex. representera filterkontexten "en del av", och peka ut alla orgenheter som en viss orgenhet
 kan anses vara "en del av".
 
 
-### 4.23.1 Attribut
+### 4.20.1 Attribut
 
-### 4.23.1 `type`
+### 4.20.1 `type`
 Typ: [`Tagg`](Tagg)!
 
 Den struktur där relationen gäller.
 
 
-### 4.23.2 `organisationsdelar`
+### 4.20.2 `organisationsdelar`
 Typ: [`Organisationsdel`](Organisationsdel)!
 
 De organisatoriska delar som pekas ut av relationen i denna struktur.
 
 
-## 4.24 <a name="LokalUtokning">LokalUtokning</a>
+## 4.21 <a name="LokalUtokning">LokalUtokning</a>
 
 
 
-## 4.25 <a name="LopandeErsattning">LopandeErsattning</a>
+## 4.22 <a name="LopandeErsattning">LopandeErsattning</a>
 
 Löpande ersättningar, t.ex. lön eller tillägg. Vilken typ av ersättning, liksom hur ofta
 och när den utbetalas, måste förstås av typtaggen.
 
 
-### 4.25.1 Attribut
+### 4.22.1 Attribut
 
-### 4.25.1 `typ`
+### 4.22.1 `giltighet`
+Typ: [`Giltighet`](Giltighet)
+
+Giltighet för denna ersättning.
+
+
+### 4.22.2 `taggning`
+Typ: [`Taggning`](Taggning)
+
+Taggning av ersättningen.
+
+
+### 4.22.3 `lokalUtokning`
+Typ: [`LokalUtokning`](LokalUtokning)
+
+Lokala utökningar.
+
+
+### 4.22.4 `typ`
 Typ: [`Tagg`](Tagg)!
 
 Ersättningstypen, t.ex. månadslön eller lönetillägg.
 
 
-### 4.25.2 `varde`
+### 4.22.5 `varde`
 Typ: `number!`
 
 Monetärt värde, per utbetalning.
 
 
-### 4.25.3 `valuta`
+### 4.22.6 `valuta`
 Typ: `boolean!`
 
 Valuta
 
 
-### 4.25.4 `konteringar`
+### 4.22.7 `konteringar`
 Typ: Lista av [`Kontering`](Kontering)
 
 Hur summan delas upp på olika konteringar.
 
 
-### 4.25.5 `detaljerarRolltilldelning`
+### 4.22.8 `detaljerarRolltilldelning`
 Typ: [`Rolltilldelning`](Rolltilldelning)
 
 Den rolltilldelning som denna period detaljerar.
 
 
-### 4.25.6 `detaljerarAnknytningsperiod`
+### 4.22.9 `detaljerarAnknytningsperiod`
 Typ: [`Anknytningsavtal`](Anknytningsavtal)
 
 Den anknytningsperiod som denna period detaljerar.
 
 
-## 4.26 <a name="MedGiltighetsbegransadTaggning">MedGiltighetsbegransadTaggning</a>
-
-MedGiltighetsbegransadTaggning(*, giltighetsperiod: top2.common.Giltighetsperiod = None, utvarderadGiltighet: top2.common.Giltighetsenum = None, tagg: top2.common.Tagg)
-
-### 4.26.1 Attribut
-
-### 4.26.1 `tagg`
-Typ: [`Tagg`](Tagg)!
-
-Lista över taggar som sitter/satt/kommer sitta på posten under giltigheten.
-
-
-## 4.27 <a name="Meddelande">Meddelande</a>
+## 4.23 <a name="Meddelande">Meddelande</a>
 
 Toppobjekt med enkla och listvärda referenser till samtliga värdeobjekt. Bra grund för meddelanden,
 även t.ex. en lysande topp-Query för ett GraphQL-gränssnitt.
 
 
-### 4.27.1 Attribut
+### 4.23.1 Attribut
 
-### 4.27.1 `anknytningsperiod`
+### 4.23.1 `anknytningsperiod`
 Typ: [`Anknytningsavtal`](Anknytningsavtal)
 
 
-### 4.27.2 `anknytningsperioder`
+### 4.23.2 `anknytningsperioder`
 Typ: Lista av [`Anknytningsavtal`](Anknytningsavtal)
 
 
-### 4.27.3 `organisationsdel`
+### 4.23.3 `organisationsdel`
 Typ: [`Organisationsdel`](Organisationsdel)
 
 
-### 4.27.4 `organisationsdelar`
+### 4.23.4 `organisationsdelar`
 Typ: Lista av [`Organisationsdel`](Organisationsdel)
 
 
-### 4.27.5 `passerkort`
+### 4.23.5 `passerkort`
 Typ: [`Passerkort`](Passerkort)
 
 
-### 4.27.6 `passerkortslista`
+### 4.23.6 `passerkortslista`
 Typ: Lista av [`Passerkort`](Passerkort)
 
 
-### 4.27.7 `passerbehorighet`
+### 4.23.7 `passerbehorighet`
 Typ: [`Passerbehorighet`](Passerbehorighet)
 
 
-### 4.27.8 `passerbehorigheter`
+### 4.23.8 `passerbehorigheter`
 Typ: Lista av [`Passerbehorighet`](Passerbehorighet)
 
 
-### 4.27.9 `person`
+### 4.23.9 `person`
 Typ: [`Person`](Person)
 
 
-### 4.27.10 `personer`
+### 4.23.10 `personer`
 Typ: Lista av [`Person`](Person)
 
 
-### 4.27.11 `roll`
+### 4.23.11 `roll`
 Typ: [`Roll`](Roll)
 
 
-### 4.27.12 `roller`
+### 4.23.12 `roller`
 Typ: Lista av [`Roll`](Roll)
 
 
-### 4.27.13 `rolltilldelning`
+### 4.23.13 `rolltilldelning`
 Typ: [`Rolltilldelning`](Rolltilldelning)
 
 
-### 4.27.14 `rolltilldelningar`
+### 4.23.14 `rolltilldelningar`
 Typ: Lista av [`Rolltilldelning`](Rolltilldelning)
 
 
-## 4.28 <a name="Omfattningsperiod">Omfattningsperiod</a>
+## 4.24 <a name="Omfattningsperiod">Omfattningsperiod</a>
 
 En mängd arbetstid som personen i kontexten av ett anknytningsavtal förväntas utföra (en
 omfattningsperiod). Kan antingen vara ett visst antal timmar (hours) eller en del av heltid
@@ -792,39 +943,69 @@ omfattningsperiod). Kan antingen vara ett visst antal timmar (hours) eller en de
 inte utfall. Avsikten är alltså inte att den skall representera en timrapport.
 
 
-### 4.28.1 Attribut
+### 4.24.1 Attribut
 
-### 4.28.1 `heltidsandel`
+### 4.24.1 `identifiering`
+Typ: [`FrivilligIdentifiering`](FrivilligIdentifiering)
+
+Identifiering av omfattningsperioden.
+
+
+### 4.24.2 `giltighet`
+Typ: [`Giltighet`](Giltighet)
+
+Giltighet för denna omfattningsperiod.
+
+
+### 4.24.3 `taggning`
+Typ: [`Taggning`](Taggning)
+
+Taggning av omfattningsperioden.
+
+
+### 4.24.4 `typ`
+Typ: [`Tagg`](Tagg)
+
+Typ av omfattningsperiod.
+
+
+### 4.24.5 `lokalUtokning`
+Typ: [`LokalUtokning`](LokalUtokning)
+
+Lokala utökningar.
+
+
+### 4.24.6 `heltidsandel`
 Typ: `number`
 
 Andel av heltid, som ett flyttal.
 
 
-### 4.28.2 `timmar`
+### 4.24.7 `timmar`
 Typ: `integer`
 
 Ett visst antal timmar.
 
 
-### 4.28.3 `timmarPerDag`
+### 4.24.8 `timmarPerDag`
 Typ: `Lista av number`
 
 Fördelning av timmar över veckodagar.
 
 
-### 4.28.4 `rolltilldelning`
+### 4.24.9 `rolltilldelning`
 Typ: [`Rolltilldelning`](Rolltilldelning)
 
 Den rolltilldelning som denna omfattningsperiod detaljerar.
 
 
-### 4.28.5 `anknytningsperiod`
+### 4.24.10 `anknytningsperiod`
 Typ: [`Anknytningsavtal`](Anknytningsavtal)
 
 Den anknytningsperiod som denna omfattningsperiod detaljerar.
 
 
-## 4.29 <a name="Organisationsdel">Organisationsdel</a>
+## 4.25 <a name="Organisationsdel">Organisationsdel</a>
 
 Representerar någon form av gruppering som är viktig för hur lärosätet organiserar en viss
 aspekt av sitt arbete. Inga gränser sätts för vad som är eller inte är en organisationsdel,
@@ -844,100 +1025,148 @@ andra organisationsdelar, där någon person ansvarar för gruppens ekonomi, och
 ansvarar för att arbetsleda gruppens gemensamma arbete.
 
 
-### 4.29.1 Attribut
+### 4.25.1 Attribut
 
-### 4.29.1 `namn`
+### 4.25.1 `identifiering`
+Typ: [`Identifiering`](Identifiering)!
+
+Identifiering av organisationsdelen.
+
+
+### 4.25.2 `giltighet`
+Typ: [`Giltighet`](Giltighet)
+
+Giltighet för denna organisationsdel.
+
+
+### 4.25.3 `taggning`
+Typ: [`Taggning`](Taggning)
+
+Taggning av organisationsdelen.
+
+
+### 4.25.4 `lokalUtokning`
+Typ: [`LokalUtokning`](LokalUtokning)
+
+Lokala utökningar.
+
+
+### 4.25.5 `namn`
 Typ: [`SprakhanteradText`](SprakhanteradText)
 
 Orgenhetens namn.
 
 
-### 4.29.2 `typer`
+### 4.25.6 `typer`
 Typ: Lista av [`Tagg`](Tagg)
 
 Orgenhetens typ(er). Övriga taggningar som inte kan sägas vara dess typ läggs i stället i de vanliga taggningsattributen. "Institution" är t.ex. tydligt en typ av organisation, men om "resultatenhet" är en typ eller en taggning är upp till varje lärosäte att avgöra.
 
 
-### 4.29.3 `kommunikationsvagar`
+### 4.25.7 `kommunikationsvagar`
 Typ: [`Kommunikation`](Kommunikation)
 
 Kommunikationsvägar till orgenheten som abstrakt entitet, t.ex. en info@institution-epostadress.
 
 
-### 4.29.4 `rolltilldelningar`
+### 4.25.8 `rolltilldelningar`
 Typ: Lista av [`Rolltilldelning`](Rolltilldelning)
 
 Rolltilldelningar, som knyter personer till orgenheten i betydelsen att de utför arbete åt den.
 
 
-### 4.29.5 `servicefunktioner`
+### 4.25.9 `servicefunktioner`
 Typ: Lista av [`Servicefunktion`](Servicefunktion)
 
 Servicefunktioner (t.ex. expeditioner) som erbjuder tjänster för denna orgenhet.
 
 
-### 4.29.6 `motpartForAnknytningsavtal`
+### 4.25.10 `motpartForAnknytningsavtal`
 Typ: Lista av [`Hemvistperiod`](Hemvistperiod)
 
 Anknytningsavtal för vilka denna orgenhet är motpart. Används t.ex. för att hitta vem som är en persons lönesättande chef.
 
 
-### 4.29.7 `ansvarshallare`
+### 4.25.11 `ansvarshallare`
 Typ: Lista av [`Organisationsdelsansvar`](Organisationsdelsansvar)
 
 Personer med vissa ansvar för denna orgenhet, utpekade personligen eller via en rolltilldelning.
 
 
-### 4.29.8 `foralderrelationer`
+### 4.25.12 `foralderrelationer`
 Typ: Lista av [`OrganisatoriskRelation`](OrganisatoriskRelation)
 
 Relationer som definierar denna orgenhets förälder/föräldrar. Andra änden av OrganizationalRelation.child.
 
 
-### 4.29.9 `barnrelationer`
+### 4.25.13 `barnrelationer`
 Typ: Lista av [`OrganisatoriskRelation`](OrganisatoriskRelation)
 
 Relationer som definierar denna orgenhets barn. Andra änden av OrganizationalRelation.parent.
 
 
-### 4.29.10 `filterrelationer`
+### 4.25.14 `filterrelationer`
 Typ: Lista av [`KontextualiseradOrganisationsdelsrelation`](KontextualiseradOrganisationsdelsrelation)
 
 Orgenheter som är relevanta för filtrering, uppdelade per relationstyp. Vanligt är t.ex. relationen 'en del av', där man för orgenhet X har en lista av alla orgenheter som X anses vara 'en del av'.
 
 
-## 4.30 <a name="Organisationsdelsansvar">Organisationsdelsansvar</a>
+## 4.26 <a name="Organisationsdelsansvar">Organisationsdelsansvar</a>
 
 Ansvar för viss orgenhet, antingen tilldelat personligen eller via en rolltilldelning.
 
 
-### 4.30.1 Attribut
+### 4.26.1 Attribut
 
-### 4.30.1 `typ`
+### 4.26.1 `identifiering`
+Typ: [`FrivilligIdentifiering`](FrivilligIdentifiering)
+
+Identifiering av ansvaret.
+
+
+### 4.26.2 `giltighet`
+Typ: [`Giltighet`](Giltighet)
+
+Giltighet för detta ansvar.
+
+
+### 4.26.3 `taggning`
+Typ: [`Taggning`](Taggning)
+
+Taggning av ansvaret.
+
+
+### 4.26.4 `lokalUtokning`
+Typ: [`LokalUtokning`](LokalUtokning)
+
+Lokala utökningar.
+
+
+### 4.26.5 `typ`
 Typ: [`Tagg`](Tagg)!
 
 Ansvarstyp(er) (chef, ekonomiskt ansvarig, arbetsledare...)
 
 
-### 4.30.2 `organisationsdel`
+### 4.26.6 `organisationsdel`
 Typ: [`Organisationsdel`](Organisationsdel)
 
 Den organisation för vilken ansvaret gäller.
 
 
-### 4.30.3 `viaRolltilldelningar`
+### 4.26.7 `viaRolltilldelningar`
 Typ: Lista av [`Rolltilldelning`](Rolltilldelning)
 
 Rolltilldelning(ar) via vilken ansvaret tilldelats (t.ex. tilldelning av chefsroll)
 
 
-### 4.30.4 `direktUtpekade`
+### 4.26.8 `direktUtpekade`
 Typ: Lista av [`Person`](Person)
 
 Individ(er) som fått ansvaret personligen tilldelat.
 
 
-## 4.31 <a name="OrganisatoriskRelation">OrganisatoriskRelation</a>
+## 4.27 <a name="OrganisatoriskRelation">OrganisatoriskRelation</a>
 
 Vi har alla någon form av struktur bland våra organisationsdelar. Det är vanligt att ha flera
 olika strukturer, t.ex.:
@@ -956,73 +1185,127 @@ pekar den ut en "förälder" och ett "barn". Ur organisationsdelarnas perspektiv
 relationer som pekar ut dess föräldrar i olika träd, och `[0..*]` relationer som pekar ut dess barn.
 
 
-### 4.31.1 Attribut
+### 4.27.1 Attribut
 
-### 4.31.1 `typer`
+### 4.27.1 `identifiering`
+Typ: [`Identifiering`](Identifiering)!
+
+Identifiering av relationen.
+
+
+### 4.27.2 `giltighet`
+Typ: [`Giltighet`](Giltighet)
+
+Giltighet för denna relation.
+
+
+### 4.27.3 `taggning`
+Typ: [`Taggning`](Taggning)
+
+Taggning av relationen.
+
+
+### 4.27.4 `lokalUtokning`
+Typ: [`LokalUtokning`](LokalUtokning)
+
+Lokala utökningar.
+
+
+### 4.27.5 `typer`
 Typ: [`Tagg`](Tagg)!
 
 Den/de strukturer/träd/perspektiv som denna relation gäller för.
 
 
-### 4.31.2 `foralder`
+### 4.27.6 `foralder`
 Typ: [`Organisationsdel`](Organisationsdel)
 
 Den orgenhet som är förälder/ovanför i denna relation. Andra änden av Organization.childRelations.
 
 
-### 4.31.3 `barn`
+### 4.27.7 `barn`
 Typ: [`Organisationsdel`](Organisationsdel)
 
 Den orgenhet som är barn/under i denna relation. Andra änden av Organization.parentRelations.
 
 
-## 4.32 <a name="Passerbehorighet">Passerbehorighet</a>
+## 4.28 <a name="Passerbehorighet">Passerbehorighet</a>
 
 En passerbehörighet, identifierad av ett för mottagaren meningsfullt ID. Tilldelningen av behörigheten
 görs till en person eller ett passerkort.
 
-### 4.32.1 Attribut
+### 4.28.1 Attribut
 
-### 4.32.1 `postid`
+### 4.28.1 `postid`
 Typ: [`Identifierare`](Identifierare)!
 
 Behörighetens ID (inte resursen behörigheten gäller för).
 
 
-### 4.32.2 `resursId`
+### 4.28.2 `resursId`
 Typ: [`Identifierare`](Identifierare)!
 
 ID på den resurs som behörigheten gäller för (inte behörighetens egna ID om ett sådant finns).
 
 
-### 4.32.3 `tilldeladPersoner`
+### 4.28.3 `tilldeladPersoner`
 Typ: [`Person`](Person)!
 
 De person(er) som tilldelats behörigheten.
 
 
-### 4.32.4 `tilldeladPasserkort`
+### 4.28.4 `tilldeladPasserkort`
 Typ: [`Passerkort`](Passerkort)!
 
 De passerkort som tilldelats behörigheten.
 
 
-## 4.33 <a name="Passerkort">Passerkort</a>
+### 4.28.5 `giltighet`
+Typ: [`Giltighet`](Giltighet)
+
+Giltighet för denna passerbehörighet.
+
+
+### 4.28.6 `lokalUtokning`
+Typ: [`LokalUtokning`](LokalUtokning)
+
+Lokala utökningar.
+
+
+## 4.29 <a name="Passerkort">Passerkort</a>
 
 Ett passerkort och de behörigheter detta kort skall vara försedda med. Om behörigheter knyts till
 personen snarare än till dennes kort så används istället PersonType.accessPrivileges. Notera att
 giltighetstider i detta objekt rör passerkortet i sig, behörigheterna har egna giltighetstider.
 
 
-### 4.33.1 Attribut
+### 4.29.1 Attribut
 
-### 4.33.1 `passerbehorigheter`
+### 4.29.1 `identifiering`
+Typ: [`FrivilligIdentifiering`](FrivilligIdentifiering)
+
+Identifiering av passerkortet.
+
+
+### 4.29.2 `passerbehorigheter`
 Typ: Lista av [`Passerbehorighet`](Passerbehorighet)
 
 Behörigheter som kortet skall förknippas med (behörigheter för individ läggs i Person.accessPrivileges)
 
 
-## 4.34 <a name="Person">Person</a>
+### 4.29.3 `giltighet`
+Typ: [`Giltighet`](Giltighet)
+
+Giltighet för detta passerkort.
+
+
+### 4.29.4 `lokalUtokning`
+Typ: [`LokalUtokning`](LokalUtokning)
+
+Lokala utökningar.
+
+
+## 4.30 <a name="Person">Person</a>
 
 En person av kött och blod. Datat är så normaliserat som avsändaren klarar av - i normalfallet
 motsvaras varje fysisk person av som mest _en_ datapost. Ingen avsändare skall t.ex. skicka flera
@@ -1034,141 +1317,165 @@ kan också finnas med här. Den främsta informationen framkommer dock i hur per
 med lärosätets organisation, vilket beskrivs av _anknytningsavtal_ och _rolltilldelningar_.
 
 
-### 4.34.1 Attribut
+### 4.30.1 Attribut
 
-### 4.34.1 `fornamn`
+### 4.30.1 `identifiering`
+Typ: [`Identifiering`](Identifiering)!
+
+Identifiering av personen.
+
+
+### 4.30.2 `giltighet`
+Typ: [`Giltighet`](Giltighet)
+
+Giltighet för denna personpost.
+
+
+### 4.30.3 `taggning`
+Typ: [`Taggning`](Taggning)
+
+Taggning av personen.
+
+
+### 4.30.4 `lokalUtokning`
+Typ: [`LokalUtokning`](LokalUtokning)
+
+Lokala utökningar.
+
+
+### 4.30.5 `fornamn`
 Typ: `boolean`
 
 APERSON fornamn/efternamn Förnamn (alla)
 
 
-### 4.34.2 `tilltalsnamn`
+### 4.30.6 `tilltalsnamn`
 Typ: `boolean`
 
 Tilltalsnamn. Om vi har alla namn så skickas samtliga i fornamn, och tilltalsnamnet här. Får vara ett smeknamn.
 
 
-### 4.34.3 `efternamn`
+### 4.30.7 `efternamn`
 Typ: `boolean`
 
 Efternamn (inklusive eventuella mellannamn).
 
 
-### 4.34.4 `formatteratNamn`
+### 4.30.8 `formatteratNamn`
 Typ: `boolean`
 
 Färdigformatterat namn, med stora/små bokstäver (t.ex. "Stefan Ponzi von Tillman och Ovar mcPherson"
 
 
-### 4.34.5 `kommunikationsvagar`
+### 4.30.9 `kommunikationsvagar`
 Typ: [`Kommunikation`](Kommunikation)
 
 aperson.adress_id -> primulaadress Kommunikationsvägar till personen som individ
 
 
-### 4.34.6 `passerbehorigheter`
+### 4.30.10 `passerbehorigheter`
 Typ: Lista av [`Passerbehorighet`](Passerbehorighet)
 
 Accessbehörigheter som personen skall ha, oavsett vilket passerkort hen använder.
 
 
-### 4.34.7 `passerkort`
+### 4.30.11 `passerkort`
 Typ: Lista av [`Passerkort`](Passerkort)
 
 Passerkort inklusive eventuella behörigheter för kortet i sig snarare än för personen.
 
 
-### 4.34.8 `anknytningsavtal`
+### 4.30.12 `anknytningsavtal`
 Typ: Lista av [`Anknytningsavtal`](Anknytningsavtal)
 
 Anknytningsavtal för denna person.
 
 
-### 4.34.9 `rolltilldelningar`
+### 4.30.13 `rolltilldelningar`
 Typ: Lista av [`Rolltilldelning`](Rolltilldelning)
 
 Rolltilldelningar för denna person.
 
 
-### 4.34.10 `avliden`
+### 4.30.14 `avliden`
 Typ: `boolean`
 
 
-### 4.34.11 `utbildningsniva`
+### 4.30.15 `utbildningsniva`
 Typ: [`Tagg`](Tagg)
 
 personkompetens.kompskikt_id -> kompskikt (t.ex. docent) Uppnådd utbildningsnivå (t.ex. vid rekrytering)
 
 
-### 4.34.12 `docentLarosate`
+### 4.30.16 `docentLarosate`
 Typ: `boolean`
 
 personkompetens.kompskikt_id -> kompskikt (t.ex. docent) Är du inte docent, pojk?!
 
 
-### 4.34.13 `docentAmne`
+### 4.30.17 `docentAmne`
 Typ: `boolean`
 
 personkompetens.kompinriktning_id -> kompinriktning.text
 
 
-### 4.34.14 `statligAnstallningFrom`
+### 4.30.18 `statligAnstallningFrom`
 Typ: [`Date`](Date)
 
 aperson Statlig anställning fortsätter när du byter lärosäte t.ex.
 
 
-### 4.34.15 `forskningsamne`
+### 4.30.19 `forskningsamne`
 Typ: `boolean`
 
 aanstallning.amnestillhor -> amnestillhor.kod/text1 Forskningsämnen behöver rapporteras som ämneskoder för jämförelser mellan lärosäten. Lista på "SCB forskningsämnen" LiU använder 3 första (101 Matematik) andra alla 5.
 
 
-### 4.34.16 `forskningsamneSCB`
+### 4.30.20 `forskningsamneSCB`
 Typ: `boolean`
 
 
-### 4.34.17 `arbetsstalleID`
+### 4.30.21 `arbetsstalleID`
 Typ: `integer`
 
 aperson.arbetsstallenr_id -> arbetsstallekod Arbetsställe-ID fås från och rapporteras till SCB.
 
 
-### 4.34.18 `arbetsplatsAdress`
+### 4.30.22 `arbetsplatsAdress`
 Typ: `boolean`
 
 aperson.arbetsstallenr_id -> arbetsstallekod Arbetsplatsadress skall rapporteras till Skatteverket kräver gatuadress eller GPS-koordinat.
 
 
-### 4.34.19 `personligaAnsvar`
+### 4.30.23 `personligaAnsvar`
 Typ: Lista av [`Organisationsdelsansvar`](Organisationsdelsansvar)
 
 Personligt tilldelade ansvar.
 
 
-### 4.34.20 `beraknadeAnsvar`
+### 4.30.24 `beraknadeAnsvar`
 Typ: Lista av [`BeraknatAnsvar`](BeraknatAnsvar)
 
 Alla ansvar denna person kan beräknas ha för andra personer.
 
 
-### 4.34.21 `omfattasAvAnsvar`
+### 4.30.25 `omfattasAvAnsvar`
 Typ: Lista av [`BeraknatAnsvar`](BeraknatAnsvar)
 
 Alla ansvar andra personer kan beräknas ha över denna person",
 
 
-### 4.34.22 `bisysslor`
+### 4.30.26 `bisysslor`
 Typ: Lista av [`Bisyssla`](Bisyssla)
 
 Registrerade bisysslor
 
 
-## 4.35 <a name="RemunerationCode">RemunerationCode</a>
+## 4.31 <a name="RemunerationCode">RemunerationCode</a>
 
 
 
-## 4.36 <a name="Roll">Roll</a>
+## 4.32 <a name="Roll">Roll</a>
 
 En viss roll - en uppsättning arbetsuppgifter och ansvar t.ex. 'Studievägledare' eller 'Rektor'.
 Personer kan agera i en roll (d.v.s. utföra de arbetsuppgifter som rollen beskriver), men rollen
@@ -1176,27 +1483,45 @@ i sig kan inte utföra något. De personer som förväntas agera i en viss roll 
 har en rolltilldelning där.
 
 
-### 4.36.1 Attribut
+### 4.32.1 Attribut
 
-### 4.36.1 `namn`
+### 4.32.1 `identifiering`
+Typ: [`Identifiering`](Identifiering)!
+
+Identifiering av rollen.
+
+
+### 4.32.2 `taggning`
+Typ: [`Taggning`](Taggning)
+
+Taggning av rollen.
+
+
+### 4.32.3 `lokalUtokning`
+Typ: [`LokalUtokning`](LokalUtokning)
+
+Lokala utökningar.
+
+
+### 4.32.4 `namn`
 Typ: [`SprakhanteradText`](SprakhanteradText)
 
 Rollens namn, t.ex. {'sv': 'Studievägledare', 'en': 'Study counsellor'}
 
 
-### 4.36.2 `beskrivning`
+### 4.32.5 `beskrivning`
 Typ: [`SprakhanteradText`](SprakhanteradText)
 
 Beskrivning av rollen, t.ex. vilka arbetsuppgifter och ansvar som ingår i den.
 
 
-### 4.36.3 `rolltilldelningar`
+### 4.32.6 `rolltilldelningar`
 Typ: [`Rolltilldelning`](Rolltilldelning)
 
 Rolltilldelningar för denna roll.
 
 
-## 4.37 <a name="Rolltilldelning">Rolltilldelning</a>
+## 4.33 <a name="Rolltilldelning">Rolltilldelning</a>
 
 En rolltilldelning säger att en person förväntas agera i en viss roll för en viss del av organisationen
 under viss tid. Förhoppningsvis har personen också tilldelats möjligheten att uppfylla de ansvar som rollen
@@ -1208,94 +1533,142 @@ det ger tydlighet att peka ut den kontexten. Om ett avtal pekas ut, så begräns
 giltighet både av sin egen giltighet men även av giltigheten på det utpekade anknytningsavtalet.
 
 
-### 4.37.1 Attribut
+### 4.33.1 Attribut
 
-### 4.37.1 `anknytningsavtal`
+### 4.33.1 `identifiering`
+Typ: [`Identifiering`](Identifiering)!
+
+Identifiering av rolltilldelningen.
+
+
+### 4.33.2 `giltighet`
+Typ: [`Giltighet`](Giltighet)
+
+Giltighet för denna rolltilldelning.
+
+
+### 4.33.3 `taggning`
+Typ: [`Taggning`](Taggning)
+
+Taggning av rolltilldelningen.
+
+
+### 4.33.4 `lokalUtokning`
+Typ: [`LokalUtokning`](LokalUtokning)
+
+Lokala utökningar.
+
+
+### 4.33.5 `anknytningsavtal`
 Typ: [`Anknytningsavtal`](Anknytningsavtal)
 
 Det anknytningsavtal som denna rolltilldelning detaljerar. Reverse: Anknytningsavtal.rolltilldelningar
 
 
-### 4.37.2 `organisationsdel`
+### 4.33.6 `organisationsdel`
 Typ: [`Organisationsdel`](Organisationsdel)
 
 Den del av organisationen där personen tilldelats rollen.
 
 
-### 4.37.3 `kommunikationsvagar`
+### 4.33.7 `kommunikationsvagar`
 Typ: [`Kommunikation`](Kommunikation)
 
 Kommunikationsvägar till personen i kontexten av denna rolltilldelning.
 
 
-### 4.37.4 `roll`
+### 4.33.8 `roll`
 Typ: [`Roll`](Roll)
 
 Den roll som personen tilldelas.
 
 
-### 4.37.5 `onfattningsperioder`
+### 4.33.9 `onfattningsperioder`
 Typ: Lista av [`Omfattningsperiod`](Omfattningsperiod)
 
 Omfattning(ar) för denna rolltilldelning.
 
 
-### 4.37.6 `lopandeErsattningsperioder`
+### 4.33.10 `lopandeErsattningsperioder`
 Typ: Lista av [`LopandeErsattning`](LopandeErsattning)
 
 Lönetillägg eller andra extra ersättningar som personen får för denna rolltilldelning. Kan vara flera, och kan variera under giltighetstiden. Lön läggs i avtalsperioden.
 
 
-### 4.37.7 `engangsersattningar`
+### 4.33.11 `engangsersattningar`
 Typ: Lista av [`Engangsersattning`](Engangsersattning)
 
 Engångsersättningar för denna rolltilldelning.
 
 
-### 4.37.8 `ansvarsperioder`
+### 4.33.12 `ansvarsperioder`
 Typ: Lista av [`Organisationsdelsansvar`](Organisationsdelsansvar)
 
 De ansvar som denna rolltilldelning medför (t.ex. linjechefsansvar för en orgenhet tilldelat av en rolltilldelning som enhetschef. Andra änden av OrganizationResponsibility.deployment.
 
 
-### 4.37.9 `ansvarsperioderForTilldelningen`
+### 4.33.13 `ansvarsperioderForTilldelningen`
 Typ: Lista av [`Rolltilldelningsansvar`](Rolltilldelningsansvar)
 
 Personliga ansvar tilldelade någon annan för denna rolltilldelning (t.ex. handledarskap för en rolltilldelning som praktikant). Andra änden av DeploymentResponsibility.deployment.
 
 
-### 4.37.10 `bemannarServicefunktioner`
+### 4.33.14 `bemannarServicefunktioner`
 Typ: Lista av [`Servicefunktion`](Servicefunktion)
 
 De servicefunktioner (om några) som bemannas via denna rolltilldelning. En specifik rolltilldelning som studievägledare kan t.ex. innebära att man bemannar en studentmottagning.
 
 
-## 4.38 <a name="Rolltilldelningsansvar">Rolltilldelningsansvar</a>
+## 4.34 <a name="Rolltilldelningsansvar">Rolltilldelningsansvar</a>
 
 Ansvar för person som har viss rolltilldelning, t.ex. att vara handledare för en viss praktikant.
 
 
-### 4.38.1 Attribut
+### 4.34.1 Attribut
 
-### 4.38.1 `typ`
+### 4.34.1 `identifiering`
+Typ: [`FrivilligIdentifiering`](FrivilligIdentifiering)
+
+Identifiering av ansvaret.
+
+
+### 4.34.2 `giltighet`
+Typ: [`Giltighet`](Giltighet)
+
+Giltighet för detta ansvar.
+
+
+### 4.34.3 `taggning`
+Typ: [`Taggning`](Taggning)
+
+Taggning av ansvaret.
+
+
+### 4.34.4 `lokalUtokning`
+Typ: [`LokalUtokning`](LokalUtokning)
+
+Lokala utökningar.
+
+
+### 4.34.5 `typ`
 Typ: [`Tagg`](Tagg)!
 
 Ansvarstyp(er) (arbetsledare, handledare...)
 
 
-### 4.38.2 `ansvarig`
+### 4.34.6 `ansvarig`
 Typ: [`Person`](Person)
 
 Den person som har ansvaret (t.ex. handledaren).
 
 
-### 4.38.3 `rolltilldelning`
+### 4.34.7 `rolltilldelning`
 Typ: [`Rolltilldelning`](Rolltilldelning)
 
 Rolltilldelningen som responsiblePerson ansvarar för (t.ex. rolltilldelningen som säger att någon är praktikant).
 
 
-## 4.39 <a name="Servicefunktion">Servicefunktion</a>
+## 4.35 <a name="Servicefunktion">Servicefunktion</a>
 
 En servicefunktion, t.ex. en expedition, handläggargrupp, eller annat sätt att utföra arbete som inte
 direkt relaterar till en specifik rolltilldelning. Servicefunktionerna kan tillhöra en eller flera
@@ -1303,128 +1676,176 @@ orgenheter. Både fysiska expeditioner med besökstider och handläggargrupper i
 kan representeras som servicefunktioner.
 
 
-### 4.39.1 Attribut
+### 4.35.1 Attribut
 
-### 4.39.1 `namn`
+### 4.35.1 `identifiering`
+Typ: [`FrivilligIdentifiering`](FrivilligIdentifiering)
+
+Identifiering av servicefunktionen.
+
+
+### 4.35.2 `giltighet`
+Typ: [`Giltighet`](Giltighet)
+
+Giltighet för denna servicefunktion.
+
+
+### 4.35.3 `taggning`
+Typ: [`Taggning`](Taggning)
+
+Taggning av servicefunktionen.
+
+
+### 4.35.4 `lokalUtokning`
+Typ: [`LokalUtokning`](LokalUtokning)
+
+Lokala utökningar.
+
+
+### 4.35.5 `namn`
 Typ: [`SprakhanteradText`](SprakhanteradText)!
 
 Servicefunktionens namn, t.ex. "Datatekniska institutionens expedition".
 
 
-### 4.39.2 `beskrivning`
+### 4.35.6 `beskrivning`
 Typ: [`SprakhanteradText`](SprakhanteradText)
 
 En beskrivning, t.ex. "Hjälper dig att klaga på tentor och säger nej till passerkortsbehörigheter"
 
 
-### 4.39.3 `kommunikationsvagar`
+### 4.35.7 `kommunikationsvagar`
 Typ: [`Kommunikation`](Kommunikation)
 
 Kommunikationsvägar till servicefunktionen (inklusive eventuella besökstider).
 
 
-### 4.39.4 `bemannadViaRolltilldelningar`
+### 4.35.8 `bemannadViaRolltilldelningar`
 Typ: Lista av [`Rolltilldelning`](Rolltilldelning)
 
 Den eller de rolltilldelningar via vilka servicefunktionen bemannas. För en studentmottagning kan man t.ex. peka ut de rolltilldelningar som studievägledare som gör att vissa personer förväntas bemanna mottagningen.
 
 
-### 4.39.5 `organisationsdelar`
+### 4.35.9 `organisationsdelar`
 Typ: Lista av [`Organisationsdel`](Organisationsdel)
 
 De organisatoriska delar för vilka denna servicefunktion tillhandahåller tjänster.
 
 
-## 4.40 <a name="Skatt">Skatt</a>
+## 4.36 <a name="Skatt">Skatt</a>
 
-Skatt(*, giltighetsperiod: top2.common.Giltighetsperiod = None, utvarderadGiltighet: top2.common.Giltighetsenum = None, SINK: float, tabell: str, kolumn: str, procskatt: float, jamkning: float, ungdomsskatt: bool)
+Skatteinformation.
 
-### 4.40.1 Attribut
+### 4.36.1 Attribut
 
-### 4.40.1 `SINK`
+### 4.36.1 `giltighet`
+Typ: [`Giltighet`](Giltighet)
+
+Giltighet för denna skatteinformation.
+
+
+### 4.36.2 `SINK`
 Typ: `number!`
 
 
-### 4.40.2 `tabell`
+### 4.36.3 `tabell`
 Typ: `boolean!`
 
 
-### 4.40.3 `kolumn`
+### 4.36.4 `kolumn`
 Typ: `boolean!`
 
 
-### 4.40.4 `procskatt`
+### 4.36.5 `procskatt`
 Typ: `number!`
 
 
-### 4.40.5 `jamkning`
+### 4.36.6 `jamkning`
 Typ: `number!`
 
 
-### 4.40.6 `ungdomsskatt`
+### 4.36.7 `ungdomsskatt`
 Typ: `boolean!`
 
 
-## 4.41 <a name="Snigelpost">Snigelpost</a>
+## 4.37 <a name="Snigelpost">Snigelpost</a>
 
 Färdigformatterad postadress, eventuellt med kopior av vanliga filtrerings- och sorteringsvärden
 i egna fält.
 
-### 4.41.1 Attribut
+### 4.37.1 Attribut
 
-### 4.41.1 `formatteradAdress`
+### 4.37.1 `synligheter`
+Typ: Lista av [`Spridning`](Spridning)
+
+Synligheter för denna adress.
+
+
+### 4.37.2 `taggning`
+Typ: [`Taggning`](Taggning)
+
+Taggning av adressen.
+
+
+### 4.37.3 `lokalUtokning`
+Typ: [`LokalUtokning`](LokalUtokning)
+
+Lokala utökningar.
+
+
+### 4.37.4 `formatteradAdress`
 Typ: `boolean!`
 
 Formatterad adress, sådan den skrivs på ett kuvert som postas på svensk brevlåda.
 
 
-### 4.41.2 `landskod`
+### 4.37.5 `landskod`
 Typ: `boolean`
 
 Kopia av landskoden från formattedAddress.
 
 
-### 4.41.3 `landsnamn`
+### 4.37.6 `landsnamn`
 Typ: `boolean`
 
 Kopia av landsnamn från formattedAddress.
 
 
-### 4.41.4 `postnummer`
+### 4.37.7 `postnummer`
 Typ: `boolean`
 
 Kopia av postnumret från formattedAddress
 
 
-### 4.41.5 `postort`
+### 4.37.8 `postort`
 Typ: `boolean`
 
 Kopia av postort från formattedAddress.
 
 
-## 4.42 <a name="SprakhanteradText">SprakhanteradText</a>
+## 4.38 <a name="SprakhanteradText">SprakhanteradText</a>
 
 
 
-## 4.43 <a name="Spridning">Spridning</a>
+## 4.39 <a name="Spridning">Spridning</a>
 
 Spridning(*, synlighet: top2.common.Tagg, ranking: int = None)
 
-### 4.43.1 Attribut
+### 4.39.1 Attribut
 
-### 4.43.1 `synlighet`
+### 4.39.1 `synlighet`
 Typ: [`Tagg`](Tagg)!
 
 En tag som beskriver ett sätt posten får spridas (t.ex. internt, intranät, extranät...)
 
 
-### 4.43.2 `ranking`
+### 4.39.2 `ranking`
 Typ: `integer`
 
 Om flera poster av samma typ möts i ovanstående medium (t.ex. att flera rolltilldelningar för samma person är synliga på en personsida på intranätet), så sorteras de utifrån rankingvärdet. Lägst värde vinner. Om flera objekt har samma ranking så väljer mottagaren godtyckligt.
 
 
-## 4.44 <a name="Tagg">Tagg</a>
+## 4.40 <a name="Tagg">Tagg</a>
 
 En tag - en egenskap uttryckt som en boolesk variabel med ett sant värde. Dessa definieras oftast av
 lärosätet själva för att uttrycka egenskaper som 'anställningsliknande förhållande' på en person eller
@@ -1437,57 +1858,93 @@ skall kunna skapa lokala taggar av en gemensamt överenskommen typ. Till exempel
 Chalmers "chalmers.se" som värderymd på den taggen.
 
 
-### 4.44.1 Attribut
+### 4.40.1 Attribut
 
-### 4.44.1 `namnrymd`
+### 4.40.1 `namnrymd`
 Typ: `boolean!`
 
 Namnrymd för typen, väsentligen är detta den som definierat typnamnet. Det möjliggör att t.ex. både Chalmers och GU kan ha typer som heter "person-id". Skall vara '*' om TOP definierar typen, annars något URL-liknande med minst ett domännamn för den som definierat semantiken för typen.
 
 
-### 4.44.2 `typnamn`
+### 4.40.2 `typnamn`
 Typ: `boolean!`
 
 Kombinationen av (typDefinieradAv, typnamn) är en unikt definierad typ av identifierare, med semantik enligt vad typDefinieradAv bestämt.
 
 
-### 4.44.3 `varde`
+### 4.40.3 `varde`
 Typ: `boolean!`
 
 Värde
 
 
-### 4.44.4 `varderymd`
+### 4.40.4 `varderymd`
 Typ: `boolean`
 
 Domännamn eller liknande identifierare som ger en kontext för kombinationen (schemeAgencyId, schemeId, value) om samma typ+värde finns i olika kontexter (t.ex. olika instanser av samma applikation). Behöver bara användas när det finns en risk att sådana värden möts i samma mottagare. Oftast på formen "lärosäte.se/applikationsinstans"
 
 
-### 4.44.5 `namn`
+### 4.40.5 `namn`
 Typ: [`SprakhanteradText`](SprakhanteradText)
 
 Beskrivning av taggen avsedd för mänsklig konsumtion. Inte värdebärande - varje avsändare kan egentligen lägga lite vad de vill här. Mottagaren skall _inte_ agera på .name, bara på kombinationen namnrymd/typnamn/varde/varderymd.
 
 
-## 4.45 <a name="Telefonnummer">Telefonnummer</a>
+## 4.41 <a name="Taggning">Taggning</a>
+
+Taggning av en post.
+
+### 4.41.1 Attribut
+
+### 4.41.1 `taggar`
+Typ: Lista av [`Tagg`](Tagg)
+
+Lista över taggar som sitter på posten just nu, där vi inte känner till någon historik/framtid.
+
+
+### 4.41.2 `giltighetsbegransadeTaggar`
+Typ: Lista av [`GiltighetsbegransadTagg`](GiltighetsbegransadTagg)
+
+Lista över taggar som suttit/sitter/kommer att sitta på posten, där vi känner till historik/framtid.
+
+
+## 4.42 <a name="Telefonnummer">Telefonnummer</a>
 
 Telefonnummer.
 
-### 4.45.1 Attribut
+### 4.42.1 Attribut
 
-### 4.45.1 `nummer`
+### 4.42.1 `synligheter`
+Typ: Lista av [`Spridning`](Spridning)
+
+Synligheter för detta telefonnummer.
+
+
+### 4.42.2 `taggning`
+Typ: [`Taggning`](Taggning)
+
+Taggning av telefonnumret.
+
+
+### 4.42.3 `lokalUtokning`
+Typ: [`LokalUtokning`](LokalUtokning)
+
+Lokala utökningar.
+
+
+### 4.42.4 `nummer`
 Typ: `boolean!` Must match regexp: `[+][0-9]{6,}`
 
 Universellt telefonnummer inklusive landskod, utan separerare, t.ex. +46317721000
 
 
-### 4.45.2 `formatterat`
+### 4.42.5 `formatterat`
 Typ: `boolean` Must match regexp: `[+]?[-0-9() ]{6,}`
 
 Telefonnummer i visuellt format, t.ex. +46 (0)31-772 10 00
 
 
-### 4.45.3 `kanTaEmotSMS`
+### 4.42.6 `kanTaEmotSMS`
 Typ: `boolean!`
 
 Går det att skicka SMS till detta telefonnummer? Saknat värde tolkas som 'nej'.

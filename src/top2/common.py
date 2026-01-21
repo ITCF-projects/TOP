@@ -54,7 +54,9 @@ class Identifierare:
 
 @jsontype()
 @dataclass(kw_only=True)
-class MedObligatoriskIdentifierare:
+class Identifiering:
+    """Identifiering av en post, med obligatoriskt huvud-ID och eventuella korrelations-ID:n."""
+
     # Huvudsakligt ID. Skall "aldrig" ändras, eller i alla fall så sällan det går. Personnummer är dåligt
     # (ändras ofta), medan ett UUID i en lokal personalkatalog kan vara finfint.
     postid: Identifierare
@@ -73,7 +75,9 @@ class MedObligatoriskIdentifierare:
 
 @jsontype()
 @dataclass(kw_only=True)
-class MedFrivilligIdentifierare:
+class FrivilligIdentifiering:
+    """Identifiering av en post, med frivilligt huvud-ID och eventuella korrelations-ID:n."""
+
     # Huvudsakligt ID (om något finns). Skall "aldrig" ändras, eller i alla fall så sällan det går.
     # Personnummer är dåligt (ändras ofta), medan ett UUID i en lokal personalkatalog kan vara finfint.
     postid: Identifierare = None
@@ -106,10 +110,14 @@ class Giltighetsenum(enum.Enum):
 
 @jsontype()
 @dataclass(kw_only=True)
-class MedGiltighet:
-    # Giltighet. Kan innehålla både en giltighetsperiod och en giltighetsenum. Om värdet utelämnas helt
-    # så känner avsändaren varken till start- eller slutdatum, bara att objektet är giltigt just nu.
+class Giltighet:
+    """Giltighet för en post. Kan innehålla både en giltighetsperiod och en giltighetsenum. Om värdet
+    utelämnas helt så känner avsändaren varken till start- eller slutdatum, bara att objektet är giltigt just nu."""
+
+    # Tidsperiod under vilken posten är giltig.
     giltighetsperiod: Giltighetsperiod = None
+
+    # Utvärderad giltighet (tidigare, aktuellt, framtida).
     utvarderadGiltighet: Giltighetsenum = None
 
 
@@ -153,27 +161,27 @@ class Tagg:
 
 @jsontype()
 @dataclass(kw_only=True)
-class MedGiltighetsbegransadTaggning(MedGiltighet):
-    # Lista över taggar som sitter/satt/kommer sitta på posten under giltigheten.
+class GiltighetsbegransadTagg:
+    """En tagg med giltighetsbegränsning."""
+
+    # Den tagg som sitter/satt/kommer sitta på posten under giltigheten.
     tagg: Tagg
+
+    # Giltighet för denna taggning.
+    giltighet: Giltighet = None
 
 
 @jsontype()
 @dataclass(kw_only=True)
-class MedTaggning:
+class Taggning:
+    """Taggning av en post."""
+
     # Lista över taggar som sitter på posten just nu, där vi inte känner till någon historik/framtid.
     taggar: list[Tagg] = None
 
     # Lista över taggar som suttit/sitter/kommer att sitta på posten, där vi känner till
     # historik/framtid.
-    giltighetsbegransadeTaggar: list[MedGiltighetsbegransadTaggning] = None
-
-
-@jsontype()
-@dataclass(kw_only=True)
-class MedTyptagg:
-    # En ensam tag som representerar objektets typ.
-    typ: Tagg
+    giltighetsbegransadeTaggar: list[GiltighetsbegransadTagg] = None
 
 
 @jsontype()
@@ -188,11 +196,6 @@ class Spridning:
     ranking: int = None
 
 
-@jsontype()
-@dataclass(kw_only=True)
-class MedSpridning:
-    # Postens synligheter, med postlokal ranking per synlighet.
-    synligheter: list[Spridning] = None
 
 
 @jsontype()
@@ -209,11 +212,3 @@ class LokalUtokning(dict):
             "^[-_a-zA-Z0-9:/?.@]+$": {"type": "object"}
         }
     }
-
-
-@jsontype()
-class MedLokalUtokning:
-    """Plats att lägga alla sina coola extensions på. Se Extension-typen för en beskrivning av innehållet."""
-    lokalUtokning: LokalUtokning
-
-

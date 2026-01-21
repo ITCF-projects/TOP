@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from typing import *
 
 from schemagen import jsontype
-from top2.common import Tagg, MedTaggning, Identifierare, MedGiltighet, MedLokalUtokning
+from top2.common import Tagg, Taggning, Identifierare, Giltighet, LokalUtokning
 
 if TYPE_CHECKING:
     from top2.rolltilldelning import Rolltilldelning
@@ -19,7 +19,14 @@ class RemunerationCode(enum.Enum):
 
 @jsontype()
 @dataclass(kw_only=True)
-class Kontering(MedTaggning, MedLokalUtokning):
+class Kontering:
+    """Kontering av en ersättning."""
+
+    # Taggning av konteringen.
+    taggning: Taggning = None
+    # Lokala utökningar.
+    lokalUtokning: LokalUtokning = None
+
     # Alla relevanta ID:n för att göra en tillräckligt detaljerad specifikation (konto, kostnadsställe, mm)
     konton: list[Identifierare]
     # Den del av värdet som konteras på detta sätt. När en ersättning konteras skall summan av alla
@@ -29,8 +36,13 @@ class Kontering(MedTaggning, MedLokalUtokning):
 
 @jsontype()
 @dataclass(kw_only=True)
-class Engangsersattning(MedTaggning, MedLokalUtokning):
+class Engangsersattning:
     """Engångsersättning, t.ex. ett arvode."""
+
+    # Taggning av ersättningen.
+    taggning: Taggning = None
+    # Lokala utökningar.
+    lokalUtokning: LokalUtokning = None
 
     # Typen av ersättning, t.ex. arvode.
     typ: Tagg
@@ -55,10 +67,17 @@ class Engangsersattning(MedTaggning, MedLokalUtokning):
 
 @jsontype()
 @dataclass(kw_only=True)
-class LopandeErsattning(MedGiltighet, MedTaggning, MedLokalUtokning):
+class LopandeErsattning:
     """Löpande ersättningar, t.ex. lön eller tillägg. Vilken typ av ersättning, liksom hur ofta
     och när den utbetalas, måste förstås av typtaggen.
     """
+
+    # Giltighet för denna ersättning.
+    giltighet: Giltighet = None
+    # Taggning av ersättningen.
+    taggning: Taggning = None
+    # Lokala utökningar.
+    lokalUtokning: LokalUtokning = None
 
     # Ersättningstypen, t.ex. månadslön eller lönetillägg.
     typ: Tagg

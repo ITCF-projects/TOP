@@ -1,16 +1,15 @@
 from top2.common import (
     Giltighetsenum,
     Giltighetsperiod,
-    MedGiltighet,
+    Giltighet,
     LokalUtokning,
-    MedLokalUtokning,
     Identifierare,
+    Identifiering,
+    FrivilligIdentifiering,
     SprakhanteradText,
-    MedFrivilligIdentifierare,
     Tagg,
-    MedTaggning,
-    MedGiltighetsbegransadTaggning,
-    MedSpridning,
+    Taggning,
+    GiltighetsbegransadTagg,
     Spridning,
 )
 from top2.kommunikation import (

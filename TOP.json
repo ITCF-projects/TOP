@@ -6,13 +6,23 @@
     "Anknytningsavtal": {
       "type": "object",
       "description": "Ett anknytningsavtal säger att en person knutits till lärosätet och hur, men säger inte vad personen gör (det finns i\nRolltilldelning). Den vanligaste formen av anknytningsavtal är ett anställningsavtal. Ett annat exempel är när en\nprofessor muntligen bjuder in en forskarkollega från Harvard för att sprida stjärnglans genom ett löst samarbete. En\nkonsult som hyrs in på enstaka timmar i ett projekt, en bemanningskonsult som hyrs in på årsbasis, avtalet som tar in en\nföretags/industridoktorand, och ett beslut om att någon ges emeriti-status är andra exempel. Varje anknytningsavtal har\nen typ som säger hur personen knutits in till lärosätet (t.ex. \"emeritus\", \"anställd\", \"forskande gäst\" eller\n\"bemanningspersonal\"). Under ett långvarigt anknytningsavtal kan viss data naturligt variera utan att avtalet skrivs om.\nDessa har egna entitetstyper: * Under en _ersättningsperiod_ utgår ersättning - t.ex. lön - till personen. * Under en\n_omfattningsperiod_ finns en bestämd omfattning (dvs ett visst antal timmar eller timmar/vecka) av tid som personen\ntillför lärosätet. * Under en _frånvaroperiod_ minskar omfattningen t.ex. på grund av semester, tjänstledighet,\nsjukskrivningar, föräldraledighet eller liknande. * En _hemvistperiod_ säger var personen har sin organisatoriska hemvist\n- normalt där ens chef är. Till skillnad från Primula så skapas alltså inte ett nytt anknytningsavtal varje gång någon\nbyter lön, får tjänstledigt, eller byter enhet i organisationen, utan dessa varierar inom samma avtal. Det är mycket\nvanligt att behöva förmedla vilka avtalsperioder som motsvarar t.ex. \"anställningsliknande former\", och därför har\navtalsperioder ett flervärt \"tag\"-fält där sådan tolkad information kan läggas.",
-      "allOf": [
-        {"$ref": "#/$defs/MedObligatoriskIdentifierare"},
-        {"$ref": "#/$defs/MedTaggning"},
-        {"$ref": "#/$defs/MedGiltighet"},
-        {"$ref": "#/$defs/MedLokalUtokning"}
-      ],
       "properties": {
+        "identifiering": {
+          "description": "Identifiering av anknytningsavtalet.",
+          "$ref": "#/$defs/Identifiering"
+        },
+        "giltighet": {
+          "description": "Giltighet för detta anknytningsavtal.",
+          "$ref": "#/$defs/Giltighet"
+        },
+        "taggning": {
+          "description": "Taggning av anknytningsavtalet.",
+          "$ref": "#/$defs/Taggning"
+        },
+        "lokalUtokning": {
+          "description": "Lokala utökningar.",
+          "$ref": "#/$defs/LokalUtokning"
+        },
         "person": {
           "description": "Den person som detta anknytningsavtal gäller.",
           "$ref": "#/$defs/Person"
@@ -120,18 +130,26 @@
         }
       },
       "required": [
+        "identifiering",
         "typ"
       ]
     },
     "BeraknatAnsvar": {
       "type": "object",
-      "description": "BeraknatAnsvar(*, taggar: list[top2.common.Tagg] = None, giltighetsbegransadeTaggar:\nlist[top2.common.MedGiltighetsbegransadTaggning] = None, giltighetsperiod: top2.common.Giltighetsperiod = None,\nutvarderadGiltighet: top2.common.Giltighetsenum = None, typ: top2.common.Tagg, ansvarig: 'Person' = None, berord:\n'Person' = None)",
-      "allOf": [
-        {"$ref": "#/$defs/MedGiltighet"},
-        {"$ref": "#/$defs/MedTaggning"},
-        {"$ref": "#/$defs/MedLokalUtokning"}
-      ],
+      "description": "Färdigberäknat ansvar mellan två personer, där den ena ('responsiblePerson' har ansvar av viss typ för en annan person\n('affectedPerson').",
       "properties": {
+        "giltighet": {
+          "description": "Giltighet för detta ansvar.",
+          "$ref": "#/$defs/Giltighet"
+        },
+        "taggning": {
+          "description": "Taggning av ansvaret.",
+          "$ref": "#/$defs/Taggning"
+        },
+        "lokalUtokning": {
+          "description": "Lokala utökningar.",
+          "$ref": "#/$defs/LokalUtokning"
+        },
         "typ": {
           "description": "Ansvarstyp (chef, ekonomiskt ansvarig, arbetsledare...)",
           "$ref": "#/$defs/Tagg"
@@ -152,12 +170,22 @@
     "Besoksadress": {
       "type": "object",
       "description": "Besöksadress, eventuellt med öppettider.",
-      "allOf": [
-        {"$ref": "#/$defs/MedSpridning"},
-        {"$ref": "#/$defs/MedTaggning"},
-        {"$ref": "#/$defs/MedLokalUtokning"}
-      ],
       "properties": {
+        "synligheter": {
+          "description": "Synligheter för denna adress.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Spridning"
+          }
+        },
+        "taggning": {
+          "description": "Taggning av adressen.",
+          "$ref": "#/$defs/Taggning"
+        },
+        "lokalUtokning": {
+          "description": "Lokala utökningar.",
+          "$ref": "#/$defs/LokalUtokning"
+        },
         "gatuadress": {
           "description": "Gatunamn och nummer.",
           "type": "string"
@@ -195,11 +223,15 @@
     "Besokstider": {
       "type": "object",
       "description": "En post i en lista av öppettider/besökstider.",
-      "allOf": [
-        {"$ref": "#/$defs/MedTaggning"},
-        {"$ref": "#/$defs/MedLokalUtokning"}
-      ],
       "properties": {
+        "taggning": {
+          "description": "Taggning av besökstiderna.",
+          "$ref": "#/$defs/Taggning"
+        },
+        "lokalUtokning": {
+          "description": "Lokala utökningar.",
+          "$ref": "#/$defs/LokalUtokning"
+        },
         "galler": {
           "description": "Beskrivning av när tiderna gäller, t.ex. 'vardagar' eller 'påskafton'.",
           "$ref": "#/$defs/SprakhanteradText"
@@ -258,12 +290,22 @@
     "ElektroniskAdress": {
       "type": "object",
       "description": "Elektronisk adress",
-      "allOf": [
-        {"$ref": "#/$defs/MedSpridning"},
-        {"$ref": "#/$defs/MedTaggning"},
-        {"$ref": "#/$defs/MedLokalUtokning"}
-      ],
       "properties": {
+        "synligheter": {
+          "description": "Synligheter för denna adress.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Spridning"
+          }
+        },
+        "taggning": {
+          "description": "Taggning av adressen.",
+          "$ref": "#/$defs/Taggning"
+        },
+        "lokalUtokning": {
+          "description": "Lokala utökningar.",
+          "$ref": "#/$defs/LokalUtokning"
+        },
         "media": {
           "description": "Media. Standarden definierar taggar för t.ex. web och epost, men det är fritt att definiera egna för specifika media.",
           "$ref": "#/$defs/Tagg"
@@ -281,11 +323,15 @@
     "Engangsersattning": {
       "type": "object",
       "description": "Engångsersättning, t.ex. ett arvode.",
-      "allOf": [
-        {"$ref": "#/$defs/MedTaggning"},
-        {"$ref": "#/$defs/MedLokalUtokning"}
-      ],
       "properties": {
+        "taggning": {
+          "description": "Taggning av ersättningen.",
+          "$ref": "#/$defs/Taggning"
+        },
+        "lokalUtokning": {
+          "description": "Lokala utökningar.",
+          "$ref": "#/$defs/LokalUtokning"
+        },
         "typ": {
           "description": "Typen av ersättning, t.ex. arvode.",
           "$ref": "#/$defs/Tagg"
@@ -327,14 +373,27 @@
     "Franvaroperiod": {
       "type": "object",
       "description": "En frånvaroperiod uttrycker semester, föräldraledighet, sjukskrivningar med mera. Det finns möjlighet att ange en\nomfattning om man önskar.",
-      "allOf": [
-        {"$ref": "#/$defs/MedGiltighet"},
-        {"$ref": "#/$defs/MedTaggning"},
-        {"$ref": "#/$defs/MedFrivilligIdentifierare"},
-        {"$ref": "#/$defs/MedTyptagg"},
-        {"$ref": "#/$defs/MedLokalUtokning"}
-      ],
       "properties": {
+        "identifiering": {
+          "description": "Identifiering av frånvaroperioden.",
+          "$ref": "#/$defs/FrivilligIdentifiering"
+        },
+        "giltighet": {
+          "description": "Giltighet för denna frånvaroperiod.",
+          "$ref": "#/$defs/Giltighet"
+        },
+        "taggning": {
+          "description": "Taggning av frånvaroperioden.",
+          "$ref": "#/$defs/Taggning"
+        },
+        "typ": {
+          "description": "Typ av frånvaro.",
+          "$ref": "#/$defs/Tagg"
+        },
+        "lokalUtokning": {
+          "description": "Lokala utökningar.",
+          "$ref": "#/$defs/LokalUtokning"
+        },
         "heltidsandel": {
           "description": "Andel av heltid, som ett flyttal.",
           "type": "number"
@@ -357,6 +416,73 @@
         }
       }
     },
+    "FrivilligIdentifiering": {
+      "type": "object",
+      "description": "Identifiering av en post, med frivilligt huvud-ID och eventuella korrelations-ID:n.",
+      "properties": {
+        "postid": {
+          "description": "Huvudsakligt ID (om något finns). Skall \"aldrig\" ändras, eller i alla fall så sällan det går. Personnummer är dåligt (ändras ofta), medan ett UUID i en lokal personalkatalog kan vara finfint.",
+          "$ref": "#/$defs/Identifierare"
+        },
+        "korrelationsidn": {
+          "description": "ID:n som kan återfinnas i andra applikationer eller externa system.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Identifierare"
+          }
+        },
+        "sammanslagnaIdn": {
+          "description": "Om denna post är resultatet av att andra poster slagits samman, så ligger ID:na för de därmed borttagna posterna här.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Identifierare"
+          }
+        },
+        "tidigareKorrelationsidn": {
+          "description": "Om ett korrelations-id försvinner, t.ex. vid ett personnummerbyte, så skickas det id som tidigare varit korrelations-id här under en tid.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Identifierare"
+          }
+        }
+      }
+    },
+    "Giltighet": {
+      "type": "object",
+      "description": "Giltighet för en post. Kan innehålla både en giltighetsperiod och en giltighetsenum. Om värdet utelämnas helt så känner\navsändaren varken till start- eller slutdatum, bara att objektet är giltigt just nu.",
+      "properties": {
+        "giltighetsperiod": {
+          "description": "Tidsperiod under vilken posten är giltig.",
+          "$ref": "#/$defs/Giltighetsperiod"
+        },
+        "utvarderadGiltighet": {
+          "description": "Utvärderad giltighet (tidigare, aktuellt, framtida).",
+          "type": "string",
+          "enum": [
+            "TIDIGARE",
+            "AKTUELLT",
+            "FRAMTIDA"
+          ]
+        }
+      }
+    },
+    "GiltighetsbegransadTagg": {
+      "type": "object",
+      "description": "En tagg med giltighetsbegränsning.",
+      "properties": {
+        "tagg": {
+          "description": "Den tagg som sitter/satt/kommer sitta på posten under giltigheten.",
+          "$ref": "#/$defs/Tagg"
+        },
+        "giltighet": {
+          "description": "Giltighet för denna taggning.",
+          "$ref": "#/$defs/Giltighet"
+        }
+      },
+      "required": [
+        "tagg"
+      ]
+    },
     "Giltighetsperiod": {
       "type": "object",
       "description": "En tidsperiod inom vilken ett associerat värde är giltigt. Om invalidFrom",
@@ -375,13 +501,23 @@
     "Hemvistperiod": {
       "type": "object",
       "description": "Säger att den organisatoriska hemvisten för ett visst anknytningsavtal under viss period ligger på en viss orgenhet. Den\norganisatoriska hemvisten används för att beräkna var ansvaret för en person ligger (t.ex. chefsansvar).",
-      "allOf": [
-        {"$ref": "#/$defs/MedGiltighet"},
-        {"$ref": "#/$defs/MedTyptagg"},
-        {"$ref": "#/$defs/MedTaggning"},
-        {"$ref": "#/$defs/MedLokalUtokning"}
-      ],
       "properties": {
+        "giltighet": {
+          "description": "Giltighet för denna hemvistperiod.",
+          "$ref": "#/$defs/Giltighet"
+        },
+        "typ": {
+          "description": "Typ av hemvist.",
+          "$ref": "#/$defs/Tagg"
+        },
+        "taggning": {
+          "description": "Taggning av hemvistperioden.",
+          "$ref": "#/$defs/Taggning"
+        },
+        "lokalUtokning": {
+          "description": "Lokala utökningar.",
+          "$ref": "#/$defs/LokalUtokning"
+        },
         "organisationsdel": {
           "description": "Den organisatoriska enhet som ansvarar för den person som anknytningsavtalet gäller.",
           "$ref": "#/$defs/Organisationsdel"
@@ -422,13 +558,48 @@
         "varde"
       ]
     },
+    "Identifiering": {
+      "type": "object",
+      "description": "Identifiering av en post, med obligatoriskt huvud-ID och eventuella korrelations-ID:n.",
+      "properties": {
+        "postid": {
+          "description": "Huvudsakligt ID. Skall \"aldrig\" ändras, eller i alla fall så sällan det går. Personnummer är dåligt (ändras ofta), medan ett UUID i en lokal personalkatalog kan vara finfint.",
+          "$ref": "#/$defs/Identifierare"
+        },
+        "korrelationsidn": {
+          "description": "ID som kan återfinnas i andra applikationer eller externa system.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Identifierare"
+          }
+        },
+        "sammanslagnaIdn": {
+          "description": "Om denna post är resultatet av att andra poster slagits samman, så ligger ID:na för de därmed borttagna posterna här.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Identifierare"
+          }
+        },
+        "tidigareKorrelationsidn": {
+          "description": "Om ett korrelations-id försvinner, t.ex. vid ett personnummerbyte, så skickas det id som tidigare varit korrelations-id här under en tid.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Identifierare"
+          }
+        }
+      },
+      "required": [
+        "postid"
+      ]
+    },
     "Kommunikation": {
       "type": "object",
       "description": "Ett kommunikationsvägar-objekt innehåller upp till fyra listor av adresser/kontaktinformation för fyra olika typer av\nkontakt - epost (och andra elektroniska adresser), telefon (och fax mm), fysiskt besök, och snigelpost. Gemensamt för\nalla typerna är att avsändaren kan förse dem med en lista av vilka kanaler varje adress/nummer får spridas. Till exempel\nså kan Lilla Lärosätets rektor välja att adressen `rektor@lillalarosatet.se` publiceras på externwebben, medan hennes\npersonliga adress `hedda.master@lillalarosatet.se` inte publiceras där. Tillsammans med synligheten kan man också ge en\nprioritet. När man måste bestämma en ordning mellan flera synliga objekt (för att ringa upp, för att visa på personkortet\npå hemsidan, eller för att sortera flera epostadresser t.ex.), så sorterar man dem på fallande värde, och tar det som har\nhögst prioritetsvärde först. Saknas prioritet räknas den som 0.",
-      "allOf": [
-        {"$ref": "#/$defs/MedLokalUtokning"}
-      ],
       "properties": {
+        "lokalUtokning": {
+          "description": "Lokala utökningar.",
+          "$ref": "#/$defs/LokalUtokning"
+        },
         "telefon": {
           "type": "array",
           "items": {
@@ -457,12 +628,16 @@
     },
     "Kontering": {
       "type": "object",
-      "description": "Kontering(*, taggar: list[top2.common.Tagg] = None, giltighetsbegransadeTaggar:\nlist[top2.common.MedGiltighetsbegransadTaggning] = None, konton: list[top2.common.Identifierare], varde: float)",
-      "allOf": [
-        {"$ref": "#/$defs/MedTaggning"},
-        {"$ref": "#/$defs/MedLokalUtokning"}
-      ],
+      "description": "Kontering av en ersättning.",
       "properties": {
+        "taggning": {
+          "description": "Taggning av konteringen.",
+          "$ref": "#/$defs/Taggning"
+        },
+        "lokalUtokning": {
+          "description": "Lokala utökningar.",
+          "$ref": "#/$defs/LokalUtokning"
+        },
         "konton": {
           "description": "Alla relevanta ID:n för att göra en tillräckligt detaljerad specifikation (konto, kostnadsställe, mm)",
           "type": "array",
@@ -512,12 +687,19 @@
     "LopandeErsattning": {
       "type": "object",
       "description": "Löpande ersättningar, t.ex. lön eller tillägg. Vilken typ av ersättning, liksom hur ofta och när den utbetalas, måste\nförstås av typtaggen.",
-      "allOf": [
-        {"$ref": "#/$defs/MedGiltighet"},
-        {"$ref": "#/$defs/MedTaggning"},
-        {"$ref": "#/$defs/MedLokalUtokning"}
-      ],
       "properties": {
+        "giltighet": {
+          "description": "Giltighet för denna ersättning.",
+          "$ref": "#/$defs/Giltighet"
+        },
+        "taggning": {
+          "description": "Taggning av ersättningen.",
+          "$ref": "#/$defs/Taggning"
+        },
+        "lokalUtokning": {
+          "description": "Lokala utökningar.",
+          "$ref": "#/$defs/LokalUtokning"
+        },
         "typ": {
           "description": "Ersättningstypen, t.ex. månadslön eller lönetillägg.",
           "$ref": "#/$defs/Tagg"
@@ -552,174 +734,30 @@
         "valuta"
       ]
     },
-    "MedFrivilligIdentifierare": {
-      "type": "object",
-      "description": "MedFrivilligIdentifierare(*, postid: top2.common.Identifierare = None, korrelationsidn: list[top2.common.Identifierare] =\nNone, sammanslagnaIdn: list[top2.common.Identifierare] = None, tidigareKorrelationsidn: list[top2.common.Identifierare] =\nNone)",
-      "properties": {
-        "postid": {
-          "description": "Huvudsakligt ID (om något finns). Skall \"aldrig\" ändras, eller i alla fall så sällan det går. Personnummer är dåligt (ändras ofta), medan ett UUID i en lokal personalkatalog kan vara finfint.",
-          "$ref": "#/$defs/Identifierare"
-        },
-        "korrelationsidn": {
-          "description": "ID:n som kan återfinnas i andra applikationer eller externa system.",
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/Identifierare"
-          }
-        },
-        "sammanslagnaIdn": {
-          "description": "Om denna post är resultatet av att andra poster slagits samman, så ligger ID:na för de därmed borttagna posterna här.",
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/Identifierare"
-          }
-        },
-        "tidigareKorrelationsidn": {
-          "description": "Om ett korrelations-id försvinner, t.ex. vid ett personnummerbyte, så skickas det id som tidigare varit korrelations-id här under en tid.",
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/Identifierare"
-          }
-        }
-      }
-    },
-    "MedGiltighet": {
-      "type": "object",
-      "description": "MedGiltighet(*, giltighetsperiod: top2.common.Giltighetsperiod = None, utvarderadGiltighet: top2.common.Giltighetsenum =\nNone)",
-      "properties": {
-        "giltighetsperiod": {
-          "description": "Giltighet. Kan innehålla både en giltighetsperiod och en giltighetsenum. Om värdet utelämnas helt så känner avsändaren varken till start- eller slutdatum, bara att objektet är giltigt just nu.",
-          "$ref": "#/$defs/Giltighetsperiod"
-        },
-        "utvarderadGiltighet": {
-          "type": "string",
-          "enum": [
-            "TIDIGARE",
-            "AKTUELLT",
-            "FRAMTIDA"
-          ]
-        }
-      }
-    },
-    "MedGiltighetsbegransadTaggning": {
-      "type": "object",
-      "description": "MedGiltighetsbegransadTaggning(*, giltighetsperiod: top2.common.Giltighetsperiod = None, utvarderadGiltighet:\ntop2.common.Giltighetsenum = None, tagg: top2.common.Tagg)",
-      "allOf": [
-        {"$ref": "#/$defs/MedGiltighet"}
-      ],
-      "properties": {
-        "tagg": {
-          "description": "Lista över taggar som sitter/satt/kommer sitta på posten under giltigheten.",
-          "$ref": "#/$defs/Tagg"
-        }
-      },
-      "required": [
-        "tagg"
-      ]
-    },
-    "MedLokalUtokning": {
-      "type": "object",
-      "description": "Plats att lägga alla sina coola extensions på. Se Extension-typen för en beskrivning av innehållet.",
-      "properties": {
-        "lokalUtokning": {
-          "$ref": "#/$defs/LokalUtokning"
-        }
-      },
-      "required": [
-        "lokalUtokning"
-      ]
-    },
-    "MedObligatoriskIdentifierare": {
-      "type": "object",
-      "description": "MedObligatoriskIdentifierare(*, postid: top2.common.Identifierare, korrelationsidn: list[top2.common.Identifierare] =\nNone, sammanslagnaIdn: list[top2.common.Identifierare] = None, tidigareKorrelationsidn: list[top2.common.Identifierare] =\nNone)",
-      "properties": {
-        "postid": {
-          "description": "Huvudsakligt ID. Skall \"aldrig\" ändras, eller i alla fall så sällan det går. Personnummer är dåligt (ändras ofta), medan ett UUID i en lokal personalkatalog kan vara finfint.",
-          "$ref": "#/$defs/Identifierare"
-        },
-        "korrelationsidn": {
-          "description": "ID som kan återfinnas i andra applikationer eller externa system.",
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/Identifierare"
-          }
-        },
-        "sammanslagnaIdn": {
-          "description": "Om denna post är resultatet av att andra poster slagits samman, så ligger ID:na för de därmed borttagna posterna här.",
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/Identifierare"
-          }
-        },
-        "tidigareKorrelationsidn": {
-          "description": "Om ett korrelations-id försvinner, t.ex. vid ett personnummerbyte, så skickas det id som tidigare varit korrelations-id här under en tid.",
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/Identifierare"
-          }
-        }
-      },
-      "required": [
-        "postid"
-      ]
-    },
-    "MedSpridning": {
-      "type": "object",
-      "description": "MedSpridning(*, synligheter: list[top2.common.Spridning] = None)",
-      "properties": {
-        "synligheter": {
-          "description": "Postens synligheter, med postlokal ranking per synlighet.",
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/Spridning"
-          }
-        }
-      }
-    },
-    "MedTaggning": {
-      "type": "object",
-      "description": "MedTaggning(*, taggar: list[top2.common.Tagg] = None, giltighetsbegransadeTaggar:\nlist[top2.common.MedGiltighetsbegransadTaggning] = None)",
-      "properties": {
-        "taggar": {
-          "description": "Lista över taggar som sitter på posten just nu, där vi inte känner till någon historik/framtid.",
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/Tagg"
-          }
-        },
-        "giltighetsbegransadeTaggar": {
-          "description": "Lista över taggar som suttit/sitter/kommer att sitta på posten, där vi känner till historik/framtid.",
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/MedGiltighetsbegransadTaggning"
-          }
-        }
-      }
-    },
-    "MedTyptagg": {
-      "type": "object",
-      "description": "MedTyptagg(*, typ: top2.common.Tagg)",
-      "properties": {
-        "typ": {
-          "description": "En ensam tag som representerar objektets typ.",
-          "$ref": "#/$defs/Tagg"
-        }
-      },
-      "required": [
-        "typ"
-      ]
-    },
     "Omfattningsperiod": {
       "type": "object",
       "description": "En mängd arbetstid som personen i kontexten av ett anknytningsavtal förväntas utföra (en omfattningsperiod). Kan antingen\nvara ett visst antal timmar (hours) eller en del av heltid (fullTimeEquivalentRatio). Kan alltså tillsammans med\ngiltighetstider uttrycka '200 timmar under 2023', '20% under januari 2024' och '95% av en heltid löpande'. Syftet är att\növerföra förutsättningar, inte utfall. Avsikten är alltså inte att den skall representera en timrapport.",
-      "allOf": [
-        {"$ref": "#/$defs/MedGiltighet"},
-        {"$ref": "#/$defs/MedTaggning"},
-        {"$ref": "#/$defs/MedTyptagg"},
-        {"$ref": "#/$defs/MedFrivilligIdentifierare"},
-        {"$ref": "#/$defs/MedLokalUtokning"}
-      ],
       "properties": {
+        "identifiering": {
+          "description": "Identifiering av omfattningsperioden.",
+          "$ref": "#/$defs/FrivilligIdentifiering"
+        },
+        "giltighet": {
+          "description": "Giltighet för denna omfattningsperiod.",
+          "$ref": "#/$defs/Giltighet"
+        },
+        "taggning": {
+          "description": "Taggning av omfattningsperioden.",
+          "$ref": "#/$defs/Taggning"
+        },
+        "typ": {
+          "description": "Typ av omfattningsperiod.",
+          "$ref": "#/$defs/Tagg"
+        },
+        "lokalUtokning": {
+          "description": "Lokala utökningar.",
+          "$ref": "#/$defs/LokalUtokning"
+        },
         "heltidsandel": {
           "description": "Andel av heltid, som ett flyttal.",
           "type": "number"
@@ -748,13 +786,23 @@
     "Organisationsdel": {
       "type": "object",
       "description": "Representerar någon form av gruppering som är viktig för hur lärosätet organiserar en viss aspekt av sitt arbete. Inga\ngränser sätts för vad som är eller inte är en organisationsdel, varje lärosäte avgör utifrån behov och förmåga. Exempel\npå möjliga orgenheter är: * Fakultet * Institution * Utbildningsprogram (om lärosätet har matrisorganisation t.ex.) *\nAdministrativ enhet * Utvecklingsprojekt (kanske bara centralt finansierade eller av viss storlek) * Kurstillfälle (ur\ngenomförande perspektivet) * Centran (av viss storlek, eller även \"kaffereps-centran\") * Excellensinitiativ (ja, det\nbegreppet finns på ett lärosäte) Gemensamt är att de är väl definierade grupper med gemensamma mål och tydliga relationer\ntill andra organisationsdelar, där någon person ansvarar för gruppens ekonomi, och någon person ansvarar för att\narbetsleda gruppens gemensamma arbete.",
-      "allOf": [
-        {"$ref": "#/$defs/MedObligatoriskIdentifierare"},
-        {"$ref": "#/$defs/MedGiltighet"},
-        {"$ref": "#/$defs/MedTaggning"},
-        {"$ref": "#/$defs/MedLokalUtokning"}
-      ],
       "properties": {
+        "identifiering": {
+          "description": "Identifiering av organisationsdelen.",
+          "$ref": "#/$defs/Identifiering"
+        },
+        "giltighet": {
+          "description": "Giltighet för denna organisationsdel.",
+          "$ref": "#/$defs/Giltighet"
+        },
+        "taggning": {
+          "description": "Taggning av organisationsdelen.",
+          "$ref": "#/$defs/Taggning"
+        },
+        "lokalUtokning": {
+          "description": "Lokala utökningar.",
+          "$ref": "#/$defs/LokalUtokning"
+        },
         "namn": {
           "description": "Orgenhetens namn.",
           "$ref": "#/$defs/SprakhanteradText"
@@ -819,18 +867,31 @@
             "$ref": "#/$defs/KontextualiseradOrganisationsdelsrelation"
           }
         }
-      }
+      },
+      "required": [
+        "identifiering"
+      ]
     },
     "Organisationsdelsansvar": {
       "type": "object",
       "description": "Ansvar för viss orgenhet, antingen tilldelat personligen eller via en rolltilldelning.",
-      "allOf": [
-        {"$ref": "#/$defs/MedGiltighet"},
-        {"$ref": "#/$defs/MedTaggning"},
-        {"$ref": "#/$defs/MedFrivilligIdentifierare"},
-        {"$ref": "#/$defs/MedLokalUtokning"}
-      ],
       "properties": {
+        "identifiering": {
+          "description": "Identifiering av ansvaret.",
+          "$ref": "#/$defs/FrivilligIdentifiering"
+        },
+        "giltighet": {
+          "description": "Giltighet för detta ansvar.",
+          "$ref": "#/$defs/Giltighet"
+        },
+        "taggning": {
+          "description": "Taggning av ansvaret.",
+          "$ref": "#/$defs/Taggning"
+        },
+        "lokalUtokning": {
+          "description": "Lokala utökningar.",
+          "$ref": "#/$defs/LokalUtokning"
+        },
         "typ": {
           "description": "Ansvarstyp(er) (chef, ekonomiskt ansvarig, arbetsledare...)",
           "$ref": "#/$defs/Tagg"
@@ -861,13 +922,23 @@
     "OrganisatoriskRelation": {
       "type": "object",
       "description": "Vi har alla någon form av struktur bland våra organisationsdelar. Det är vanligt att ha flera olika strukturer, t.ex.: *\nlinjeträd som representerar arbetsrättsliga ansvar * attestträd som representerar ekonomiska beslutsvägar *\norganisationsträd i Ladok som representerar beslutsvägar för examination. * ett träd som visas ut på hemsidan. För vissa\nlärosäten kanske träden är identiska, men för de flesta skiljer sig dessa träd åt. Det är däremot långt ifrån vanligt att\nha flera än två-tre av dessa dimensioner i ett IT-system. Varje organisationsdelsrelation representerar ett riktat\nförhållande i något av träden som lägger en organisationsdel \"under\" en annan under någon tidsperiod. Ur relationens\nperspektiv så pekar den ut en \"förälder\" och ett \"barn\". Ur organisationsdelarnas perspektiv så har de `[0..*]`\nrelationer som pekar ut dess föräldrar i olika träd, och `[0..*]` relationer som pekar ut dess barn.",
-      "allOf": [
-        {"$ref": "#/$defs/MedObligatoriskIdentifierare"},
-        {"$ref": "#/$defs/MedGiltighet"},
-        {"$ref": "#/$defs/MedTaggning"},
-        {"$ref": "#/$defs/MedLokalUtokning"}
-      ],
       "properties": {
+        "identifiering": {
+          "description": "Identifiering av relationen.",
+          "$ref": "#/$defs/Identifiering"
+        },
+        "giltighet": {
+          "description": "Giltighet för denna relation.",
+          "$ref": "#/$defs/Giltighet"
+        },
+        "taggning": {
+          "description": "Taggning av relationen.",
+          "$ref": "#/$defs/Taggning"
+        },
+        "lokalUtokning": {
+          "description": "Lokala utökningar.",
+          "$ref": "#/$defs/LokalUtokning"
+        },
         "typer": {
           "description": "Den/de strukturer/träd/perspektiv som denna relation gäller för.",
           "type": "array",
@@ -885,16 +956,13 @@
         }
       },
       "required": [
+        "identifiering",
         "typer"
       ]
     },
     "Passerbehorighet": {
       "type": "object",
       "description": "En passerbehörighet, identifierad av ett för mottagaren meningsfullt ID. Tilldelningen av behörigheten görs till en\nperson eller ett passerkort.",
-      "allOf": [
-        {"$ref": "#/$defs/MedGiltighet"},
-        {"$ref": "#/$defs/MedLokalUtokning"}
-      ],
       "properties": {
         "postid": {
           "description": "Behörighetens ID (inte resursen behörigheten gäller för).",
@@ -917,6 +985,14 @@
           "items": {
             "$ref": "#/$defs/Passerkort"
           }
+        },
+        "giltighet": {
+          "description": "Giltighet för denna passerbehörighet.",
+          "$ref": "#/$defs/Giltighet"
+        },
+        "lokalUtokning": {
+          "description": "Lokala utökningar.",
+          "$ref": "#/$defs/LokalUtokning"
         }
       },
       "required": [
@@ -929,31 +1005,48 @@
     "Passerkort": {
       "type": "object",
       "description": "Ett passerkort och de behörigheter detta kort skall vara försedda med. Om behörigheter knyts till personen snarare än\ntill dennes kort så används istället PersonType.accessPrivileges. Notera att giltighetstider i detta objekt rör\npasserkortet i sig, behörigheterna har egna giltighetstider.",
-      "allOf": [
-        {"$ref": "#/$defs/MedFrivilligIdentifierare"},
-        {"$ref": "#/$defs/MedGiltighet"},
-        {"$ref": "#/$defs/MedLokalUtokning"}
-      ],
       "properties": {
+        "identifiering": {
+          "description": "Identifiering av passerkortet.",
+          "$ref": "#/$defs/FrivilligIdentifiering"
+        },
         "passerbehorigheter": {
           "description": "Behörigheter som kortet skall förknippas med (behörigheter för individ läggs i Person.accessPrivileges)",
           "type": "array",
           "items": {
             "$ref": "#/$defs/Passerbehorighet"
           }
+        },
+        "giltighet": {
+          "description": "Giltighet för detta passerkort.",
+          "$ref": "#/$defs/Giltighet"
+        },
+        "lokalUtokning": {
+          "description": "Lokala utökningar.",
+          "$ref": "#/$defs/LokalUtokning"
         }
       }
     },
     "Person": {
       "type": "object",
       "description": "En person av kött och blod. Datat är så normaliserat som avsändaren klarar av - i normalfallet motsvaras varje fysisk\nperson av som mest _en_ datapost. Ingen avsändare skall t.ex. skicka flera personposter med olika ID:n när en person har\nflera parallella anställningar. Personobjekt innehåller vissa rena individegenskaper, t.ex. namn och diverse\nidentifierare (t.ex. personnummer). Kontaktinformation till personen, både i professionell och privat kontext kan också\nfinnas med här. Den främsta informationen framkommer dock i hur personen hänger ihop med lärosätets organisation, vilket\nbeskrivs av _anknytningsavtal_ och _rolltilldelningar_.",
-      "allOf": [
-        {"$ref": "#/$defs/MedObligatoriskIdentifierare"},
-        {"$ref": "#/$defs/MedTaggning"},
-        {"$ref": "#/$defs/MedLokalUtokning"},
-        {"$ref": "#/$defs/MedGiltighet"}
-      ],
       "properties": {
+        "identifiering": {
+          "description": "Identifiering av personen.",
+          "$ref": "#/$defs/Identifiering"
+        },
+        "giltighet": {
+          "description": "Giltighet för denna personpost.",
+          "$ref": "#/$defs/Giltighet"
+        },
+        "taggning": {
+          "description": "Taggning av personen.",
+          "$ref": "#/$defs/Taggning"
+        },
+        "lokalUtokning": {
+          "description": "Lokala utökningar.",
+          "$ref": "#/$defs/LokalUtokning"
+        },
         "fornamn": {
           "description": "APERSON fornamn/efternamn Förnamn (alla)",
           "type": "string"
@@ -1064,17 +1157,27 @@
             "$ref": "#/$defs/Bisyssla"
           }
         }
-      }
+      },
+      "required": [
+        "identifiering"
+      ]
     },
     "Roll": {
       "type": "object",
       "description": "En viss roll - en uppsättning arbetsuppgifter och ansvar t.ex. 'Studievägledare' eller 'Rektor'. Personer kan agera i en\nroll (d.v.s. utföra de arbetsuppgifter som rollen beskriver), men rollen i sig kan inte utföra något. De personer som\nförväntas agera i en viss roll på en viss orgenhet har en rolltilldelning där.",
-      "allOf": [
-        {"$ref": "#/$defs/MedObligatoriskIdentifierare"},
-        {"$ref": "#/$defs/MedTaggning"},
-        {"$ref": "#/$defs/MedLokalUtokning"}
-      ],
       "properties": {
+        "identifiering": {
+          "description": "Identifiering av rollen.",
+          "$ref": "#/$defs/Identifiering"
+        },
+        "taggning": {
+          "description": "Taggning av rollen.",
+          "$ref": "#/$defs/Taggning"
+        },
+        "lokalUtokning": {
+          "description": "Lokala utökningar.",
+          "$ref": "#/$defs/LokalUtokning"
+        },
         "namn": {
           "description": "Rollens namn, t.ex. {'sv': 'Studievägledare', 'en': 'Study counsellor'}",
           "$ref": "#/$defs/SprakhanteradText"
@@ -1087,18 +1190,31 @@
           "description": "Rolltilldelningar för denna roll.",
           "$ref": "#/$defs/Rolltilldelning"
         }
-      }
+      },
+      "required": [
+        "identifiering"
+      ]
     },
     "Rolltilldelning": {
       "type": "object",
       "description": "En rolltilldelning säger att en person förväntas agera i en viss roll för en viss del av organisationen under viss tid.\nFörhoppningsvis har personen också tilldelats möjligheten att uppfylla de ansvar som rollen medför - eller så används\nRolltilldelningen som bas för att automatiskt utdela sådana behörigheter. Det är rekommenderat (men inte tvingande) att\npeka ut det anknytningsavtal inom vilket denna rolltilldelning skett. Många personer agerar i flera olika roller på ett\nlärosäte i kontexten av t.ex. en anställning, och det ger tydlighet att peka ut den kontexten. Om ett avtal pekas ut, så\nbegränsas rolltilldelningens giltighet både av sin egen giltighet men även av giltigheten på det utpekade\nanknytningsavtalet.",
-      "allOf": [
-        {"$ref": "#/$defs/MedObligatoriskIdentifierare"},
-        {"$ref": "#/$defs/MedGiltighet"},
-        {"$ref": "#/$defs/MedTaggning"},
-        {"$ref": "#/$defs/MedLokalUtokning"}
-      ],
       "properties": {
+        "identifiering": {
+          "description": "Identifiering av rolltilldelningen.",
+          "$ref": "#/$defs/Identifiering"
+        },
+        "giltighet": {
+          "description": "Giltighet för denna rolltilldelning.",
+          "$ref": "#/$defs/Giltighet"
+        },
+        "taggning": {
+          "description": "Taggning av rolltilldelningen.",
+          "$ref": "#/$defs/Taggning"
+        },
+        "lokalUtokning": {
+          "description": "Lokala utökningar.",
+          "$ref": "#/$defs/LokalUtokning"
+        },
         "anknytningsavtal": {
           "description": "Det anknytningsavtal som denna rolltilldelning detaljerar. Reverse: Anknytningsavtal.rolltilldelningar",
           "$ref": "#/$defs/Anknytningsavtal"
@@ -1157,18 +1273,31 @@
             "$ref": "#/$defs/Servicefunktion"
           }
         }
-      }
+      },
+      "required": [
+        "identifiering"
+      ]
     },
     "Rolltilldelningsansvar": {
       "type": "object",
       "description": "Ansvar för person som har viss rolltilldelning, t.ex. att vara handledare för en viss praktikant.",
-      "allOf": [
-        {"$ref": "#/$defs/MedGiltighet"},
-        {"$ref": "#/$defs/MedTaggning"},
-        {"$ref": "#/$defs/MedFrivilligIdentifierare"},
-        {"$ref": "#/$defs/MedLokalUtokning"}
-      ],
       "properties": {
+        "identifiering": {
+          "description": "Identifiering av ansvaret.",
+          "$ref": "#/$defs/FrivilligIdentifiering"
+        },
+        "giltighet": {
+          "description": "Giltighet för detta ansvar.",
+          "$ref": "#/$defs/Giltighet"
+        },
+        "taggning": {
+          "description": "Taggning av ansvaret.",
+          "$ref": "#/$defs/Taggning"
+        },
+        "lokalUtokning": {
+          "description": "Lokala utökningar.",
+          "$ref": "#/$defs/LokalUtokning"
+        },
         "typ": {
           "description": "Ansvarstyp(er) (arbetsledare, handledare...)",
           "$ref": "#/$defs/Tagg"
@@ -1189,13 +1318,23 @@
     "Servicefunktion": {
       "type": "object",
       "description": "En servicefunktion, t.ex. en expedition, handläggargrupp, eller annat sätt att utföra arbete som inte direkt relaterar\ntill en specifik rolltilldelning. Servicefunktionerna kan tillhöra en eller flera orgenheter. Både fysiska expeditioner\nmed besökstider och handläggargrupper i ett ärendehanteringssystem kan representeras som servicefunktioner.",
-      "allOf": [
-        {"$ref": "#/$defs/MedFrivilligIdentifierare"},
-        {"$ref": "#/$defs/MedGiltighet"},
-        {"$ref": "#/$defs/MedTaggning"},
-        {"$ref": "#/$defs/MedLokalUtokning"}
-      ],
       "properties": {
+        "identifiering": {
+          "description": "Identifiering av servicefunktionen.",
+          "$ref": "#/$defs/FrivilligIdentifiering"
+        },
+        "giltighet": {
+          "description": "Giltighet för denna servicefunktion.",
+          "$ref": "#/$defs/Giltighet"
+        },
+        "taggning": {
+          "description": "Taggning av servicefunktionen.",
+          "$ref": "#/$defs/Taggning"
+        },
+        "lokalUtokning": {
+          "description": "Lokala utökningar.",
+          "$ref": "#/$defs/LokalUtokning"
+        },
         "namn": {
           "description": "Servicefunktionens namn, t.ex. \"Datatekniska institutionens expedition\".",
           "$ref": "#/$defs/SprakhanteradText"
@@ -1229,11 +1368,12 @@
     },
     "Skatt": {
       "type": "object",
-      "description": "Skatt(*, giltighetsperiod: top2.common.Giltighetsperiod = None, utvarderadGiltighet: top2.common.Giltighetsenum = None,\nSINK: float, tabell: str, kolumn: str, procskatt: float, jamkning: float, ungdomsskatt: bool)",
-      "allOf": [
-        {"$ref": "#/$defs/MedGiltighet"}
-      ],
+      "description": "Skatteinformation.",
       "properties": {
+        "giltighet": {
+          "description": "Giltighet för denna skatteinformation.",
+          "$ref": "#/$defs/Giltighet"
+        },
         "SINK": {
           "type": "number"
         },
@@ -1265,12 +1405,22 @@
     "Snigelpost": {
       "type": "object",
       "description": "Färdigformatterad postadress, eventuellt med kopior av vanliga filtrerings- och sorteringsvärden i egna fält.",
-      "allOf": [
-        {"$ref": "#/$defs/MedSpridning"},
-        {"$ref": "#/$defs/MedTaggning"},
-        {"$ref": "#/$defs/MedLokalUtokning"}
-      ],
       "properties": {
+        "synligheter": {
+          "description": "Synligheter för denna adress.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Spridning"
+          }
+        },
+        "taggning": {
+          "description": "Taggning av adressen.",
+          "$ref": "#/$defs/Taggning"
+        },
+        "lokalUtokning": {
+          "description": "Lokala utökningar.",
+          "$ref": "#/$defs/LokalUtokning"
+        },
         "formatteradAdress": {
           "description": "Formatterad adress, sådan den skrivs på ett kuvert som postas på svensk brevlåda.",
           "type": "array",
@@ -1355,15 +1505,45 @@
         "varde"
       ]
     },
+    "Taggning": {
+      "type": "object",
+      "description": "Taggning av en post.",
+      "properties": {
+        "taggar": {
+          "description": "Lista över taggar som sitter på posten just nu, där vi inte känner till någon historik/framtid.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Tagg"
+          }
+        },
+        "giltighetsbegransadeTaggar": {
+          "description": "Lista över taggar som suttit/sitter/kommer att sitta på posten, där vi känner till historik/framtid.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/GiltighetsbegransadTagg"
+          }
+        }
+      }
+    },
     "Telefonnummer": {
       "type": "object",
       "description": "Telefonnummer.",
-      "allOf": [
-        {"$ref": "#/$defs/MedSpridning"},
-        {"$ref": "#/$defs/MedTaggning"},
-        {"$ref": "#/$defs/MedLokalUtokning"}
-      ],
       "properties": {
+        "synligheter": {
+          "description": "Synligheter för detta telefonnummer.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Spridning"
+          }
+        },
+        "taggning": {
+          "description": "Taggning av telefonnumret.",
+          "$ref": "#/$defs/Taggning"
+        },
+        "lokalUtokning": {
+          "description": "Lokala utökningar.",
+          "$ref": "#/$defs/LokalUtokning"
+        },
         "nummer": {
           "description": "Universellt telefonnummer inklusive landskod, utan separerare, t.ex. +46317721000",
           "type": "string",

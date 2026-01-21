@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import *
 
 from schemagen import jsontype
-from top2.common import Tagg, SprakhanteradText, MedTaggning, MedFrivilligIdentifierare, MedObligatoriskIdentifierare, MedGiltighet, MedLokalUtokning
+from top2.common import Tagg, SprakhanteradText, Taggning, FrivilligIdentifiering, Identifiering, Giltighet, LokalUtokning
 
 if TYPE_CHECKING:
     from top2.rolltilldelning import Rolltilldelning
@@ -13,12 +13,21 @@ if TYPE_CHECKING:
 
 @jsontype()
 @dataclass(kw_only=True)
-class Servicefunktion(MedFrivilligIdentifierare, MedGiltighet, MedTaggning, MedLokalUtokning):
+class Servicefunktion:
     """En servicefunktion, t.ex. en expedition, handläggargrupp, eller annat sätt att utföra arbete som inte
     direkt relaterar till en specifik rolltilldelning. Servicefunktionerna kan tillhöra en eller flera
     orgenheter. Både fysiska expeditioner med besökstider och handläggargrupper i ett ärendehanteringssystem
     kan representeras som servicefunktioner.
     """
+
+    # Identifiering av servicefunktionen.
+    identifiering: FrivilligIdentifiering = None
+    # Giltighet för denna servicefunktion.
+    giltighet: Giltighet = None
+    # Taggning av servicefunktionen.
+    taggning: Taggning = None
+    # Lokala utökningar.
+    lokalUtokning: LokalUtokning = None
 
     # Servicefunktionens namn, t.ex. "Datatekniska institutionens expedition".
     namn: SprakhanteradText
@@ -54,7 +63,7 @@ class KontextualiseradOrganisationsdelsrelation:
 
 @jsontype()
 @dataclass(kw_only=True)
-class Organisationsdel(MedObligatoriskIdentifierare, MedGiltighet, MedTaggning, MedLokalUtokning):
+class Organisationsdel:
     """Representerar någon form av gruppering som är viktig för hur lärosätet organiserar en viss
     aspekt av sitt arbete. Inga gränser sätts för vad som är eller inte är en organisationsdel,
     varje lärosäte avgör utifrån behov och förmåga. Exempel på möjliga orgenheter är:
@@ -72,6 +81,15 @@ class Organisationsdel(MedObligatoriskIdentifierare, MedGiltighet, MedTaggning, 
     andra organisationsdelar, där någon person ansvarar för gruppens ekonomi, och någon person
     ansvarar för att arbetsleda gruppens gemensamma arbete.
     """
+
+    # Identifiering av organisationsdelen.
+    identifiering: Identifiering
+    # Giltighet för denna organisationsdel.
+    giltighet: Giltighet = None
+    # Taggning av organisationsdelen.
+    taggning: Taggning = None
+    # Lokala utökningar.
+    lokalUtokning: LokalUtokning = None
 
     # Orgenhetens namn.
     namn: SprakhanteradText = None
@@ -111,7 +129,7 @@ class Organisationsdel(MedObligatoriskIdentifierare, MedGiltighet, MedTaggning, 
 
 @jsontype()
 @dataclass(kw_only=True)
-class OrganisatoriskRelation(MedObligatoriskIdentifierare, MedGiltighet, MedTaggning, MedLokalUtokning):
+class OrganisatoriskRelation:
     """Vi har alla någon form av struktur bland våra organisationsdelar. Det är vanligt att ha flera
     olika strukturer, t.ex.:
 
@@ -128,6 +146,16 @@ class OrganisatoriskRelation(MedObligatoriskIdentifierare, MedGiltighet, MedTagg
     pekar den ut en "förälder" och ett "barn". Ur organisationsdelarnas perspektiv så har de `[0..*]`
     relationer som pekar ut dess föräldrar i olika träd, och `[0..*]` relationer som pekar ut dess barn.
     """
+
+    # Identifiering av relationen.
+    identifiering: Identifiering
+    # Giltighet för denna relation.
+    giltighet: Giltighet = None
+    # Taggning av relationen.
+    taggning: Taggning = None
+    # Lokala utökningar.
+    lokalUtokning: LokalUtokning = None
+
     # Den/de strukturer/träd/perspektiv som denna relation gäller för.
     typer: list[Tagg]
 

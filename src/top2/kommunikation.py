@@ -12,8 +12,10 @@ class Telefonnummer:
 
     # Synligheter för detta telefonnummer.
     synligheter: list[Spridning] = None
+
     # Taggning av telefonnumret.
     taggning: Taggning = None
+
     # Lokala utökningar.
     lokalUtokning: LokalUtokning = None
 
@@ -35,8 +37,10 @@ class Snigelpost:
 
     # Synligheter för denna adress.
     synligheter: list[Spridning] = None
+
     # Taggning av adressen.
     taggning: Taggning = None
+
     # Lokala utökningar.
     lokalUtokning: LokalUtokning = None
 
@@ -63,8 +67,10 @@ class ElektroniskAdress:
 
     # Synligheter för denna adress.
     synligheter: list[Spridning] = None
+
     # Taggning av adressen.
     taggning: Taggning = None
+
     # Lokala utökningar.
     lokalUtokning: LokalUtokning = None
 
@@ -83,6 +89,7 @@ class Besokstider:
 
     # Taggning av besökstiderna.
     taggning: Taggning = None
+
     # Lokala utökningar.
     lokalUtokning: LokalUtokning = None
 
@@ -106,8 +113,10 @@ class Besoksadress:
 
     # Synligheter för denna adress.
     synligheter: list[Spridning] = None
+
     # Taggning av adressen.
     taggning: Taggning = None
+
     # Lokala utökningar.
     lokalUtokning: LokalUtokning = None
 

@@ -18,10 +18,13 @@ class Organisationsdelsansvar:
 
     # Identifiering av ansvaret.
     identifiering: FrivilligIdentifiering = None
+
     # Giltighet för detta ansvar.
     giltighet: Giltighet = None
+
     # Taggning av ansvaret.
     taggning: Taggning = None
+
     # Lokala utökningar.
     lokalUtokning: LokalUtokning = None
 
@@ -46,10 +49,13 @@ class Rolltilldelningsansvar:
 
     # Identifiering av ansvaret.
     identifiering: FrivilligIdentifiering = None
+
     # Giltighet för detta ansvar.
     giltighet: Giltighet = None
+
     # Taggning av ansvaret.
     taggning: Taggning = None
+
     # Lokala utökningar.
     lokalUtokning: LokalUtokning = None
 
@@ -73,8 +79,10 @@ class BeraknatAnsvar:
 
     # Giltighet för detta ansvar.
     giltighet: Giltighet = None
+
     # Taggning av ansvaret.
     taggning: Taggning = None
+
     # Lokala utökningar.
     lokalUtokning: LokalUtokning = None
 

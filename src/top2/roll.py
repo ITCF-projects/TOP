@@ -18,8 +18,10 @@ class Roll:
 
     # Identifiering av rollen.
     identifiering: Identifiering
+
     # Taggning av rollen.
     taggning: Taggning = None
+
     # Lokala utökningar.
     lokalUtokning: LokalUtokning = None
 

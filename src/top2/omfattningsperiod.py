@@ -22,12 +22,16 @@ class Omfattningsperiod:
 
     # Identifiering av omfattningsperioden.
     identifiering: FrivilligIdentifiering = None
+
     # Giltighet för denna omfattningsperiod.
     giltighet: Giltighet = None
+
     # Taggning av omfattningsperioden.
     taggning: Taggning = None
+
     # Typ av omfattningsperiod.
     typ: Tagg = None
+
     # Lokala utökningar.
     lokalUtokning: LokalUtokning = None
 
@@ -56,12 +60,16 @@ class Franvaroperiod:
 
     # Identifiering av frånvaroperioden.
     identifiering: FrivilligIdentifiering = None
+
     # Giltighet för denna frånvaroperiod.
     giltighet: Giltighet = None
+
     # Taggning av frånvaroperioden.
     taggning: Taggning = None
+
     # Typ av frånvaro.
     typ: Tagg = None
+
     # Lokala utökningar.
     lokalUtokning: LokalUtokning = None
 

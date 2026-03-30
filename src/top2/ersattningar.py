@@ -24,11 +24,13 @@ class Kontering:
 
     # Taggning av konteringen.
     taggning: Taggning = None
+
     # Lokala utökningar.
     lokalUtokning: LokalUtokning = None
 
     # Alla relevanta ID:n för att göra en tillräckligt detaljerad specifikation (konto, kostnadsställe, mm)
     konton: list[Identifierare]
+
     # Den del av värdet som konteras på detta sätt. När en ersättning konteras skall summan av alla
     # Kontering bli samma som ersättnings totalvärde. Valutan är samma som ersättningens valuta.
     varde: float
@@ -41,6 +43,7 @@ class Engangsersattning:
 
     # Taggning av ersättningen.
     taggning: Taggning = None
+
     # Lokala utökningar.
     lokalUtokning: LokalUtokning = None
 
@@ -74,8 +77,10 @@ class LopandeErsattning:
 
     # Giltighet för denna ersättning.
     giltighet: Giltighet = None
+
     # Taggning av ersättningen.
     taggning: Taggning = None
+
     # Lokala utökningar.
     lokalUtokning: LokalUtokning = None
 

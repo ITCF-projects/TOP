@@ -38,10 +38,13 @@ class Hemvistperiod:
 
     # Giltighet för denna hemvistperiod.
     giltighet: Giltighet = None
+
     # Typ av hemvist.
     typ: Tagg = None
+
     # Taggning av hemvistperioden.
     taggning: Taggning = None
+
     # Lokala utökningar.
     lokalUtokning: LokalUtokning = None
 
@@ -87,10 +90,13 @@ class Anknytningsavtal:
 
     # Identifiering av anknytningsavtalet.
     identifiering: Identifiering
+
     # Giltighet för detta anknytningsavtal.
     giltighet: Giltighet = None
+
     # Taggning av anknytningsavtalet.
     taggning: Taggning = None
+
     # Lokala utökningar.
     lokalUtokning: LokalUtokning = None
 

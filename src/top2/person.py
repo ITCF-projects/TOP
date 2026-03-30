@@ -20,15 +20,19 @@ class Passerbehorighet:
 
     # Behörighetens ID (inte resursen behörigheten gäller för).
     postid: Identifierare
+
     # ID på den resurs som behörigheten gäller för (inte behörighetens egna ID om ett sådant finns).
     resursId: Identifierare
+
     # De person(er) som tilldelats behörigheten.
     tilldeladPersoner: "list[Person]"
+
     # De passerkort som tilldelats behörigheten.
     tilldeladPasserkort: "list[Passerkort]"
 
     # Giltighet för denna passerbehörighet.
     giltighet: Giltighet = None
+
     # Lokala utökningar.
     lokalUtokning: LokalUtokning = None
 
@@ -48,6 +52,7 @@ class Passerkort:
 
     # Giltighet för detta passerkort.
     giltighet: Giltighet = None
+
     # Lokala utökningar.
     lokalUtokning: LokalUtokning = None
 
@@ -84,8 +89,10 @@ class Person:
 
     # Giltighet för denna personpost.
     giltighet: Giltighet = None
+
     # Taggning av personen.
     taggning: Taggning = None
+
     # Lokala utökningar.
     lokalUtokning: LokalUtokning = None
 

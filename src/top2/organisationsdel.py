@@ -84,10 +84,13 @@ class Organisationsdel:
 
     # Identifiering av organisationsdelen.
     identifiering: Identifiering
+
     # Giltighet för denna organisationsdel.
     giltighet: Giltighet = None
+
     # Taggning av organisationsdelen.
     taggning: Taggning = None
+
     # Lokala utökningar.
     lokalUtokning: LokalUtokning = None
 

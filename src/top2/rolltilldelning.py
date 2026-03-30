@@ -31,10 +31,13 @@ class Rolltilldelning:
 
     # Identifiering av rolltilldelningen.
     identifiering: Identifiering
+
     # Giltighet för denna rolltilldelning.
     giltighet: Giltighet = None
+
     # Taggning av rolltilldelningen.
     taggning: Taggning = None
+
     # Lokala utökningar.
     lokalUtokning: LokalUtokning = None
 

@@ -121,6 +121,10 @@ class Person:
     rolltilldelningar: "list[Rolltilldelning]" = None
 
     avliden: bool = None
+    hemlig: bool = None
+
+    # Kön? Ligger som K/M i Primula - hur lägger vi med det?
+
 
     # personkompetens.kompskikt_id -> kompskikt (t.ex. docent)
     # Uppnådd utbildningsnivå (t.ex. vid rekrytering)

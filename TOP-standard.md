@@ -79,7 +79,7 @@ Orgenheterna kan inte av sig själva utföra nytta, för detta behövs **persone
 
 Personer knyts till lärosätet genom **anknytningsavtal**, där den vanligaste varianten är ett anställningsavtal. Men även gästprofessurer, deltagande i forskningsprojekt, till och med när en professor muntligen bjuder in någon från Harvard att sprida stjärnglans över sin institution är former av sådana avtal.
 
-> Lilla Lärosätet har anknytningsavtal för alla personer, men av olika typ. Hedda Master, Patrik Socrates, Lena Lund och Adam Nistram har alla typen "Anställd" på sina anknyntningsavtal. Eftersom Linda Projektil verkar vid lärosätet på heltid, så får hennes avtal typen "Bemanningspersonal". Peroja Deltacko som bara gör enstaka timmar får typen "Timkonsult", och Emilia Fodat får typen "Intermittent anställd" på sina respektive avtal.
+> Lilla Lärosätet har anknytningsavtal för alla personer, men av olika typ. Hedda Master, Patrik Socrates, Lena Lund och Adam Nistram har alla typen "Anställd" på sina anknytningsavtal. Eftersom Linda Projektil verkar vid lärosätet på heltid, så får hennes avtal typen "Bemanningspersonal". Peroja Deltacko som bara gör enstaka timmar får typen "Timkonsult", och Emilia Fodat får typen "Intermittent anställd" på sina respektive avtal.
 
 Ett anknytningsavtal kan under sin löptid innefatta många olika egenskaper. Under en 25 år lång anställning (som är _ett_ avtal) kommer en person att byta lön, organisatorisk hemvist, tjänsteomfattning med mera massor av gånger. Varje sådan egenskap representeras därför av ett eller flera intervall eller _perioder_ av något slag - en egenskap med start- och eventuellt slutdatum.
 

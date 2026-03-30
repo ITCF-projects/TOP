@@ -14,3 +14,8 @@ JSON-schemat är automatgenererat utifrån  Python-kod som ligger i `src/top2`-k
 
 För att generera json-schemat, ställ dig i `src`-katalogen och kör `python3 ./top.py` - (eller något motsvarande om du använder såndär Windows). Jag skall nog orka paketera det lite snällare om någon behöver det.
 
+# TODO
+
+* Använd $id för att versionshantera TOP (semver)
+* Flytta "MedGiltighetsperiod" till en `giltighetsperiod: Giltighetsperiod`
+

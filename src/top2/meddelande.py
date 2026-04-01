@@ -1,6 +1,7 @@
 import dataclasses
 
 from schemagen import jsontype
+from top2 import LokalUtokning
 
 from top2.rolltilldelning import Rolltilldelning
 from top2.roll import Roll
@@ -30,3 +31,5 @@ class Meddelande:
     roller: list[Roll] = None
     rolltilldelning: Rolltilldelning = None
     rolltilldelningar: list[Rolltilldelning] = None
+
+    lokalUtokning: LokalUtokning = None

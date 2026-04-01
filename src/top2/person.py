@@ -83,6 +83,9 @@ class Merit:
     # Eventuella unika ID för just denna merit.
     identifiering: FrivilligIdentifiering = None
 
+    # Taggning av meriten.
+    taggning: Taggning = None
+
     # Meritens namn, t.ex. "Docent", "Certifierad IT-arkitekt" eller "Civilingenjör".
     namn: SprakhanteradText = None
 

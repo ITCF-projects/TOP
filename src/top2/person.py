@@ -3,6 +3,7 @@ import datetime
 from typing import *
 
 from schemagen import jsontype
+from top2 import SprakhanteradText
 from top2.common import Identifierare, Identifiering, FrivilligIdentifiering, Giltighet, Taggning, LokalUtokning, Tagg
 
 if TYPE_CHECKING:
@@ -73,6 +74,31 @@ class Bisyssla:
 
 @jsontype()
 @dataclass(kw_only=True)
+class Merit:
+    """En merit är någon egenskap en person har som är oberoende av anställning, rolltilldelning,
+    eller liknande. Meriter utdelas vid någon tidpunkt, och följer sedan med personen livslångt.
+    Avsikten är t.ex. "Docent" (akademisk merit), "Certifierad IT-arkitekt" (certifiering) eller
+    "Civilingenjör" (examen).
+    """
+    # Eventuella unika ID för just denna merit.
+    identifiering: FrivilligIdentifiering = None
+
+    # Meritens namn, t.ex. "Docent", "Certifierad IT-arkitekt" eller "Civilingenjör".
+    namn: SprakhanteradText = None
+
+    # Detaljering av meriten, t.ex. ämne för avhandling eller område för civilinjenjörsexamen.
+    detaljer: SprakhanteradText = None
+
+    # Vem som utfärdat meriten, t.ex. lärosäte för docentskapet eller certifieringsentitet för certifikat.
+    utfardadAv: SprakhanteradText = None
+
+    # Startdatum. Det är inte relevant med slutdatum för en merit - när en person väl fått sin certifiering
+    # så är den livslång.
+    utfardandedatum: datetime.date = None
+
+
+@jsontype()
+@dataclass(kw_only=True)
 class Person:
     """En person av kött och blod. Datat är så normaliserat som avsändaren klarar av - i normalfallet
     motsvaras varje fysisk person av som mest _en_ datapost. Ingen avsändare skall t.ex. skicka flera
@@ -135,16 +161,12 @@ class Person:
     # två könen. Övriga kön specas inte.
     kon: str = None
 
-    # personkompetens.kompskikt_id -> kompskikt (t.ex. docent)
-    # Uppnådd utbildningsnivå (t.ex. vid rekrytering)
+    # Meriter (t.ex. akademiska meriter, certifieringar, examina). [Primula: Docent ligger i
+    # tabellen personkompetens].
+    meriter: list[Merit] = None
+
+    # Uppnådd utbildningsnivå (t.ex. vid rekrytering) [Primula: personkompetens.kompskikt_id]
     utbildningsniva: Tagg = None
-
-    # personkompetens.kompskikt_id -> kompskikt (t.ex. docent)
-    # Är du inte docent, pojk?!
-    docentLarosate: str = None
-
-    # personkompetens.kompinriktning_id -> kompinriktning.text
-    docentAmne: str = None
 
     # aperson
     # Statlig anställning fortsätter när du byter lärosäte t.ex.

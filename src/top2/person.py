@@ -130,8 +130,10 @@ class Person:
     avliden: bool = None
     hemlig: bool = None
 
-    # Kön? Ligger som K/M i Primula - hur lägger vi med det?
-
+    # Kön. Olika system har olika detaljeringsgrad, så vi kan inte göra en pålitlig enum. Vi
+    # lämnar det som en sträng i datat, och rekommenderar värdena "kvinna" och "man" för just de
+    # två könen. Övriga kön specas inte.
+    kon: str = None
 
     # personkompetens.kompskikt_id -> kompskikt (t.ex. docent)
     # Uppnådd utbildningsnivå (t.ex. vid rekrytering)

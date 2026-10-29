@@ -1,6 +1,7 @@
 import datetime
 
 from pony import orm
+from pony.orm import Optional, Required
 
 db = orm.Database()
 
@@ -28,6 +29,8 @@ class SprakhanteradText(db.Entity):
     _tagg_namn = orm.Set("Tagg", reverse="namn")
     _besokstider_galler = orm.Set("Besokstider", reverse="galler")
     _besokstider_avvikels = orm.Set("Besokstider", reverse="avvikelse")
+    _besoksadress_byggnad = orm.Set("Besoksadress", reverse="byggnad")
+    _besoksadress_hitta_i_huset = orm.Set("Besoksadress", reverse="hittaIHuset")
 
 
 class Tagg(db.Entity):
@@ -43,6 +46,9 @@ class Tagg(db.Entity):
     _spridning_synlighet = orm.Set("Spridning")
     _person_taggar = orm.Set("Person")
     _besokstider_taggar = orm.Set("Besokstider")
+    _elektronisk_adress_taggar = orm.Set("ElektroniskAdress", reverse="taggar")
+    _elektronisk_adress_media = orm.Set("ElektroniskAdress", reverse="media")
+    _besoksadress_taggar = orm.Set("Besoksadress")
 
 
 class GiltighetsbegransadTaggning(db.Entity):
@@ -55,6 +61,8 @@ class GiltighetsbegransadTaggning(db.Entity):
 
     _person_giltighetsbegransade_taggar = orm.Set("Person")
     _besokstider_giltighetsbegransade_taggar = orm.Set("Besokstider")
+    _elektronisk_adress_giltighetsbegransade_taggar = orm.Set("ElektroniskAdress")
+    _besoksadress_giltighetsbegransade_taggar = orm.Set("Besoksadress")
 
 
 class Spridning(db.Entity):
@@ -64,6 +72,7 @@ class Spridning(db.Entity):
     _telefonnummer = orm.Required("Telefonnummer")
     _snigelpost = orm.Required("Snigelpost")
     _elektronisk_adress = orm.Required("ElektroniskAdress")
+    _besoksadress_spridning = orm.Set("Besoksadress")
 
 
 class Telefonnummer(db.Entity):
@@ -71,26 +80,27 @@ class Telefonnummer(db.Entity):
     formatterat_nummer = orm.Optional(str)
     kan_ta_emot_sms = orm.Required(bool, sql_default=False)
 
-    person_telefonnummer = orm.Set("Person")
+    person_telefonnummer = orm.Set("Person", reverse="telefon")
     spridning = orm.Set(Spridning)
 
 
 class Snigelpost(db.Entity):
-    formatteradAdress: list[str]
+    formatteradAdress = orm.Required(str)
 
     # Kopia av landskoden från formattedAddress.
-    landskod: str = None  # regexp="[A-Z]{2}"
+    landskod = orm.Optional(str)  #, regexp="[A-Z]{2}")
 
     # Kopia av landsnamn från formattedAddress.
-    landsnamn: str = None  # regexp="[A-Z ]+"
+    landsnamn = orm.Optional(str)  #, regexp="[A-Z ]+")
 
     # Kopia av postnumret från formattedAddress
-    postnummer: str = None  # regexp="[-A-Z0-9 ]+")
+    postnummer = orm.Optional(str)  #, regexp="[-A-Z0-9 ]+")
 
     # Kopia av postort från formattedAddress.
-    postort: str = None
+    postort = orm.Optional(str)
 
     spridning = orm.Set(Spridning)
+    personer = orm.Set("Person")
 
 
 class ElektroniskAdress(db.Entity):
@@ -105,10 +115,12 @@ class ElektroniskAdress(db.Entity):
 
     # Media. Standarden definierar taggar för t.ex. web och epost, men det är fritt att definiera egna
     # för specifika media.
-    media: Tagg
+    media = orm.Set(Tagg)
 
     # Adressen. Utseendet beror på media. För epost är det t.ex. en epostadress, för web en URL.
-    adress: str
+    adress = orm.Optional(str)
+
+    personer = orm.Set("Person")
 
 
 class Besokstider(db.Entity):
@@ -122,13 +134,15 @@ class Besokstider(db.Entity):
     galler = orm.Set(SprakhanteradText)
 
     # Tid på lokal klocka då besök kan börja.
-    oppnar = orm.Set(str)
+    oppnar = orm.Optional(str)
 
     # Tid på lokal klocka då besök inte längre kan börja.
-    stanger: orm.Set(str)
+    stanger = orm.Optional(str)
 
     # Beskrivning som ersätter opens/closes, t.ex. "stängt".
     avvikelse = orm.Set(SprakhanteradText)
+
+    _besoksadress = orm.Set("Besoksadress")
 
 
 class Besoksadress(db.Entity):
@@ -142,23 +156,25 @@ class Besoksadress(db.Entity):
     giltighetsbegransade_taggar = orm.Set(GiltighetsbegransadTaggning)
 
     # Gatunamn och nummer.
-    gatuadress: str
+    gatuadress = orm.Optional(str)
 
     # Stad
-    stad: str
+    stad = orm.Optional(str)
 
     # Land (implicit om det utelämnas)
-    land: str = None
+    land = orm.Optional(str)
 
     # Byggnadsnamn (t.ex. 'Segerstedtska huset')
-    byggnad: SprakhanteradText = None
+    byggnad = orm.Set(SprakhanteradText)
 
     # Instruktioner hur man tar sig till besöksplatsen, t.ex. 'en trappa upp i vänster trapphus,
     # rum 2231 på höger sida' eller 'rum 2231 på plan 2'
-    hittaIHuset: SprakhanteradText = None
+    hittaIHuset = orm.Set(SprakhanteradText)
 
     # Besökstider.
-    besokstider: list[Besokstider]
+    besokstider = orm.Set(Besokstider)
+
+    personer = orm.Set("Person")
 
 
 class Person(db.Entity):
@@ -183,10 +199,10 @@ class Person(db.Entity):
     formatterat_namn = orm.Optional(str)
 
     # Kommunikation
-    telefon: list[Telefonnummer] = None
-    snigelpost: list[Snigelpost] = None
-    elektronisk: list[ElektroniskAdress] = None
-    besok: list[Besoksadress] = None
+    telefon = orm.Set(Telefonnummer)
+    snigelpost = orm.Set(Snigelpost)
+    elektronisk_adress = orm.Set(ElektroniskAdress)
+    besoksadress = orm.Set(Besoksadress)
 
 
 orm.set_sql_debug(True)

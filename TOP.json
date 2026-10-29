@@ -734,6 +734,36 @@
         "valuta"
       ]
     },
+    "Merit": {
+      "type": "object",
+      "description": "En merit är någon egenskap en person har som är oberoende av anställning, rolltilldelning, eller liknande. Meriter\nutdelas vid någon tidpunkt, och följer sedan med personen livslångt. Avsikten är t.ex. \"Docent\" (akademisk merit),\n\"Certifierad IT-arkitekt\" (certifiering) eller \"Civilingenjör\" (examen).",
+      "properties": {
+        "identifiering": {
+          "description": "Eventuella unika ID för just denna merit.",
+          "$ref": "#/$defs/FrivilligIdentifiering"
+        },
+        "taggning": {
+          "description": "Taggning av meriten.",
+          "$ref": "#/$defs/Taggning"
+        },
+        "namn": {
+          "description": "Meritens namn, t.ex. \"Docent\", \"Certifierad IT-arkitekt\" eller \"Civilingenjör\".",
+          "$ref": "#/$defs/SprakhanteradText"
+        },
+        "detaljer": {
+          "description": "Detaljering av meriten, t.ex. ämne för avhandling eller område för civilinjenjörsexamen.",
+          "$ref": "#/$defs/SprakhanteradText"
+        },
+        "utfardadAv": {
+          "description": "Vem som utfärdat meriten, t.ex. lärosäte för docentskapet eller certifieringsentitet för certifikat.",
+          "$ref": "#/$defs/SprakhanteradText"
+        },
+        "utfardandedatum": {
+          "description": "Startdatum. Det är inte relevant med slutdatum för en merit - när en person väl fått sin certifiering så är den livslång.",
+          "$ref": "#/$defs/Date"
+        }
+      }
+    },
     "Omfattningsperiod": {
       "type": "object",
       "description": "En mängd arbetstid som personen i kontexten av ett anknytningsavtal förväntas utföra (en omfattningsperiod). Kan antingen\nvara ett visst antal timmar (hours) eller en del av heltid (fullTimeEquivalentRatio). Kan alltså tillsammans med\ngiltighetstider uttrycka '200 timmar under 2023', '20% under januari 2024' och '95% av en heltid löpande'. Syftet är att\növerföra förutsättningar, inte utfall. Avsikten är alltså inte att den skall representera en timrapport.",
@@ -1098,17 +1128,23 @@
         "avliden": {
           "type": "boolean"
         },
+        "hemlig": {
+          "type": "boolean"
+        },
+        "kon": {
+          "description": "Kön. Olika system har olika detaljeringsgrad, så vi kan inte göra en pålitlig enum. Vi lämnar det som en sträng i datat, och rekommenderar värdena \"kvinna\" och \"man\" för just de två könen. Övriga kön specas inte.",
+          "type": "string"
+        },
+        "meriter": {
+          "description": "Meriter (t.ex. akademiska meriter, certifieringar, examina). [Primula: Docent ligger i tabellen personkompetens].",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Merit"
+          }
+        },
         "utbildningsniva": {
-          "description": "personkompetens.kompskikt_id -> kompskikt (t.ex. docent) Uppnådd utbildningsnivå (t.ex. vid rekrytering)",
+          "description": "Uppnådd utbildningsnivå (t.ex. vid rekrytering) [Primula: personkompetens.kompskikt_id]",
           "$ref": "#/$defs/Tagg"
-        },
-        "docentLarosate": {
-          "description": "personkompetens.kompskikt_id -> kompskikt (t.ex. docent) Är du inte docent, pojk?!",
-          "type": "string"
-        },
-        "docentAmne": {
-          "description": "personkompetens.kompinriktning_id -> kompinriktning.text",
-          "type": "string"
         },
         "statligAnstallningFrom": {
           "description": "aperson Statlig anställning fortsätter när du byter lärosäte t.ex.",
@@ -1566,7 +1602,7 @@
     }
   },
   "type": "object",
-  "description": "Toppobjekt med enkla och listvärda referenser till samtliga värdeobjekt. Bra grund för meddelanden, även t.ex. en lysande\ntopp-Query för ett GraphQL-gränssnitt.",
+  "description": "Toppobjekt med enkla och listvärda referenser till samtliga värdeobjekt. Bra grund för meddelanden, även t.ex. en lysande\ntopp-Query för ett GraphQL-gränssnitt, eller datatyp för JSON-filer med datadumpar i.",
   "properties": {
     "anknytningsperiod": {
       "$ref": "#/$defs/Anknytningsavtal"
@@ -1575,6 +1611,13 @@
       "type": "array",
       "items": {
         "$ref": "#/$defs/Anknytningsavtal"
+      }
+    },
+    "definieradeTaggar": {
+      "description": "Avsändaren förmedlar en uppsättning definierade taggar. Möjliggör att t.ex. bara skicka \"namn\" en gång, därefter endast skicka namnrymd/typnamn/varde/varderymd, eller att utbyta taggar för att hitta gemensamma subset.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Tagg"
       }
     },
     "organisationsdel": {
@@ -1630,6 +1673,9 @@
       "items": {
         "$ref": "#/$defs/Rolltilldelning"
       }
+    },
+    "lokalUtokning": {
+      "$ref": "#/$defs/LokalUtokning"
     }
   },
   "unevaluatedProperties": false

@@ -29,7 +29,7 @@ from top2.organisationsdel import (
     KontextualiseradOrganisationsdelsrelation,
     Servicefunktion,
 )
-from top2.person import Passerkort, Passerbehorighet, Person, Bisyssla
+from top2.person import Passerkort, Passerbehorighet, Person, Bisyssla, Merit
 from top2.ersattningar import (
     Kontering,
     RemunerationCode,

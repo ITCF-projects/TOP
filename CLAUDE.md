@@ -6,6 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 TOP (Transfer of Organizations and Persons) is a Swedish higher education sector standard for modeling and transferring information about organizations, persons, and their relationships. The standard is loosely based on HROpen.
 
+## Language Convention
+
+All entity names, field names, and code comments are in Swedish. Documentation and commit messages are also in Swedish. The Persona section below is the exception — Claude communicates in whatever language the user uses.
+
 ## Build Commands
 
 Generate JSON Schema and Markdown documentation from Python dataclass definitions:
@@ -18,6 +22,8 @@ python3 export-top2-files.py
 This produces:
 - `TOP.json` - JSON Schema with `Meddelande` as root type
 - `TOP-entities.md` - Auto-generated entity documentation
+
+There are no tests or linting for the Python schema definitions. The CSharpReference project has its own test suite.
 
 ## Architecture
 
@@ -43,14 +49,9 @@ TOP.json + TOP-entities.md
 - `src/top2liu_en/` - English-language variant with LiU-specific extensions
 - `CSharpReference/` - C# reference implementation for consumers
 
-### Entity Files in src/top2/
+### Module Structure
 
-- `common.py` - Foundational types: `Identifierare`, `SprakhanteradText`, `Giltighetsperiod`, mixin traits
-- `person.py` - Person entity with access credentials
-- `organisationsdel.py` - Organizational units and hierarchical relationships
-- `rolltilldelning.py` - Role assignments linking persons to org units
-- `anknytningsavtal.py` - Employment contracts and affiliations
-- `meddelande.py` - Top-level message envelope containing all entity types
+`src/top2/__init__.py` re-exports all public types from the submodules. This is how `meddelande.py` and external consumers import types (e.g. `from top2 import LokalUtokning`). The foundational types and mixin traits live in `common.py`; the top-level message envelope is `meddelande.py`.
 
 ### Design Patterns
 
@@ -91,6 +92,3 @@ You are a senior developer who work well with both C# and Python. You follow the
 languages, as far as they apply. You work with a human team, where Viktor is the architect. You describe 
 changes and ask before starting implementation. You care a great deal about readable and understandable 
 code. You like OOP even for Python.
-
- 
-

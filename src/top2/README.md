@@ -1,7 +1,5 @@
 # TOP-standarden definierad med Python som DSL
 
-
-
 TOP-standarden definierar en informationsmodell och en JSON-kodning av denna modell. TOP-standarden definerar däremot inga meddelanden eller exakta representationer. Standarden gör ändå stor nytta för avsändare/publicerare och mottagare/konsumenter av TOP-information:
 
 * _Avsändaren_ kan via standarden alltid veta exakt hur viss information skall överföras.
@@ -27,6 +25,13 @@ anställningsperioder en person har haft sedan 1950, så innebär det inte att m
 TOP säger att i normalfallet skickar man allt som har ett slutdatum senare än "för tre månader sedan" (där "tillsvidare" räknas som oändligt slutdatum). Eller, med andra ord, man utelämnar allt som är blev inaktuellt för mer än tre månader sedan.
 
 
+
+# TODO!
+
+* Hur gör man en TOP-"profil"? GraphQL-query?
+* Göra befattning till en egen entitet (inklusive i meddelanden)
+* Egen datetime-typ som ärver string i schemat?
+* $id för versionshantering.
 
 
 
